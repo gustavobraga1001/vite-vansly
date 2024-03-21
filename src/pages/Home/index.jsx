@@ -2,9 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import useAuth from "../../hooks/useAuth";
-import sino from '../../assets/sino.png'
-import mapa from '../../assets/mapa.png'
-import pesquisa from '../../assets/pesquisa.png'
+import sino from '../../assets/sino.svg'
+import mapa from '../../assets/loc.svg'
+import pesquisa from '../../assets/pesquisa.svg'
 import './home.css'
 import Footer from "../../components/Footer";
 import BemVindo from "../../components/BemVindo";

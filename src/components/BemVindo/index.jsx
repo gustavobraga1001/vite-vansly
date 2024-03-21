@@ -1,5 +1,5 @@
 import React from 'react'
-import carro from '../../assets/carro.png'
+import carro from '../../assets/Van.svg'
 import './bemVindo.css'
 
 const BemVindo = () => {

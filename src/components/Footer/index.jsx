@@ -1,8 +1,8 @@
 import React from 'react'
-import home from '../../assets/home.png'
-import presenca from '../../assets/presenca.png'
-import percurso from '../../assets/percurso.png'
-import perfil from '../../assets/perfil.png'
+import home from '../../assets/home.svg'
+import presenca from '../../assets/presenca.svg'
+import percurso from '../../assets/percurso.svg'
+import perfil from '../../assets/perfil.svg'
 import './footer.css'
 
 const Footer = () => {
