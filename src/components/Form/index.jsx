@@ -57,8 +57,6 @@ const Form = () => {
                     Cadastrar
                   </p>
               </Link>
-
-              
               <Button text="Acessar"  classe={'acessar'} onClick={handleLogin}/>
             </div>
             

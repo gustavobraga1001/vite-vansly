@@ -1,7 +1,6 @@
 import { Fragment } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from '../pages/Home'
-import Signin from '../pages/Signin'
 import Signup from '../pages/Signup'
 import useAuth from '../hooks/useAuth'
 import Login from '../pages/Login'
@@ -9,7 +8,7 @@ import Login from '../pages/Login'
 const Private = ({ Item }) => {
     const {signed} = useAuth();
 
-    return signed > 0 ? <Item /> : <Signin />
+    return signed > 0 ? <Item /> : <Login/>
 }
 
 const RoutesApp = () => {
@@ -21,7 +20,6 @@ const RoutesApp = () => {
                 <Route path='/' element={<Login />} />
                 <Route path='/signup' element={<Signup />} />
                 <Route path='*' element={<Login />} />
-                <Route path='/signin' element={<Signin />} />
             </Routes>
         </Fragment>
     </BrowserRouter>
