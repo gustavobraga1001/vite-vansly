@@ -1,0 +1,30 @@
+.card {
+    border: 1px solid black;
+    border-radius: 15px;
+    margin: 10px 15px;
+}
+
+.card img {
+    max-width: 100%;
+}
+
+.card .container-card {
+    margin:  10px 15px;
+}
+
+.card .container-card p {
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.card-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-star {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

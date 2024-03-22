@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import useAuth from "../../hooks/useAuth";
-import sino from '../../assets/sino.svg'
-import mapa from '../../assets/loc.svg'
-import pesquisa from '../../assets/pesquisa.svg'
+import carro from '../../assets/carros.svg'
 import './home.css'
 import Footer from "../../components/Footer";
 import BemVindo from "../../components/BemVindo";
+import Card from "../../components/Card";
+import Header from "../../components/Header";
 
 const Home = () => {
   const { signout } = useAuth();
@@ -15,27 +15,38 @@ const Home = () => {
 
   return (
     <div className="box-home">
-      <header className="header">
-        <div className="titulo-home">
-          <h1>Olá, Usuário</h1>
-          <img src={sino} />
-        </div>
-        <div className="loc-home">
-          <p>Localização</p>
-          <div>
-            <img src={mapa} alt="" />
-            <select name="" id="">
-              <option value="Santo Ándre - SP">Santo Ándre - SP</option>
-            </select>
-          </div>
-        </div>
-        <div className="pesquisa">
-            <img src={pesquisa} alt="" />
-            <input type="text" placeholder="Para onde?"/>
-        </div>
-      </header>
-      <main>
+      <Header />
+      <main className="conteudo">
         <BemVindo />
+        <h3>Rotas disponíveis</h3>
+        <Card 
+          img={carro}
+          title={'Van1'}
+          local={'Santo André - São Caetano do Sul'}
+          preco={'448,00'}
+          stars={'4,95'}
+        />
+        <Card 
+          img={carro}
+          title={'Van1'}
+          local={'Santo André - São Caetano do Sul'}
+          preco={'448,00'}
+          stars={'4,95'}
+        />
+        <Card 
+          img={carro}
+          title={'Van1'}
+          local={'Santo André - São Caetano do Sul'}
+          preco={'448,00'}
+          stars={'4,95'}
+        />
+        <Card 
+          img={carro}
+          title={'Van1'}
+          local={'Santo André - São Caetano do Sul'}
+          preco={'448,00'}
+          stars={'4,95'}
+        />
       </main>
       <Button text="Sair" onClick={() => [signout(), navigate("/")]}>
         Sair

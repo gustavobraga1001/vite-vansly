@@ -1,13 +1,13 @@
 .footer{
-    position: absolute;
-    bottom:0%;
-    height: 9vh;
+    position: fixed;
+    bottom:0;
+    height: 100px;
     width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 0 30px;
+    padding: 0px 30px;
     align-items: center;
-    padding-bottom: 17.5px;
+    background-color: white;
 }
 
 .footer div {

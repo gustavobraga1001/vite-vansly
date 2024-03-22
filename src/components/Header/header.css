@@ -1,0 +1,91 @@
+.header {
+    background-color: #003B6D;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 15px;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    max-height: 200px
+  }
+
+  .header-fixo {
+      background-color: antiquewhite;
+  }
+  
+  .header .titulo-home{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    margin: 12px 0;
+  }
+  
+  .header .titulo-home h1 {
+    color: white;
+    font-weight: 600;
+    font-size: 28px;
+  }
+  
+  .header .titulo-home img {
+    width: 22.5px;
+    height: 25px;
+  }
+  
+  .loc-home {
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .loc-home p {
+    color: #AAAAAA;
+    font-size: 12px;
+    font-weight: 400;
+  }
+  
+  .loc-home div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .loc-home select {
+    background-color: #003B6D;
+    border: none;
+    color: white;
+    padding-right: 10px;
+    font-size: 12px;
+    font-weight: 400
+  }
+  
+  .pesquisa {
+    margin-top: 10px;
+    margin: 10px 15px;
+    display: flex;
+    max-width: 400px;
+    height: 60px;
+    background-color: white;
+    border-radius: 5px;
+    gap: 20px;
+    align-items: center;
+  }
+  
+  .pesquisa input {
+    border: none;
+    font-size: 17px;
+    font-weight: 400;
+    color: #AAAAAA;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    outline: none;
+  }
+  
+  .pesquisa img {
+    width: 20px;
+    height: 20px;
+    margin-left: 20px;
+  }
