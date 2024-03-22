@@ -5,11 +5,11 @@
   width: 100vw;
 }
 
-.conteudo {
+.conteudo-home {
   padding-top: 200px;
   padding-bottom: 70px;
 }
 
-.conteudo h3 {
+.conteudo-home h3 {
   margin-left: 15px;
 }

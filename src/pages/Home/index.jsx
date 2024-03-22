@@ -16,7 +16,7 @@ const Home = () => {
   return (
     <div className="box-home">
       <Header />
-      <main className="conteudo">
+      <main className="conteudo-home">
         <BemVindo />
         <h3>Rotas disponíveis</h3>
         <Card 
