@@ -1,7 +1,6 @@
 .box-home{
   display: flex;
   flex-direction: column;
-  height: 90vh;
   width: 100vw;
 }
 
@@ -12,4 +11,31 @@
 
 .conteudo-home h3 {
   margin-left: 15px;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  gap: 20px;
+}
+
+
+
+@media (min-width: 1024px) {
+  .conteudo-home{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 200px;
+    margin-left: 80px;
+    padding-bottom: 0px;
+
+    /* max-width: 50%; */
+  }
+
+  .conteudo-home h3 {
+    text-align: start;
+  }
 }

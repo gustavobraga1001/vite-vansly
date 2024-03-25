@@ -19,6 +19,7 @@ const Home = () => {
       <main className="conteudo-home">
         <BemVindo />
         <h3>Rotas disponíveis</h3>
+        <div className="cards">
         <Card 
           img={carro}
           title={'Van1'}
@@ -47,10 +48,8 @@ const Home = () => {
           preco={'448,00'}
           stars={'4,95'}
         />
+        </div>
       </main>
-      <Button text="Sair" onClick={() => [signout(), navigate("/")]}>
-        Sair
-      </Button>
 
       <Footer />
     </div>

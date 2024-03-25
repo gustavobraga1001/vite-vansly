@@ -5,7 +5,7 @@ import './index.css'
 
 const Login = () => {
   return (
-    <div className='container'>
+    <div className='container-login'>
         <Logo />
         <div className='titulo'>
             <h1>Acessar</h1>

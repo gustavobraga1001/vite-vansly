@@ -26,7 +26,8 @@ const Form = () => {
       return;
     }
 
-    navigate("/home"); };
+    navigate("/home"); 
+  };
   return (
     <div className="conteudo">
             <Input 
@@ -59,7 +60,6 @@ const Form = () => {
               </Link>
               <Button text="Acessar"  classe={'acessar'} onClick={handleLogin}/>
             </div>
-            
         </div>
   );
 };

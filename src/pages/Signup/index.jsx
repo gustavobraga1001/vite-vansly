@@ -1,27 +1,25 @@
 import React, { useState } from "react";
-import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import './index.css'
+import Input from "../../components/Input";
+import voltar from '../../assets/Return.svg'
 
 const Signup = () => {
-  const [email, setEmail] = useState("");
-  const [emailConf, setEmailConf] = useState("");
-  const [senha, setSenha] = useState("");
-  const [error, setError] = useState("");
+  const { signup } = useAuth();
   const navigate = useNavigate();
 
-  const { signup } = useAuth();
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [error, setError] = useState("");
 
   const handleSignup = () => {
-    if (!email | !emailConf | !senha) {
+    if (!email | !senha) {
       setError("Preencha todos os campos");
+      console.log('caiu')
       return;
-    } else if (email !== emailConf) {
-      setError("Os e-mails não são iguais");
-      return;
-    }
+    } 
 
     const res = signup(email, senha);
 
@@ -35,36 +33,33 @@ const Signup = () => {
   };
 
   return (
-    <div className="container">
-      <h1>SISTEMA DE LOGIN</h1>
-      <div className="content">
-        <Input
-          label={'Digit seu email'}
+    <div className="container-signup">
+      <Link to={'/'}>
+        <div className='return-sign'>
+            <img src={voltar} />
+        </div>
+      </Link>
+      <div className="titulo">
+        <h1>Cadastrar</h1>
+      <p>Insira seu numero de telefone para prosseguirmos com seu cadastro.</p>
+    </div>
+      <div className="content" action="/home">
+      <Input 
+          label={'Digite seu E-mail'}
           type="email"
-          placeholder="Digite seu E-mail"
-          value={email}
+          placeholder="E-mail"
           onChange={(e) => [setEmail(e.target.value), setError("")]}
-        />
-        <Input
-          type="email"
-          placeholder="Confirme seu E-mail"
-          value={emailConf}
-          onChange={(e) => [setEmailConf(e.target.value), setError("")]}
-        />
-        <Input
-          type="password"
-          placeholder="Digite sua Senha"
-          value={senha}
-          onChange={(e) => [setSenha(e.target.value), setError("")]}
-        />
+      />
+      <Input 
+                label={'Digite seu senha'}
+                type="password"
+                placeholder="Senha"
+                onChange={(e) => [setSenha(e.target.value), setError("")]}
+            />
         <p className="label-error">{error}</p>
-        <Button text="Inscrever-se" onClick={handleSignup} />
-        <p className="label-signin">
-          Já tem uma conta?
-          <strong>
-            <Link to="/">&nbsp;Entre</Link>
-          </strong>
-        </p>
+        <div className="button">
+          <Button text="Inscrever-se" type='submit 'classe ={'acessar'} onClick={handleSignup} />
+        </div>
       </div>
     </div>
   );

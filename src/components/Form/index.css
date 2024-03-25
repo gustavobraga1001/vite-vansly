@@ -5,14 +5,6 @@
     gap: 10px;
 }
 
-.conteudo input {
-    padding: 22.5px;
-    background-color: #EBEBEB;
-    border: none;
-    border-radius: 5px;
-    color: #AAAAAA;
-    font-size: 15px;
-}
 
 .opcoes {
     display: flex;

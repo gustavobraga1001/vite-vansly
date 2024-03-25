@@ -4,6 +4,7 @@ import Home from '../pages/Home'
 import Signup from '../pages/Signup'
 import useAuth from '../hooks/useAuth'
 import Login from '../pages/Login'
+import Busca from '../pages/Busca/busca'
 
 const Private = ({ Item }) => {
     const {signed} = useAuth();
@@ -20,6 +21,7 @@ const RoutesApp = () => {
                 <Route path='/' element={<Login />} />
                 <Route path='/signup' element={<Signup />} />
                 <Route path='*' element={<Login />} />
+                <Route path='/busca' element={<Busca />} />
             </Routes>
         </Fragment>
     </BrowserRouter>

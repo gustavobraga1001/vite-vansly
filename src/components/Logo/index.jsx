@@ -4,7 +4,9 @@ import './index.css'
 
 const Logo = () => {
   return (
-        <img src={logo} className='logo' />
+    <div className='logo'>
+      <img src={logo} />
+    </div> 
   )
 }
 

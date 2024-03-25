@@ -8,7 +8,7 @@ const Card = ( {img, title, local, preco, stars}) => {
     console.log(img, title, local, preco, stars)
 
   return (
-    <>
+    <div className='card-box'>
     <div className='card'>
       <img src={img} alt="" />
       <div className='container-card'>
@@ -25,8 +25,8 @@ const Card = ( {img, title, local, preco, stars}) => {
 
         <div className='linha'></div>
     </div>
-    <img src={divisoria} alt="" />
-    </>
+    <img className='divisoria' src={divisoria} alt="" />
+    </div>
   )
 }
 
