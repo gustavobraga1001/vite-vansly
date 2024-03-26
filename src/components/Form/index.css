@@ -17,17 +17,20 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    cursor: pointer;
 }
 
-.lembrar p {
+.lembrar label {
     color: #1E1E1E;
 }
 
-.check {
-    background-color: #EBEBEB;
+.lembrar input[type="checkbox"]{
+    background-color: #003B6D   ;
+    accent-color: #003B6D;
     width: 20px;
     height: 20px;
 }
+
 
 .botoes {
     display: flex;

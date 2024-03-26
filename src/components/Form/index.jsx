@@ -46,10 +46,9 @@ const Form = () => {
             <p className="label-error">{error}</p>
             <div className="opcoes">
                 <div className="lembrar">
-                    <div className="check"></div>
-                    <p>Lembrar senha</p>
+                    <input type="checkbox" id="check-box" className="check" />
+                    <label for="check-box">Lembrar senha</label>
                 </div>
-                
                 <a href="">Esqueci minha senha</a>
             </div>
             <div className="botoes">
