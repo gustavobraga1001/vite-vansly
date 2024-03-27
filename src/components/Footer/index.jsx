@@ -1,36 +1,38 @@
 import React from 'react'
-import home from '../../assets/home.svg'
+import homeAcionado from '../../assets/icons/homeAcionado.svg'
+import percursoAcionado from '../../assets/icons/percursoAcionado.svg'
 import { Link } from 'react-router-dom'
-import presenca from '../../assets/presenca.svg'
-import percurso from '../../assets/percurso.svg'
-import perfil from '../../assets/perfil.svg'
+import presencaImg from '../../assets/icons/presenca.svg'
+import percursoImg from '../../assets/icons/percurso.svg'
+import perfilImg from '../../assets/icons/perfil.svg'
+import homeImg from '../../assets/icons/home.svg'
 import './footer.css'
 
-const Footer = () => {
+const Footer = ({home, presenca, percurso, perfil}) => {
   return (
     <footer className='footer'>
         <div>
             <Link to={'/home'}>
-                <img src={home} alt="" />
+                {home ? <img src={homeAcionado} alt="" /> : <img src={homeImg}/>}
                 <p>Início</p>
             </Link>
             
         </div>
         <div>
             <Link to={'/presenca'}>
-                <img src={presenca} alt="" />
+                {presenca ? <img src={presencaImg} alt="" /> : <img src={presencaImg}/>}
                 <p>Presença</p>
             </Link>
         </div>
         <div>
-            <Link>
-                <img src={percurso} alt="" />
+            <Link to={'/percurso'}>
+                {percurso ? <img src={percursoAcionado} alt="" /> : <img src={percursoImg}/>}
                 <p>Percurso</p>
             </Link>
         </div>
         <div>
             <Link>
-                <img src={perfil} alt="" />
+                {perfil ? <img src={perfilAcionado} alt="" /> : <img src={perfilImg}/>}
                 <p>Perfil</p>
             </Link>
         </div>

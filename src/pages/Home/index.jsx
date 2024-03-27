@@ -51,7 +51,12 @@ const Home = () => {
         </div>
       </main>
 
-      <Footer />
+      <Footer 
+        home={true}
+        presenca={false}
+        percurso={false}
+        perfil={false}
+      />
     </div>
   );
 };
