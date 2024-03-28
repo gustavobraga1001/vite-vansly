@@ -4,9 +4,6 @@ import divisoria from '../../assets/Divisoria.svg'
 import './card.css'
 
 const Card = ( {img, title, local, preco, stars}) => {
-
-    console.log(img, title, local, preco, stars)
-
   return (
     <div className='card'>
       <img src={img} alt="" />
@@ -21,8 +18,6 @@ const Card = ( {img, title, local, preco, stars}) => {
           </div>
           <p>R$ {preco} /Mês</p>
         </div>
-
-        
     </div>
   )
 }

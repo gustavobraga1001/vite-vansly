@@ -11,6 +11,7 @@ const Percurso = () => {
   return (
     <div className='box-percurso'>
         <HeaderFixo 
+            tela='home'
             img={img}
             text='Percurso'
         />

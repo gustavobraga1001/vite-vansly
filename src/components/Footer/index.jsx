@@ -31,7 +31,7 @@ const Footer = ({home, presenca, percurso, perfil}) => {
             </Link>
         </div>
         <div>
-            <Link>
+            <Link to={'/perfil'}>
                 {perfil ? <img src={perfilAcionado} alt="" /> : <img src={perfilImg}/>}
                 <p>Perfil</p>
             </Link>
