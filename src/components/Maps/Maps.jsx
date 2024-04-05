@@ -1,293 +1,101 @@
-import React from 'react'
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import React, { useEffect, useState } from 'react';
+import { DirectionsRenderer, DirectionsService, GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import './Maps.css';
+import imgVan from '../../assets/iconeMovel.svg';
+import { stylesMaps } from './StyleMaps';
 
+const center = {
+  lat: -23.62178148779765,
+  lng: -46.56528250493589,
+};
 
-const Maps = () => {
+const MapPage = () => {
+  const [waypoints, setWaypoints] = useState([]);
+  const [map, setMap] = useState(null);
+  const [origin, setOrigin] = useState(null);
+  const [destination, setDestination] = useState(null);
+  const [response, setResponse] = useState(null);
 
-    const { isLoaded } = useJsApiLoader({
-        id: 'google-map-script',
-        googleMapsApiKey: "AIzaSyB3Qj7ytVrui6Psa-sR5cJgyFAStIQAPx0"
-      })
+  const onMapLoad = map => {
+    setMap(map);
+  };
 
-    return (
-    <div className='maps'>
-        {
-            isLoaded ? (
-                <GoogleMap
-                  mapContainerStyle={{width: '100%', height:'80vh'}}
-                  center={{
-                    lat: -23.61741720501313, 
-                    lng: -46.57452432873151
-                  }}
-                  options={{
-                    disableDefaultUI: true,
-                    zoomControl:false,
-                    styles:[
-                        {
-                            "featureType": "administrative",
-                            "elementType": "all",
-                            "stylers": [
-                                {
-                                    "hue": "#000000"
-                                },
-                                {
-                                    "lightness": -100
-                                },
-                                {
-                                    "visibility": "off"
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "administrative.locality",
-                            "elementType": "all",
-                            "stylers": [
-                                {
-                                    "visibility": "on"
-                                },
-                                {
-                                    "saturation": "-3"
-                                },
-                                {
-                                    "gamma": "1.81"
-                                },
-                                {
-                                    "weight": "0.01"
-                                },
-                                {
-                                    "hue": "#ff0000"
-                                },
-                                {
-                                    "lightness": "17"
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "administrative.land_parcel",
-                            "elementType": "all",
-                            "stylers": [
-                                {
-                                    "visibility": "off"
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "landscape",
-                            "elementType": "geometry",
-                            "stylers": [
-                                {
-                                    "hue": "#dddddd"
-                                },
-                                {
-                                    "saturation": -100
-                                },
-                                {
-                                    "lightness": -3
-                                },
-                                {
-                                    "visibility": "on"
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "landscape",
-                            "elementType": "labels",
-                            "stylers": [
-                                {
-                                    "hue": "#000000"
-                                },
-                                {
-                                    "saturation": -100
-                                },
-                                {
-                                    "lightness": -100
-                                },
-                                {
-                                    "visibility": "off"
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "poi",
-                            "elementType": "all",
-                            "stylers": [
-                                {
-                                    "hue": "#000000"
-                                },
-                                {
-                                    "saturation": -100
-                                },
-                                {
-                                    "lightness": -100
-                                },
-                                {
-                                    "visibility": "off"
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "road",
-                            "elementType": "geometry",
-                            "stylers": [
-                                {
-                                    "hue": "#bbbbbb"
-                                },
-                                {
-                                    "saturation": -100
-                                },
-                                {
-                                    "lightness": 26
-                                },
-                                {
-                                    "visibility": "on"
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "road",
-                            "elementType": "labels",
-                            "stylers": [
-                                {
-                                    "hue": "#ffffff"
-                                },
-                                {
-                                    "saturation": -100
-                                },
-                                {
-                                    "lightness": 100
-                                },
-                                {
-                                    "visibility": "off"
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "road.arterial",
-                            "elementType": "labels.text",
-                            "stylers": [
-                                {
-                                    "visibility": "on"
-                                },
-                                {
-                                    "color": "#797979"
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "road.arterial",
-                            "elementType": "labels.text.fill",
-                            "stylers": [
-                                {
-                                    "color": "#868686"
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "road.arterial",
-                            "elementType": "labels.text.stroke",
-                            "stylers": [
-                                {
-                                    "color": "#ffffff"
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "road.local",
-                            "elementType": "all",
-                            "stylers": [
-                                {
-                                    "hue": "#ff0000"
-                                },
-                                {
-                                    "saturation": -100
-                                },
-                                {
-                                    "lightness": 100
-                                },
-                                {
-                                    "visibility": "on"
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "road.local",
-                            "elementType": "labels.text",
-                            "stylers": [
-                                {
-                                    "visibility": "on"
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "road.local",
-                            "elementType": "labels.text.fill",
-                            "stylers": [
-                                {
-                                    "color": "#b6b2b2"
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "transit",
-                            "elementType": "labels",
-                            "stylers": [
-                                {
-                                    "hue": "#ff0000"
-                                },
-                                {
-                                    "lightness": -100
-                                },
-                                {
-                                    "visibility": "off"
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "water",
-                            "elementType": "geometry",
-                            "stylers": [
-                                {
-                                    "hue": "#ff0000"
-                                },
-                                {
-                                    "saturation": -100
-                                },
-                                {
-                                    "lightness": 100
-                                },
-                                {
-                                    "visibility": "on"
-                                }
-                            ]
-                        },
-                        {
-                            "featureType": "water",
-                            "elementType": "labels",
-                            "stylers": [
-                                {
-                                    "hue": "#000000"
-                                },
-                                {
-                                    "saturation": -100
-                                },
-                                {
-                                    "lightness": -100
-                                },
-                                {
-                                    "visibility": "off"
-                                }
-                            ]
-                        }
-                    ]
-                  }}
-                  zoom={15}
-                >
-                  <></>
-                </GoogleMap>
-            ) : <></>
-        }
+  useEffect(() => {
+    setOrigin({ lat: -23.625046561701133, lng: -46.52039028647473 });
+    setDestination({ lat: -23.618485377185664, lng: -46.57856412063509 });
+    setWaypoints([
+      { lat: -23.634274926423352, lng: -46.526985241377645 },
+      { lat: -23.636358643864003, lng: -46.54355056389266 }
+    ]);
+  }, []);
+
+  const directionsServiceoptions = React.useMemo(() => {
+    return {
+      origin,
+      destination,
+      waypoints: waypoints.map(point => ({ location: point })),
+      travelMode: 'DRIVING',
+    };
+  }, [origin, destination, waypoints]);
+
+  const directionsCallback = React.useCallback(res => {
+    if (res !== null && res.status === 'OK') {
+      setResponse(res);
+    } else {
+      console.log(res);
+    }
+  }, []);
+
+  const directionsRendererOptions = React.useMemo(() => {
+    return {
+      directions: response,
+    };
+  }, [response]);
+
+  function myFunction() {
+    map?.panTo(waypoints[0]);
+  }
+
+  return (
+    <div className="map">
+      <LoadScript
+        googleMapsApiKey={import.meta.env.VITE_CHAVE_API}
+        libraries={['places']}
+      >
+        <GoogleMap
+          onLoad={onMapLoad}
+          center={center}
+          zoom={16}
+          options={{
+            zoomControl: false,
+            fullscreenControl: false,
+            streetViewControl: false,
+            mapTypeControl: false,
+            scaleControl: true,
+            styles: stylesMaps
+          }}
+          mapContainerStyle={{ width: '100%', height: '100%' }}
+        >
+          <button className="button-maps" onClick={myFunction}>.</button>
+
+          <Marker position={{ lat: -23.627367263149733, lng: -46.519162653963555 }} icon={{
+            url: imgVan,
+          }} />
+
+          {origin && destination && (
+            <DirectionsService
+              options={directionsServiceoptions}
+              callback={directionsCallback}
+            />
+          )}
+
+          {response && directionsRendererOptions && (
+            <DirectionsRenderer options={directionsRendererOptions} />
+          )}
+        </GoogleMap>
+      </LoadScript>
     </div>
-    )
-}
+  );
+};
 
-export default Maps
+export default MapPage;
