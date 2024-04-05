@@ -15,9 +15,7 @@ const Percurso = () => {
             img={img}
             text='Percurso'
         />
-        <div className='map-container-box'>
             <MapPage />
-        </div>
       </div>
         
         <Footer 

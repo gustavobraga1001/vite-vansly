@@ -1,24 +1,17 @@
-.map-container-box{
+.box-percurso {
     width: 100vw;
     height: 90vh;
 }
 
+.main-percurso{
+    height: 100%;   
+}
+
 @media (min-width: 1024px) {
-    body {
-        margin: 0;
-    }
-    .box-percurso {
-        
-        margin: 0;
-    }
 
     .main-percurso {
         width: 100%;
-        margin-left: 150px;
+        padding-left: 80px;
     }
 
-    .map-container-box{
-        width: 100vw;
-        height: 90vh;
-    }
 }
