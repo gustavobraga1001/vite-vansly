@@ -65,7 +65,7 @@ const MapPage = () => {
         <GoogleMap
           onLoad={onMapLoad}
           center={center}
-          zoom={16}
+          zoom={15}
           options={{
             zoomControl: false,
             fullscreenControl: false,
