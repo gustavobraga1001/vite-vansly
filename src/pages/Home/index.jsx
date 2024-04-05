@@ -8,10 +8,15 @@ import Footer from "../../components/Footer";
 import BemVindo from "../../components/BemVindo";
 import Card from "../../components/Card";
 import Header from "../../components/Header";
+import carro2 from "../../assets/carro2.svg"
 
 const Home = () => {
   const { signout } = useAuth();
   const navigate = useNavigate();
+
+  const images = [
+    carro, carro2, carro
+  ]
 
   return (
     <div className="box-home">
@@ -21,28 +26,28 @@ const Home = () => {
         <h3>Rotas disponíveis</h3>
         <div className="cards">
         <Card 
-          img={carro}
+          img={images}
           title={'Van1'}
           local={'Santo André - São Caetano do Sul'}
           preco={'448,00'}
           stars={'4,95'}
         />
         <Card 
-          img={carro}
+          img={images}
           title={'Van1'}
           local={'Santo André - São Caetano do Sul'}
           preco={'448,00'}
           stars={'4,95'}
         />
         <Card 
-          img={carro}
+          img={images}
           title={'Van1'}
           local={'Santo André - São Caetano do Sul'}
           preco={'448,00'}
           stars={'4,95'}
         />
         <Card 
-          img={carro}
+          img={images}
           title={'Van1'}
           local={'Santo André - São Caetano do Sul'}
           preco={'448,00'}

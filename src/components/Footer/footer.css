@@ -8,6 +8,7 @@
     padding: 0px 30px;
     align-items: center;
     background-color: white;
+    z-index: 999;
 }
 
 .footer a {

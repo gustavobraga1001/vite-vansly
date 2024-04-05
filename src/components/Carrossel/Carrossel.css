@@ -1,0 +1,41 @@
+
+.carousel-container {
+    position: relative; /* Define o posicionamento relativo */
+    z-index: 1; /* Define um z-index para garantir que o carrossel não fique sobreposto por outros elementos */
+  }
+  
+  
+
+/* Carousel.css */
+/* Estilo para os dots */
+.slick-dots-custom {
+    position: absolute;
+    bottom: 10px; /* Distância do fundo */
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* Estilo para cada dot individual */
+  .slick-dots-custom li {
+    display: inline-block;
+    margin: 0 10px; /* Espaçamento entre os dots */
+  }
+  
+  /* Estilo para os dots inativos */
+  .slick-dots-custom li button {
+    font-size: 0; /* Remova o texto dentro do dot */
+    color: transparent; /* Faça o texto dentro do dot transparente */
+    background-color: white; /* Cor de fundo do dot */
+    border: none; /* Remova a borda */
+    border-radius: 50%; /* Faça o dot redondo */
+    width: 10px; /* Largura do dot */
+    height: 10px; /* Altura do dot */
+    opacity: 0.5; /* Defina uma opacidade menor */
+    transition: opacity 0.3s ease; /* Adicione uma transição suave */
+  }
+  
+  /* Estilo para o dot ativo */
+  .slick-dots-custom li.slick-active button {
+    opacity: 1; /* Defina a opacidade máxima */
+  }
+  
