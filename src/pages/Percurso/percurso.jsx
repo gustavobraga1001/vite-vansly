@@ -15,7 +15,7 @@ const Percurso = () => {
             img={img}
             text='Percurso'
         />
-            <MapPage />
+      <MapPage />
       </div>
         
         <Footer 

@@ -6,6 +6,7 @@ import presencaImg from '../../assets/icons/presenca.svg'
 import percursoImg from '../../assets/icons/percurso.svg'
 import perfilImg from '../../assets/icons/perfil.svg'
 import homeImg from '../../assets/icons/home.svg'
+import perfilAcionado from '../../assets/icons/perfilAcionado.svg'
 import './footer.css'
 
 const Footer = ({home, presenca, percurso, perfil}) => {

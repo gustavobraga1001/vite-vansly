@@ -7,6 +7,7 @@ import Login from '../pages/Login'
 import Busca from '../pages/Busca/busca'
 import Anuncio from '../pages/Anuncio/Anuncio'
 import Percurso from '../pages/Percurso/percurso'
+import Perfil from '../pages/Perfil/Perfil'
 
 const Private = ({ Item }) => {
     const {signed} = useAuth();
@@ -26,6 +27,7 @@ const RoutesApp = () => {
                 <Route path='/busca' element={<Busca />} />
                 <Route path='/anuncio' element={<Anuncio />} />
                 <Route path='/percurso' element={<Percurso />} />
+                <Route path='/perfil' element={<Perfil />} />
             </Routes>
         </Fragment>
     </BrowserRouter>
