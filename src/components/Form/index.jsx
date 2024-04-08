@@ -47,7 +47,7 @@ const Form = () => {
             <div className="opcoes">
                 <div className="lembrar">
                     <input type="checkbox" id="check-box" className="check" />
-                    <label for="check-box">Lembrar senha</label>
+                    <label htmlFor="check-box">Lembrar senha</label>
                 </div>
                 <a href="">Esqueci minha senha</a>
             </div>

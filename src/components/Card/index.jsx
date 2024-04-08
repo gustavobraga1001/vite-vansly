@@ -5,6 +5,7 @@ import './card.css'
 import Carrossel from '../Carrossel/Carrossel'
 
 const Card = ( {img, title, local, preco, stars}) => {
+  // console.log('card', img)
   return (
     <div className='card'>
       <Carrossel images={img} />
