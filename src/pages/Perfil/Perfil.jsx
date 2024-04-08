@@ -2,11 +2,10 @@ import React from 'react'
 import HeaderFixo from '../../components/HeaderFixo/headerFixo'
 import returnImg from '../../assets/Return.svg'
 import imgPerfil from '../../assets/fotoPerfil.svg'
-import editarPerfil from '../../assets/editarPerfil.svg'
 import './Perfil.css'
-import Button from '../../components/Button'
 import Footer from '../../components/Footer'
 import OpcoesPerfil from '../../components/OpcoesPerfil/OpcoesPerfil'
+import opcoes from './Opcoes'
 
 const Perfil = () => {
   return (
@@ -23,7 +22,9 @@ const Perfil = () => {
                 <button className="button-perfil">Editar Perfil</button>
             </div>    
     </div>
-    <OpcoesPerfil />
+    {opcoes.map((info) => {
+        return <OpcoesPerfil img={info.img} text={info.text} />
+    })}
     <Footer 
         home={false}
         presenca={false}

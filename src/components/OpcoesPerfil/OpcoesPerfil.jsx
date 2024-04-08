@@ -1,15 +1,16 @@
 import React from 'react'
+import seta from '../../assets/GoSeta.svg'
+import './OpcoesPerfil.css'
 
 const OpcoesPerfil = ({ img, text}) => {
   return (
     <div>
-        <div className="pagamentos">
+        <div className="opcao-perfil">
             <div className="inicio">
-            <a href="" />
-            <img src={img} />
-            <p>Notificações</p>
+                <img src={img} />
+                <p>{text}</p>
             </div>
-        <img src={seta} /> 
+            <img src={seta} /> 
         </div>
     </div>
   )

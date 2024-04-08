@@ -1,8 +1,9 @@
 .container-perfil{
     width: 100vw;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-
+    padding-bottom: 100px;
 }
 
 .box-perfil{
