@@ -1,4 +1,3 @@
-import React from 'react'
 import sino from '../../assets/sino.svg'
 import mapa from '../../assets/loc.svg'
 import pesquisa from '../../assets/pesquisa.svg'
