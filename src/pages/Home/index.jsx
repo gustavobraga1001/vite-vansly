@@ -26,11 +26,9 @@ const Home = () => {
           preco={info.preco}
           stars={info.stars}
         />
-          
         ))}
         </div>
       </main>
-
       <Footer 
         home={true}
         presenca={false}

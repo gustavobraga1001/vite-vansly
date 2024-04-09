@@ -17,7 +17,6 @@ const Signup = () => {
   const handleSignup = () => {
     if (!email | !senha) {
       setError("Preencha todos os campos");
-      console.log('caiu')
       return;
     } 
 

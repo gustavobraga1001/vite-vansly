@@ -3,6 +3,7 @@ import { DirectionsRenderer, DirectionsService, GoogleMap, LoadScript, Marker } 
 import './Maps.css';
 import imgVan from '../../assets/iconeMovel.svg';
 import { stylesMaps } from './StyleMaps';
+import btnLoc from '../../assets/btn-loc.svg'
 
 const center = {
   lat: -23.62178148779765,
@@ -76,7 +77,7 @@ const MapPage = () => {
           }}
           mapContainerStyle={{ width: '100%', height: '100%' }}
         >
-          <button className="button-maps" onClick={myFunction}>.</button>
+            <img src={btnLoc} alt="" className="button-maps" onClick={myFunction} />
 
           <Marker position={{ lat: -23.627367263149733, lng: -46.519162653963555 }} icon={{
             url: imgVan,

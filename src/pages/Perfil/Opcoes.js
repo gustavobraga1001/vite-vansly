@@ -23,7 +23,8 @@ const opcoes = [
     },
     {
         img: logOutImg,
-        text: "Log Out"
+        text: "Log Out",
+        onClick: true
     },
 ]
 

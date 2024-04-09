@@ -44,7 +44,7 @@ const Form = () => {
                 onChange={(e) => [setSenha(e.target.value), setError("")]}
             />
             <p className="label-error">{error}</p>
-            <div className="opcoes">
+            <div className="opcoes-login">
                 <div className="lembrar">
                     <input type="checkbox" id="check-box" className="check" />
                     <label htmlFor="check-box">Lembrar senha</label>

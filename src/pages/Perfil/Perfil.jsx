@@ -23,7 +23,12 @@ const Perfil = () => {
             </div>    
     </div>
     {opcoes.map((info) => {
-        return <OpcoesPerfil img={info.img} text={info.text} />
+        if(info.onClick) {
+            return <OpcoesPerfil img={info.img} text={info.text} sair={true}/>
+        }else {
+            return <OpcoesPerfil img={info.img} text={info.text} />
+        }
+        
     })}
     <Footer 
         home={false}
