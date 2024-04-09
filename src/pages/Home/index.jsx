@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
-import './home.css'
+import "./home.css";
 import Footer from "../../components/Footer";
 import BemVindo from "../../components/BemVindo";
 import Card from "../../components/Card";
@@ -9,7 +6,6 @@ import Header from "../../components/Header";
 import infoCards from "./infoCard";
 
 const Home = () => {
-
   return (
     <div className="box-home">
       <Header />
@@ -17,24 +13,20 @@ const Home = () => {
         <BemVindo />
         <h3>Rotas disponíveis</h3>
         <div className="cards">
-        {infoCards.map((info) => (
-          <Card 
-          key={info.id}
-          img={info.img}
-          title={info.title}
-          local={info.local}
-          preco={info.preco}
-          stars={info.stars}
-        />
-        ))}
+          {infoCards.map((info) => (
+            <Card
+              key={info.id}
+              id={info.id}
+              img={info.img}
+              title={info.title}
+              local={info.local}
+              preco={info.preco}
+              stars={info.stars}
+            />
+          ))}
         </div>
       </main>
-      <Footer 
-        home={true}
-        presenca={false}
-        percurso={false}
-        perfil={false}
-      />
+      <Footer home={true} presenca={false} percurso={false} perfil={false} />
     </div>
   );
 };

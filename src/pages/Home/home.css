@@ -1,8 +1,8 @@
-.box-home{
+.box-home {
   display: flex;
   flex-direction: column;
   width: 100vw;
-  box-sizing: border-box  ;
+  box-sizing: border-box;
 }
 
 .conteudo-home {
@@ -20,20 +20,16 @@
 
 .cards {
   width: 100%;
-  max-width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   grid-gap: 25px;
+  /* padding: 15px; */
 }
 
-
-
 @media (min-width: 1024px) {
-  .conteudo-home{
+  .conteudo-home {
     display: flex;
     justify-content: center;
-    margin-left: 95px; 
+    margin-left: 95px;
   }
-
-
 }

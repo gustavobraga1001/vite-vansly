@@ -17,8 +17,6 @@ const Carousel = ({ images }) => {
       <ul> {dots} </ul>
     )
   };
-  // console.log('carroseel', images)
-
   return (
     <div className="carousel-container">
       <Slider {...settings}>

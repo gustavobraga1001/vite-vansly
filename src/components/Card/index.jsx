@@ -1,27 +1,27 @@
-import React from 'react'
-import star from '../../assets/star.svg'
-import divisoria from '../../assets/Divisoria.svg'
-import './card.css'
-import Carrossel from '../Carrossel/Carrossel'
+import star from "../../assets/star.svg";
+import "./card.css";
+import Carrossel from "../Carrossel/Carrossel";
+import { Link } from "react-router-dom";
 
-const Card = ( {img, title, local, preco, stars}) => {
-  // console.log('card', img)
+const Card = ({ key, id, img, title, local, preco, stars }) => {
   return (
-    <div className='card'>
-      <Carrossel images={img} />
-      <div className='container-card'>
+    <Link to={`/anuncio/${id}`}>
+      <div className="card" key={key}>
+        <Carrossel images={img} />
+        <div className="container-card">
           <p>{title}</p>
-          <div className='card-info'>
-              <p>{local}</p>
-              <div className='card-star'>
-                  <img src={star} alt="" />
-                  <p>{stars}</p>
-              </div>
+          <div className="card-info">
+            <p>{local}</p>
+            <div className="card-star">
+              <img src={star} alt="" />
+              <p>{stars}</p>
+            </div>
           </div>
           <p>R$ {preco} /Mês</p>
         </div>
-    </div>
-  )
-}
+      </div>
+    </Link>
+  );
+};
 
-export default Card
+export default Card;
