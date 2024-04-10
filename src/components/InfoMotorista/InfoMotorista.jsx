@@ -17,7 +17,7 @@ const InfoMotorista = () => {
           </div>
         </div>
       </div>
-      <img className="divisoria-nova" src={divisoria} />
+      {/* <img className="divisoria-nova" src={divisoria} /> */}
     </div>
   );
 };

@@ -43,7 +43,7 @@ const InfoAnuncio = ({ title, stars, locals }) => {
           <h5>Vagas dísponiveis: 06</h5>
         </div>
       </div>
-      <img className="divisoria-nova" src={divisoria} />
+      {/* <img className="divisoria-nova" src={divisoria} /> */}
     </div>
   );
 };
