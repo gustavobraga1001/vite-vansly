@@ -1,0 +1,24 @@
+.regras {
+  width: 100%;
+  padding: 0 15px;
+  padding-bottom: 100px;
+}
+
+.regras h5 {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 21.6px;
+  text-align: left;
+}
+
+.topicos {
+  margin-top: 15px;
+  padding: 0 25px;
+  border: 1px solid rgba(170, 170, 170, 1);
+  border-radius: 5px;
+}
+
+li {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}

@@ -1,18 +1,17 @@
 import "./infoAnuncio.css";
 import star from "../../assets/star.svg";
-import divisoria from "../../assets/Divisoria.svg"
+import divisoria from "../../assets/Divisoria.svg";
+import Stars from "../Stars/Stars";
 
 const InfoAnuncio = ({ title, stars, locals }) => {
+  const number = parseFloat(stars.replace(",", "."));
+  console.log(number, stars);
   return (
     <div className="box-info-anuncio">
       <h1>{title}</h1>
       <div className="nota">
         <div className="avaliacao">
-          <img src={star} />
-          <img src={star} />
-          <img src={star} />
-          <img src={star} />
-          <img src={star} />
+          <Stars count={number} img={star} />
           <p>{stars}</p>
         </div>
         <div className="qtdAvaliacao">

@@ -23,7 +23,7 @@ const infoCards = [
     title: "Van2",
     local: ["São Bernardo do Campo "],
     preco: "336,00",
-    stars: "4,80",
+    stars: "2,80",
   },
   {
     id: 3,
@@ -39,7 +39,7 @@ const infoCards = [
     title: "Van1",
     local: ["Santo André", "São Caetano do Sul"],
     preco: "448,00",
-    stars: "4,95",
+    stars: "3,50",
   },
   {
     id: 5,

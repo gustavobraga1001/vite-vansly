@@ -1,23 +1,25 @@
-import "./infoMotorista.css"
-import fotoMotorista from "../../assets/VansImg/foto-perfil-motor.svg"
+import "./infoMotorista.css";
+import fotoMotorista from "../../assets/VansImg/foto-perfil-motor.svg";
+import divisoria from "../../assets/Divisoria.svg";
 
 const InfoMotorista = () => {
   return (
-    <div className="info-moto">
-        <div className="foto">
-            <img src={fotoMotorista} />
-        </div>
+    <div>
+      <div className="info-moto">
+        <img src={fotoMotorista} />
         <div className="motorista">
-        <div className="nome">
+          <div className="nome">
             <h5>Motorista: </h5>
             <p>Elias Mendez</p>
-        </div>
-        <div className="tempo">
+          </div>
+          <div className="tempo">
             <p>Motorista há 1 mês</p>
+          </div>
         </div>
-        </div>
+      </div>
+      <img className="divisoria-nova" src={divisoria} />
     </div>
-  )
-}
+  );
+};
 
-export default InfoMotorista
+export default InfoMotorista;

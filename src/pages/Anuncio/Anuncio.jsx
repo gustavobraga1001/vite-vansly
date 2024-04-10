@@ -6,6 +6,8 @@ import returnImg from "../../assets/icons/return-anuncio.svg";
 import shareImg from "../../assets/icons/Share.svg";
 import InfoAnuncio from "../../components/InfoAnuncio/InfoAnuncio";
 import InfoMotorista from "../../components/InfoMotorista/InfoMotorista";
+import Recursos from "../../components/Recursos/Recursos";
+import Regras from "../../components/Regras/Regras";
 
 const Anuncio = () => {
   const { id } = useParams();
@@ -25,6 +27,11 @@ const Anuncio = () => {
         locals={card[0].local}
       />
       <InfoMotorista />
+      <Recursos />
+      <Regras />
+      <div className="contratar">
+        <button>Contratar por R$ {card[0].preco} /Mês</button>
+      </div>
     </div>
   );
 };
