@@ -29,7 +29,7 @@ const Recursos = () => {
         <img src={wifiImg} />
         <p>Wi-fi</p>
       </div>
-      <img className="divisoria-nova" src={divisoria} />
+      {/* <img className="divisoria-nova" src={divisoria} /> */}
     </div>
   );
 };
