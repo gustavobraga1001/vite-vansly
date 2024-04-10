@@ -2,7 +2,6 @@
   width: 100%;
   height: 100%;
   position: relative; /* Define o posicionamento relativo */
-  z-index: 1; /* Define um z-index para garantir que o carrossel não fique sobreposto por outros elementos */
 }
 
 /* Carousel.css */
@@ -40,5 +39,7 @@
 
 .carousel-container img {
   width: 100%;
-  /* height: 364px; */
+  height: 250px;
+  border-radius: 15px 15px 0px 0px;
+  object-fit: cover;
 }

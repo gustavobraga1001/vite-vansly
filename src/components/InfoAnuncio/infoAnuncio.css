@@ -1,0 +1,109 @@
+.box-info-anuncio {
+  width: 100vw;
+}
+
+.nota {
+  display: flex;
+  padding: 0 15px;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.box-info-anuncio h1 {
+  padding: 0 15px;
+  margin-top: 30px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.avaliacao {
+  display: flex;
+  height: 50px;
+  gap: 10px;
+  align-items: center;
+}
+
+.avaliacao img {
+  width: 20px;
+  height: 20px;
+}
+
+.qtdAvaliacao {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.qtdAvaliacao a {
+  color: rgba(0, 59, 109, 1);
+  text-decoration: underline;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.info-van {
+  width: 100%;
+  padding: 0 15px;
+}
+
+.info-van h5 {
+  font-weight: 600;
+  font-size: 18px;
+  color: #1e1e1e;
+}
+
+.regiao {
+  display: flex;
+  width: 100%;
+  height: 72px;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.regiao p {
+  display: flex;
+  background: rgba(207, 207, 207, 1);
+  border-radius: 5px;
+  padding: 2px 5px 2px 5px;
+}
+
+.inst-destino {
+  display: flex;
+  width: 100%;
+  height: 72px;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 25px;
+}
+
+.inst-destino p {
+  display: flex;
+  background: rgba(207, 207, 207, 1);
+  border-radius: 5px;
+  padding: 2px 5px 2px 5px;
+}
+
+.horario {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.horario p {
+  display: flex;
+  background: rgba(207, 207, 207, 1);
+  border-radius: 5px;
+  padding: 2px 5px 2px 5px;
+}
+.vagas {
+  margin-top: 20px;
+}
+
+.divisoria-nova {
+    margin: 15px 0;
+}

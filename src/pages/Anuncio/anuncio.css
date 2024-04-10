@@ -1,10 +1,26 @@
 .box-anuncio {
-    width: 100vw;
+  width: 100vw;
 }
 
+.card-anuncio {
+  position: relative;
+  width: 100%; /* Largura total */
+}
 
-.card-anuncio img{
-    width: 100%;
-    /* height: 400px; */
-    
+.img-return {
+  position: absolute; /* Define a posição da imagem como absoluta */
+  top: 20px; /* Posiciona a imagem no topo */
+  left: 15px; /* Posiciona a imagem no lado esquerdo */
+  z-index: 1; /* Garante que a imagem esteja acima do carrossel */
+}
+
+.img-compartilhar {
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  z-index: 1;
+}
+
+.card-anuncio img {
+  border-radius: 0;
 }

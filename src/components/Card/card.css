@@ -5,9 +5,17 @@
     border-radius: 15px;
     margin-bottom: 20px;
 }
+.card p {
+    color: black;
+}
 
 .card img {
     width: 100%;
+}
+
+.local-card {
+    display: flex;
+    gap: 5px;
 }
 
 .card .container-card {
@@ -38,15 +46,4 @@
     .divisoria {
         display: none;
     } 
-
-    /* .card {
-
-        border: 1px solid black;
-        border-radius: 15px;
-        margin-bottom: 20px;
-    }
-    
-    .card img {
-        width: 100%;
-    } */
 }
