@@ -1,6 +1,11 @@
 .container-info{
     width: 100vw;
     height: 100vh;
+    padding-bottom: 100px;
+}
+
+.box-info-contrato {
+    padding-bottom: 100px;
 }
 
 .card-info-contrato {
@@ -18,4 +23,27 @@
 
 .card-info-contrato p span {
     font-weight: bold;
+}
+
+.card-info-final h1{
+    font-weight: 600;
+    font-size: 18px;
+    margin-left: 15px;
+}
+
+.card-infor-borda {
+    width: 30%;
+    height: 1px;
+    border-top: 1px dashed rgba(170, 170, 170, 1);
+}
+
+.card-info-box {
+    display: flex;
+    align-items: first baseline;
+    justify-content: space-between;
+}
+
+.card-info-box p {
+    font-weight: 500;
+    font-size: 18px;
 }

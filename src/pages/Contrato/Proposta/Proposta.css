@@ -1,0 +1,20 @@
+.container-proposta {
+    width: 100vw;
+    height: 100vh;
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+    gap: 20px;
+
+}
+
+.container-proposta img {
+    width: 221px;
+}
+
+.container-proposta p{
+    width: 400px;
+    text-align: center;
+}
