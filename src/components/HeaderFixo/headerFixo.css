@@ -6,11 +6,11 @@
     gap: 20px;
     padding: 20px 15px;
     background-color: white;
-    /* margin-bottom: 10px; */
 }
 
-.header-fixo img {
+.header-fixo img, .header-fixo a {
     width: 30px;
+    height: 30px;
 }
 
 .header-fixo p {

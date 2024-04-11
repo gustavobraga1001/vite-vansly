@@ -8,6 +8,7 @@ import InfoAnuncio from "../../components/InfoAnuncio/InfoAnuncio";
 import InfoMotorista from "../../components/InfoMotorista/InfoMotorista";
 import Recursos from "../../components/Recursos/Recursos";
 import Regras from "../../components/Regras/Regras";
+import divisoria from "../../assets/Divisoria.svg";
 
 const Anuncio = () => {
   const { id } = useParams();
@@ -26,11 +27,22 @@ const Anuncio = () => {
         stars={card[0].stars}
         locals={card[0].local}
       />
+      <div className="divisoria-anuncio">
+        <img src={divisoria} alt="" />
+      </div>
       <InfoMotorista />
+      <div className="divisoria-anuncio">
+        <img src={divisoria} alt="" />
+      </div>
       <Recursos />
+      <div className="divisoria-anuncio">
+        <img src={divisoria} alt="" />
+      </div>
       <Regras />
       <div className="contratar">
-        <button>Contratar por R$ {card[0].preco} /Mês</button>
+        <Link to={`/contrato/locais/${id}`}>
+          <button>Contratar por R$ {card[0].preco} /Mês</button>
+        </Link>
       </div>
     </div>
   );

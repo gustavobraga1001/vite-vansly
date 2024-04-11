@@ -1,0 +1,114 @@
+.box-locais {
+  width: 100vw;
+  height: 100vh;
+}
+
+.header-locais {
+  width: 100vw;
+  background-color: #003b6d;
+}
+
+.ida-locais {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 15px;
+}
+
+.ida-locais p {
+  font-weight: 400;
+  font-size: 18px;
+}
+
+.toggle-container {
+  width: 60px;
+  height: 30px;
+  background: linear-gradient(
+    96.13deg,
+    rgba(0, 59, 109, 0.2) -8.9%,
+    rgba(0, 82, 151, 0.2) 115.43%
+  );
+  border-radius: 15px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1) inset;
+  overflow: hidden; /* Para garantir que a bolinha não ultrapasse os limites do contêiner */
+}
+
+.toggle-container {
+  width: 60px;
+  height: 30px;
+  background: linear-gradient(
+    96.13deg,
+    rgba(0, 59, 109, 0.2) -8.9%,
+    rgba(0, 82, 151, 0.2) 115.43%
+  );
+  border-radius: 15px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1) inset;
+  overflow: hidden; /* Para garantir que a bolinha não ultrapasse os limites do contêiner */
+}
+
+.toggle-ball {
+  width: 26px;
+  height: 26px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+  left: 2px; /* Posição inicial da bolinha */
+  top: 50%; /* Posiciona a bolinha na metade da altura do contêiner */
+  transform: translate(0%, -50%); /* Centraliza a bolinha */
+  transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Transição suave para a propriedade transform */
+}
+
+.toggle-container.ativo .toggle-ball {
+  transform: translate(
+    110%,
+    -50%
+  ); /* Posição final da bolinha quando ativada */
+}
+
+.input-locais {
+  max-width: 100%;
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-locais div{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(235, 235, 235, 1);
+  padding: 10px 15px 10px 15px;
+  border-radius: 5px;
+  height: 60px;
+}
+
+.input-locais div input {
+  padding: 5px;
+  width: 90%;
+  color: rgba(170, 170, 170, 1);
+  font-weight: 400;
+  font-size: 15px;
+  outline: none;
+  background-color: transparent;
+}
+
+.combo-box-locais {
+  border: none; /* Remove a borda */
+  box-shadow: none; /* Remove a sombra */
+  color: rgba(170, 170, 170, 1);
+  -webkit-appearance: none; /* Remove o estilo padrão do WebKit */
+  -moz-appearance: none; /* Remove o estilo padrão do Mozilla */
+  appearance: none; /* Remove o estilo padrão */
+  padding-right: 30px; /* Espaço para o ícone */
+  background-color: transparent;
+  width: 90%;
+}
