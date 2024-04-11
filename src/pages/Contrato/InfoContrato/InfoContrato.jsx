@@ -52,7 +52,7 @@ const InfoContrato = () => {
         <img src={divisoria} alt="" />
             <div className='card-info-box'>
               <p>Total do serviço</p>
-              <div className='card-infor-borda'></div>
+              <div className='card-infor-borda-menor'></div>
               <p>R$ 448,00 /Mês</p>
             </div>
           </div>

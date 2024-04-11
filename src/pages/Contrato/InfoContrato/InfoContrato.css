@@ -37,6 +37,12 @@
     border-top: 1px dashed rgba(170, 170, 170, 1);
 }
 
+.card-infor-borda-menor {
+    width: 20%;
+    height: 1px;
+    border-top: 1px dashed rgba(170, 170, 170, 1);
+}
+
 .card-info-box {
     display: flex;
     align-items: first baseline;
