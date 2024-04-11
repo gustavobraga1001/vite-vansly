@@ -12,13 +12,17 @@ const Locais = () => {
   const card = infoCards.filter((card) => card.id == id);
 
   const [ativado, setAtivado] = useState(false);
-  // console.log(ativado)
+  const [ida, setIda] = useState('')
+  const [destino, setDestino] = useState('')
+  const [desembarque, setDesembarque] = useState('')
+  const [error, setError] = useState("");
+
+  console.log(ida)
 
   const handleClick = () => {
     setAtivado(!ativado);
   };
 
-  console.log(ativado);
 
   return (
     <div className="box-locais">
@@ -41,7 +45,11 @@ const Locais = () => {
       <div className="input-locais">
         <p>Local de embarque (ida)</p>
         <div>
-          <input type="text" placeholder="Ponto de embarque" />
+          <input 
+            type="text" 
+            placeholder="Ponto de embarque"  
+            onChange={(e) => [setIda(e.target.value), setError("")]}
+          />
           <img src={iconeMovel} alt="" />
         </div>
       </div>
