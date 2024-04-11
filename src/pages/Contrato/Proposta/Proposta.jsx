@@ -1,4 +1,5 @@
 import propostaImg from "../../../assets/proposta.svg"
+import Loading from "../../../components/Loading";
 import './Proposta.css'
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -20,6 +21,7 @@ const Proposta = () => {
         <p>Sua proposta será enviada ao motorista para análise
             caso rejeitada você receberá uma mensagem.
         </p>
+        <Loading />
     </div>
   )
 }
