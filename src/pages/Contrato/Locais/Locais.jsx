@@ -68,6 +68,11 @@ const Locais = () => {
       ) : (
         ""
       )}
+      <div className="box-prosseguir">
+        <Link to={`/contrato/info/${id}`}>
+          <button className="prosseguir">Prosseguir</button>
+        </Link>
+      </div>
     </div>
   );
 };

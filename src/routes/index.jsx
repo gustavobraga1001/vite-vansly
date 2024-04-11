@@ -9,6 +9,7 @@ import Anuncio from "../pages/Anuncio/Anuncio";
 import Percurso from "../pages/Percurso/percurso";
 import Perfil from "../pages/Perfil/Perfil";
 import Locais from "../pages/Contrato/Locais/Locais";
+import InfoContrato from "../pages/Contrato/InfoContrato/InfoContrato";
 
 const Private = ({ Item }) => {
   const { signed } = useAuth();
@@ -31,6 +32,7 @@ const RoutesApp = () => {
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/anuncio/:id" element={<Anuncio />} />
           <Route path="/contrato/locais/:id" element={<Locais />} />
+          <Route path="/contrato/info/:id" element={<InfoContrato />} />
         </Routes>
       </Fragment>
     </BrowserRouter>

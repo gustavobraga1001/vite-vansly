@@ -112,3 +112,37 @@
   background-color: transparent;
   width: 90%;
 }
+
+.box-prosseguir {
+    width: 100%;
+    background-color: whitesmoke;
+    display: flex;
+    height: 90px;
+    border-top: 1px solid #D2D2D2;
+    justify-content: center;
+    position: fixed;
+    bottom: 0px;
+    padding: 15px 35px;
+}
+
+.prosseguir {
+  background-color: rgba(170, 170, 170, 1);
+  border: none;
+  display: flex;
+  width: 100%;
+  height: 60px;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  color: rgba(255, 255, 255, 1);
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  /* margin: 0 35px */
+}
+
+.box-prosseguir a {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

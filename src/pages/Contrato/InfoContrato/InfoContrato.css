@@ -1,0 +1,21 @@
+.container-info{
+    width: 100vw;
+    height: 100vh;
+}
+
+.card-info-contrato {
+    display: flex;
+    text-align: start;
+    padding: 15px;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: left;
+ border: 1px solid rgba(170, 170, 170, 1);
+ border-radius: 5px;
+ margin: 15px;
+}
+
+
+.card-info-contrato p span {
+    font-weight: bold;
+}
