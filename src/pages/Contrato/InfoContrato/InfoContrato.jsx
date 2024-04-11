@@ -41,18 +41,18 @@ const InfoContrato = () => {
           <div className='card-info-contrato'>
             <div className='card-info-box'>
               <p>Preço do serviço</p>
-              <div className='card-infor-borda'></div>
+              <div className='card-info-borda'></div>
               <p>R$ 400,00</p>
             </div>
             <div className='card-info-box'>
               <p>Impostos / Taxas</p>
-              <div className='card-infor-borda'></div>
+              <div className='card-info-borda'></div>
               <p>R$ 48,00</p>
             </div>
         <img src={divisoria} alt="" />
             <div className='card-info-box'>
               <p>Total do serviço</p>
-              <div className='card-infor-borda-menor'></div>
+              <div className='card-info-borda-menor'></div>
               <p>R$ 448,00 /Mês</p>
             </div>
           </div>

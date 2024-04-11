@@ -31,13 +31,13 @@
     margin-left: 15px;
 }
 
-.card-infor-borda {
+.card-info-borda {
     width: 25%;
     height: 1px;
     border-top: 1px dashed rgba(170, 170, 170, 1);
 }
 
-.card-infor-borda-menor {
+.card-info-borda-menor {
     width: 20%;
     height: 1px;
     border-top: 1px dashed rgba(170, 170, 170, 1);
