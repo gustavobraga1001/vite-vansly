@@ -26,13 +26,16 @@ const Anuncio = () => {
         title={card[0].title}
         stars={card[0].stars}
         locals={card[0].local}
+        instituicoes={card[0].instituicoes}
+        horario={card[0].horario}
+        vagas={card[0].vagas}
       />
       <div className="divisoria-anuncio">
         <img src={divisoria} alt="" />
       </div>
-      <InfoMotorista />
+      <InfoMotorista nomeMotor={card[0].motorista}/>
       <div className="divisoria-anuncio">
-        <img src={divisoria} alt="" />
+        <img src={divisoria} />
       </div>
       <Recursos />
       <div className="divisoria-anuncio">

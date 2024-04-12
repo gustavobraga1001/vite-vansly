@@ -2,7 +2,7 @@ import "./infoMotorista.css";
 import fotoMotorista from "../../assets/VansImg/foto-perfil-motor.svg";
 import divisoria from "../../assets/Divisoria.svg";
 
-const InfoMotorista = () => {
+const InfoMotorista = ({ nomeMotor }) => {
   return (
     <div>
       <div className="info-moto">
@@ -10,7 +10,7 @@ const InfoMotorista = () => {
         <div className="motorista">
           <div className="nome">
             <h5>Motorista: </h5>
-            <p>Elias Mendez</p>
+            <p>{nomeMotor}</p>
           </div>
           <div className="tempo">
             <p>Motorista há 1 mês</p>

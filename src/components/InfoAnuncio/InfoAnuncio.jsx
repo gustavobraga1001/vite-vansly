@@ -3,7 +3,14 @@ import star from "../../assets/star.svg";
 import divisoria from "../../assets/Divisoria.svg";
 import Stars from "../Stars/Stars";
 
-const InfoAnuncio = ({ title, stars, locals }) => {
+const InfoAnuncio = ({
+  title,
+  stars,
+  locals,
+  instituicoes,
+  horario,
+  vagas,
+}) => {
   const number = parseFloat(stars.replace(",", "."));
   console.log(number, stars);
   return (
@@ -29,18 +36,19 @@ const InfoAnuncio = ({ title, stars, locals }) => {
 
         <div className="inst-destino">
           <h5>Instituições de destino: </h5>
-          <p>USCS - Conceição</p>
-          <p>USCS - Centro</p>
-          <p>USCS - Barcelona</p>
+          {instituicoes.map((instituicao, i) => (
+            <p key={i}>{instituicao}</p>
+          ))}
         </div>
         <div className="horario">
           <h5>Horários de início:</h5>
-          <p>06:00</p>
-          <p>18:00</p>
+          {horario.map((hora, i) => (
+            <p key={i}>{hora}</p>
+          ))}
         </div>
 
         <div className="vagas">
-          <h5>Vagas dísponiveis: 06</h5>
+          <h5>Vagas dísponiveis: {vagas}</h5>
         </div>
       </div>
       {/* <img className="divisoria-nova" src={divisoria} /> */}

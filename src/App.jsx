@@ -1,14 +1,16 @@
-import React from "react"
-import RoutesApp from "./routes"
-import { AuthProvider } from "./contexts/Auth"
-
+import React from "react";
+import RoutesApp from "./routes";
+import { AuthProvider } from "./contexts/Auth";
+import { DadosSensiveisProvider } from "./contexts/DadosSensiveis";
 
 function App() {
   return (
     <AuthProvider>
-      <RoutesApp />
+      <DadosSensiveisProvider>
+        <RoutesApp />
+      </DadosSensiveisProvider>
     </AuthProvider>
-  )
+  );
 }
 
-export default App
+export default App;
