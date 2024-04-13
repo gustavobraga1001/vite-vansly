@@ -1,6 +1,6 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import infoCards from "../../Home/infoCard";
+import { useNavigate, useParams } from "react-router-dom";
 import HeaderFixo from "../../../components/HeaderFixo/headerFixo";
 import "./Locais.css";
 import returnImg from "../../../assets/icons/return-anuncio.svg";
@@ -10,25 +10,35 @@ import { useDadosSensiveis } from "../../../contexts/DadosSensiveis";
 
 const Locais = () => {
   const { id } = useParams();
-  const card = infoCards.filter((card) => card.id == id);
 
   const [ativado, setAtivado] = useState(false);
   const [ida, setIda] = useState("");
   const [destino, setDestino] = useState("");
   const [desembarque, setDesembarque] = useState("");
   const [error, setError] = useState("");
-
-  const handleSelecaoChange = (event) => {
-    setDestino(event.target.value);
-  };
+  const navigate = useNavigate();
 
   const handleClick = () => {
     setAtivado(!ativado);
   };
+  console.log(ativado);
 
   const { setDadosSensiveis } = useDadosSensiveis();
 
   const handleProsseguir = () => {
+    if (ativado) {
+      if (!ida | !destino) {
+        setError("Preencha todos os campos");
+        console.log(error);
+        return;
+      }
+    } else {
+      if (!ida | !destino | !desembarque) {
+        setError("Preencha todos os campos");
+        console.log(error);
+        return;
+      }
+    }
     // Definir os dados sensíveis usando o contexto
     setDadosSensiveis({
       ida: ida,
@@ -36,6 +46,7 @@ const Locais = () => {
       desembarque: desembarque,
     });
 
+    navigate(`/contrato/info/${id}`);
   };
 
   return (
@@ -70,7 +81,10 @@ const Locais = () => {
       <div className="input-locais">
         <p>Ponto de destino</p>
         <div>
-          <select className="combo-box-locais" onChange={handleSelecaoChange}>
+          <select
+            className="combo-box-locais"
+            onChange={(e) => setDestino(e.target.value)}
+          >
             <option value="">Destino</option>
             <option value="USCS - BARCELONA">USCS - BARCELONA</option>
             <option value="USCS - CONCEIÇÃO">USCS - CONCEIÇÃO</option>
@@ -79,14 +93,14 @@ const Locais = () => {
           <img src={iconeSelect} alt="" />
         </div>
       </div>
-      {ativado ? (
+      {!ativado ? (
         <div className="input-locais">
           <p>Local de desembarque (volta)</p>
           <div>
             <input
               type="text"
               placeholder="Ponto de desembarque"
-              onChange={(e) => [setDesembarque(e.target.value), setError("")]}
+              onChange={(e) => setDesembarque(e.target.value)}
             />
             <img src={iconeMovel} alt="" />
           </div>
@@ -94,12 +108,11 @@ const Locais = () => {
       ) : (
         ""
       )}
+      <p className="label-error">{error}</p>
       <div className="box-prosseguir">
-        <Link to={`/contrato/info/${id}`}>
-          <button className="prosseguir" onClick={handleProsseguir}>
-            Prosseguir
-          </button>
-        </Link>
+        <button className="prosseguir" onClick={handleProsseguir}>
+          Prosseguir
+        </button>
       </div>
     </div>
   );
