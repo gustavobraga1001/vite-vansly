@@ -1,6 +1,6 @@
 .box-anuncio {
   width: 100vw;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 .card-anuncio {
@@ -36,7 +36,7 @@
   justify-content: center;
   position: fixed;
   bottom: 0px;
-  padding: 15px;
+  padding: 15px 35px;
 }
 
 .contratar button {
@@ -70,4 +70,18 @@
 
 .divisoria-anuncio img {
   width: 94%;
+}
+
+@media (min-width: 1024px) {
+  .box-anuncio {
+    /* height: 100vh; */
+    width: 50vw;
+    /* border: 1px solid gray; */
+    position: relative;
+    z-index: 999;
+  }
+
+  .contratar {
+    width: 50%;
+  }
 }

@@ -7,29 +7,28 @@ import returnImg from "../../../assets/icons/return-anuncio.svg";
 import iconeMovel from "../../../assets/map.svg";
 import iconeSelect from "../../../assets/select-icon.svg";
 import { useDadosSensiveis } from "../../../contexts/DadosSensiveis";
+import { useDadosViagem } from "../../../contexts/DadosViagemContext";
 
 const Locais = () => {
   const { id } = useParams();
 
+  const { ida, destino, desembarque, setIda, setDestino, setDesembarque } =
+    useDadosViagem();
+
+  console.log(ida);
+
   const [ativado, setAtivado] = useState(false);
-  const [ida, setIda] = useState("");
-  const [destino, setDestino] = useState("");
-  const [desembarque, setDesembarque] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleClick = () => {
     setAtivado(!ativado);
   };
-  console.log(ativado);
-
-  const { setDadosSensiveis } = useDadosSensiveis();
 
   const handleProsseguir = () => {
     if (ativado) {
       if (!ida | !destino) {
         setError("Preencha todos os campos");
-        console.log(error);
         return;
       }
     } else {
@@ -39,12 +38,6 @@ const Locais = () => {
         return;
       }
     }
-    // Definir os dados sensíveis usando o contexto
-    setDadosSensiveis({
-      ida: ida,
-      destino: destino,
-      desembarque: desembarque,
-    });
 
     navigate(`/contrato/info/${id}`);
   };
@@ -108,7 +101,7 @@ const Locais = () => {
       ) : (
         ""
       )}
-      <p className="label-error">{error}</p>
+      <p className="label-error-novo">{error}</p>
       <div className="box-prosseguir">
         <button className="prosseguir" onClick={handleProsseguir}>
           Prosseguir

@@ -33,7 +33,7 @@ const Anuncio = () => {
       <div className="divisoria-anuncio">
         <img src={divisoria} alt="" />
       </div>
-      <InfoMotorista nomeMotor={card[0].motorista}/>
+      <InfoMotorista nomeMotor={card[0].motorista} />
       <div className="divisoria-anuncio">
         <img src={divisoria} />
       </div>

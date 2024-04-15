@@ -5,13 +5,14 @@ import infoCards from "../../Home/infoCard";
 import { Link, useParams } from "react-router-dom";
 import divisoria from "../../../assets/Divisoria.svg";
 import "./InfoContrato.css";
-import { useDadosSensiveis } from "../../../contexts/DadosSensiveis";
+import { useDadosViagem } from "../../../contexts/DadosViagemContext";
 
 const InfoContrato = () => {
   const { id } = useParams();
   const card = infoCards.filter((card) => card.id == id);
 
-  const { dadosSensiveis } = useDadosSensiveis();
+  const { ida, destino, desembarque, setIda, setDestino, setDesembarque } =
+    useDadosViagem();
   const taxa = 48.0;
   const number = parseFloat(card[0].preco.replace(",", "."));
   const total = taxa + number;
@@ -56,16 +57,16 @@ const InfoContrato = () => {
         <div className="card-info-contrato">
           <p>
             <span>Embarque - </span>
-            {dadosSensiveis.ida}
+            {ida}
           </p>
           <p>
             <span>Destino - </span>
-            {dadosSensiveis.destino}
+            {destino}
           </p>
-          {dadosSensiveis.desembarque ? (
+          {desembarque ? (
             <p>
               <span>Desembarque - </span>
-              {dadosSensiveis.desembarque}
+              {desembarque}
             </p>
           ) : (
             ""

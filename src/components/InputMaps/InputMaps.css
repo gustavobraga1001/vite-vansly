@@ -1,0 +1,38 @@
+.input-busca {
+    display: flex;
+    /* justify-content: space-between; */
+    margin: 0 15px;
+    background-color: rgba(235, 235, 235, 1);
+    border-radius: 5px;
+    /* gap: 20px; */
+  }
+  
+  .meu-input {
+    width: 100%;
+    outline: none;
+  }
+  
+  .input-busca img {
+    margin-right: 10px;
+  }
+  
+  /* Exemplo de estilos para o menu de autocompletar */
+  .pac-container {
+    background-color: #fff; /* Cor de fundo do menu */
+    border: 1px solid #ccc; /* Borda do menu */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra do menu */
+  }
+  
+  .pac-item {
+    padding: 10px; /* Espaçamento interno dos itens */
+    cursor: pointer; /* Cursor ao passar por cima dos itens */
+  }
+  
+  .pac-item:hover {
+    background-color: #f5f5f5; /* Cor de fundo ao passar por cima dos itens */
+  }
+  @media (min-width: 1024px) {
+    .input-busca {
+       width: 92%;
+    }
+  }

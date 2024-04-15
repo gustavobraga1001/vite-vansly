@@ -81,7 +81,7 @@
   gap: 10px;
 }
 
-.input-locais div{
+.input-locais div {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -113,16 +113,26 @@
   width: 90%;
 }
 
+.combo-box-locais option {
+  font-size: 20px;
+}
+
 .box-prosseguir {
-    width: 100%;
-    background-color: whitesmoke;
-    display: flex;
-    height: 90px;
-    border-top: 1px solid #D2D2D2;
-    justify-content: center;
-    position: fixed;
-    bottom: 0px;
-    padding: 15px 35px;
+  width: 100%;
+  background-color: whitesmoke;
+  display: flex;
+  height: 90px;
+  border-top: 1px solid #d2d2d2;
+  justify-content: center;
+  position: fixed;
+  bottom: 0px;
+  padding: 15px 35px;
+}
+
+.box-prosseguir a {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .prosseguir {
@@ -141,8 +151,22 @@
   /* margin: 0 35px */
 }
 
-.box-prosseguir a {
-  display: flex;
-  justify-content: center;
-  width: 100%;
+.label-error-novo {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
+
+@media (min-width: 1024px) {
+  .box-locais {
+    /* height: 100vh; */
+    width: 50vw;
+    /* border: 1px solid gray; */
+    position: relative;
+    z-index: 999;
+  }
+
+  .box-prosseguir{
+    width: 50%;
+  }
 }

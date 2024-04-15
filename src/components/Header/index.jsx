@@ -11,15 +11,6 @@ const Header = () => {
           <h1>Olá, Usuário</h1>
           <img src={sino} />
         </div>
-        <div className="loc-home">
-          <p>Localização</p>
-          <div className='loc-search'>
-            <img src={mapa} alt="" />
-            <select name="" id="">
-              <option value="Santo Ándre - SP">Santo Ándre - SP</option>
-            </select>
-          </div>
-        </div>
         <Pesquisa 
           img={pesquisa} 
           placeholder={'Para onde?'} 
