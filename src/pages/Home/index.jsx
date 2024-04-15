@@ -4,8 +4,10 @@ import BemVindo from "../../components/BemVindo";
 import Card from "../../components/Card";
 import Header from "../../components/Header";
 import infoCards from "./infoCard";
+import useAuth from "../../hooks/useAuth";
 
 const Home = () => {
+
   return (
     <div className="box-home">
       <Header />
