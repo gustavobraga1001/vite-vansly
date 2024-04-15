@@ -52,7 +52,7 @@ const Form = () => {
                 <a href="">Esqueci minha senha</a>
             </div>
             <div className="botoes">
-              <Link to="/signup" className="link-cadastrar">
+              <Link to="/signupName" className="link-cadastrar">
                   <p>
                     Cadastrar
                   </p>

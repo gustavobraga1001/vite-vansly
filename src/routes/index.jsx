@@ -11,6 +11,7 @@ import Perfil from "../pages/Perfil/Perfil";
 import Locais from "../pages/Contrato/Locais/Locais";
 import InfoContrato from "../pages/Contrato/InfoContrato/InfoContrato";
 import Proposta from "../pages/Contrato/Proposta/Proposta";
+import SignupName from "../pages/SignupName/SignupName";
 
 const Private = ({ Item }) => {
   const { signed } = useAuth();
@@ -25,6 +26,7 @@ const RoutesApp = () => {
         <Routes>
           <Route exact path="/home" element={<Private Item={Home} />} />
           <Route path="/" element={<Login />} />
+          <Route path="/signupName" element={<SignupName />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<Login />} />
           <Route path="/busca" element={<Busca />} />

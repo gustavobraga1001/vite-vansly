@@ -6,14 +6,26 @@ export const useUserContext = () => useContext(AuthContext);
 
 export const UserProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [data, setData] = useState("");
+  const [emailUser, setEmailUser] = useState("");
 
   useEffect(() => {
     const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
     setUsers(storedUsers);
   }, []);
 
-  const addUser = (email, name, birthdate) => {
-    const newUser = { email, name, birthdate };
+  const addUser = (name, data, email) => {
+    const storedUsers = JSON.parse(localStorage.getItem("users"));
+
+    const hasUser = storedUsers?.find((user) => user.email === email);
+
+    if (hasUser) {
+      return "Já existe uma conta com este e-mail";
+    }
+
+    const newUser = {name, data, email};
     const updatedUsers = [...users, newUser];
     localStorage.setItem("users", JSON.stringify(updatedUsers));
     setUsers(updatedUsers);
@@ -38,7 +50,7 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ users, addUser, findUserByEmail }}>
+    <AuthContext.Provider value={{ users, addUser, findUserByEmail, name, setName, data, setData, email, setEmail, emailUser, setEmailUser }}>
       {children}
     </AuthContext.Provider>
   );

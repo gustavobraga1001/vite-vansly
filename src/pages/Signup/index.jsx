@@ -10,24 +10,23 @@ import { useUserContext } from "../../contexts/UserContext";
 const Signup = () => {
   const { signup } = useAuth();
   const navigate = useNavigate();
-  const { addUser } = useUserContext();
+  const { name, data, addUser , emailUser, setEmailUser} = useUserContext();
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [name, setName] = useState("");
-  const [data, setData] = useState("14/10/2004");
   const [error, setError] = useState("");
 
-  const handleSignup = () => {
-    // setName(email);
-    console.log(name);
+  console.log(name, data)
 
+  const handleSignup = () => {
     if (!email | !senha) {
       setError("Preencha todos os campos");
       return;
     }
 
-    addUser(email, name, data);
+
+
+    addUser(name, data, emailUser)
     const res = signup(email, senha);
 
     if (res) {
@@ -49,7 +48,7 @@ const Signup = () => {
       <div className="titulo">
         <h1>Cadastrar</h1>
         <p>
-          Insira seu numero de telefone para prosseguirmos com seu cadastro.
+          Insira seu email para prosseguirmos com seu cadastro.
         </p>
       </div>
       <div className="content" action="/home">
@@ -59,8 +58,8 @@ const Signup = () => {
           placeholder="E-mail"
           onChange={(e) => [
             setEmail(e.target.value),
+            setEmailUser(e.target.value),
             setError(""),
-            setName(e.target.value),
           ]}
         />
         <Input

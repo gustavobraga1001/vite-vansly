@@ -5,8 +5,10 @@ import Card from "../../components/Card";
 import Header from "../../components/Header";
 import infoCards from "./infoCard";
 import useAuth from "../../hooks/useAuth";
+import { useUserContext } from "../../contexts/UserContext";
 
 const Home = () => {
+
 
   return (
     <div className="box-home">
