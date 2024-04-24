@@ -4,6 +4,7 @@ import pesquisa from '../../assets/pesquisa.svg'
 import './header.css'
 import Pesquisa from '../Pesquisa/pesquisa'
 import { useUserContext } from '../../contexts/UserContext'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
 
@@ -14,7 +15,9 @@ const Header = () => {
     <header className='header'>
         <div className="titulo-home">
           <h1>Olá, {user.name}</h1>
-          <img src={sino} />
+          <Link to="/notificacoes">
+            <img src={sino} />
+          </Link>
         </div>
         <Pesquisa 
           img={pesquisa} 

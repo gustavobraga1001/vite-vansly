@@ -12,6 +12,8 @@ import Locais from "../pages/Contrato/Locais/Locais";
 import InfoContrato from "../pages/Contrato/InfoContrato/InfoContrato";
 import Proposta from "../pages/Contrato/Proposta/Proposta";
 import SignupName from "../pages/SignupName/SignupName";
+import Notificacoes from "../pages/Notificacoes/Notificacoes";
+import Contratos from "../pages/Contratos/Contratos";
 
 const Private = ({ Item }) => {
   const { signed } = useAuth();
@@ -37,6 +39,8 @@ const RoutesApp = () => {
           <Route path="/contrato/locais/:id" element={<Locais />} />
           <Route path="/contrato/info/:id" element={<InfoContrato />} />
           <Route path="/proposta" element={<Proposta />} />
+          <Route path="/notificacoes" element={<Notificacoes />} />
+          <Route path="/contratos" element={<Contratos />} />
         </Routes>
       </Fragment>
     </BrowserRouter>

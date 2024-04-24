@@ -8,19 +8,23 @@ const opcoes = [
   {
     img: notificacaoImg,
     text: "Notificações",
+    link: "/notificacoes",
   },
   {
     img: contratosImg,
     text: "Contratos",
+    link: "/contratos",
   },
-  {
-    img: volanteImg,
-    text: "Seja um motorista",
-  },
+  // {
+  //   img: volanteImg,
+  //   text: "Seja um motorista",
+  //   link: "/motorista",
+  // },
   {
     img: logOutImg,
     text: "Log Out",
     onClick: true,
+    link: "/login",
   },
 ];
 

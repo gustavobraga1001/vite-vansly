@@ -1,0 +1,25 @@
+.notificacao-container{
+    width: 100vw;
+    height: 100vh;
+}
+
+.notificacao-box{
+    text-align: center;
+}
+
+.notificacao-box img {
+    /* margin: 0 10px; */
+    width: 90%;
+}
+
+@media (min-width: 1024px) { 
+    .notificacao-container{
+        width: 60vw;
+        height: 100vh;
+    }
+
+    .notificacao-box img {
+        /* margin: 0 10px; */
+        width: 50%;
+    }
+}

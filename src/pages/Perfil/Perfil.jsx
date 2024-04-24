@@ -18,10 +18,9 @@ const Perfil = () => {
     <div className="container-perfil">
       <HeaderFixo tela={"home"} img={returnImg} text={"Perfil"} />
       <div className="box-perfil">
-        <div className="foto">
+        {/* <div className="foto">
           <img src={imgPerfil} />
-        </div>
-
+        </div> */}
         <div className="info">
           <h3>{user.name}</h3>
           <p>{user.email}</p>
@@ -33,10 +32,10 @@ const Perfil = () => {
       {opcoes.map((info, i) => {
         if (info.onClick) {
           return (
-            <OpcoesPerfil key={i} img={info.img} text={info.text} sair={true} />
+            <OpcoesPerfil key={i} img={info.img} text={info.text} sair={true} link={info.link}/>
           );
         } else {
-          return <OpcoesPerfil key={i} img={info.img} text={info.text} />;
+          return <OpcoesPerfil key={i} img={info.img} text={info.text} link={info.link}/>;
         }
       })}
       <Footer home={false} presenca={false} percurso={false} perfil={true} />
