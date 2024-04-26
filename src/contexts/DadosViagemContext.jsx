@@ -11,10 +11,11 @@ export const DadosViagemProvider = ({ children }) => {
   const [ida, setIda] = useState("");
   const [destino, setDestino] = useState("");
   const [desembarque, setDesembarque] = useState("");
+  const [motorista, setMotorista] = useState({})
 
   return (
     <DadosViagemContext.Provider
-      value={{ ida, setIda, destino, setDestino, desembarque, setDesembarque }}
+      value={{ ida, setIda, destino, setDestino, desembarque, setDesembarque, motorista, setMotorista }}
     >
       {children}
     </DadosViagemContext.Provider>

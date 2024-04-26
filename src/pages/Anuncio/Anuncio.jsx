@@ -9,10 +9,20 @@ import InfoMotorista from "../../components/InfoMotorista/InfoMotorista";
 import Recursos from "../../components/Recursos/Recursos";
 import Regras from "../../components/Regras/Regras";
 import divisoria from "../../assets/Divisoria.svg";
+import { useDadosViagem } from "../../contexts/DadosViagemContext";
 
 const Anuncio = () => {
+  const { motorista, setMotorista } = useDadosViagem();
+
   const { id } = useParams();
-  const card = infoCards.filter((card) => card.id == id);
+  const card = infoCards.find(card => card.id == id);
+
+  
+  const submitAnuncio = () => {
+    setMotorista(card);
+    console.log(motorista)
+    
+  }
   return (
     <div className="box-anuncio">
       <div className="card-anuncio">
@@ -20,20 +30,20 @@ const Anuncio = () => {
           <img src={returnImg} className="img-return" />
         </Link>
         <img src={shareImg} className="img-compartilhar" />
-        <Carousel images={card[0].img} />
+        <Carousel images={card.img} />
       </div>
       <InfoAnuncio
-        title={card[0].title}
-        stars={card[0].stars}
-        locals={card[0].local}
-        instituicoes={card[0].instituicoes}
-        horario={card[0].horario}
-        vagas={card[0].vagas}
+        title={card.title}
+        stars={card.stars}
+        locals={card.local}
+        instituicoes={card.instituicoes}
+        horario={card.horario}
+        vagas={card.vagas}
       />
       <div className="divisoria-anuncio">
         <img src={divisoria} alt="" />
       </div>
-      <InfoMotorista nomeMotor={card[0].motorista} />
+      <InfoMotorista nomeMotor={card.motorista} />
       <div className="divisoria-anuncio">
         <img src={divisoria} />
       </div>
@@ -42,9 +52,9 @@ const Anuncio = () => {
         <img src={divisoria} alt="" />
       </div>
       <Regras />
-      <div className="contratar">
-        <Link to={`/contrato/locais/${id}`}>
-          <button>Contratar por R$ {card[0].preco} /Mês</button>
+      <div className="contratar" onClick={submitAnuncio}>
+        <Link to={`/contrato/locais/${id}`} >
+          <button>Contratar por R$ {card.preco} /Mês</button>
         </Link>
       </div>
     </div>

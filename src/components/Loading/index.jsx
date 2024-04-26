@@ -4,9 +4,9 @@ import './index.css'
 const Loading = () => {
   return (
     <div className='box'>
-        <div class="loader-dot"></div>
-        <div class="loader-dot"></div>
-        <div class="loader-dot"></div>
+        <div className="loader-dot"></div>
+        <div className="loader-dot"></div>
+        <div className="loader-dot"></div>
     </div>
   )
 }

@@ -6,15 +6,18 @@ import { Link, useParams } from "react-router-dom";
 import divisoria from "../../../assets/Divisoria.svg";
 import "./InfoContrato.css";
 import { useDadosViagem } from "../../../contexts/DadosViagemContext";
+import { useContrato } from "../../../contexts/Contrato";
 
 const InfoContrato = () => {
   const { id } = useParams();
-  const card = infoCards.filter((card) => card.id == id);
+  // const card = infoCards.filter((card) => card.id == id);
 
-  const { ida, destino, desembarque, setIda, setDestino, setDesembarque } =
+  const { ida, destino, desembarque, setIda, setDestino, setDesembarque, motorista } =
     useDadosViagem();
+  const {setContrato} = useContrato();
+  
   const taxa = 48.0;
-  const number = parseFloat(card[0].preco.replace(",", "."));
+  const number = parseFloat(motorista.preco.replace(",", "."));
   const total = taxa + number;
   const formattedPriceTaxa = taxa
     .toFixed(2)
@@ -24,6 +27,17 @@ const InfoContrato = () => {
     .toFixed(2)
     .replace(".", ",")
     .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    
+    const submitContrato = () => {
+      setContrato({
+        motorista,
+        ida,
+        desembarque,
+        destino,
+        formattedPriceTaxa,
+        formattedPrice
+    })
+    }
 
   return (
     <div className="container-info">
@@ -37,18 +51,18 @@ const InfoContrato = () => {
       <div className="box-info-contrato">
         <div className="card-info-contrato">
           <p>
-            <span>{card[0].title}</span>
+            <span>{motorista.title}</span>
           </p>
           <p>
             <span>Motorista - </span>
-            {card[0].motorista}
+            {motorista.motorista}
           </p>
           <p>
             <span>Rota - </span>Santo André - São Caetano do Sul
           </p>
           <p>
             <span>Horário de início - </span>
-            {card[0].horario[1]}
+            {motorista.horario[1]}
           </p>
         </div>
         <div className="divisoria-anuncio">
@@ -81,7 +95,7 @@ const InfoContrato = () => {
             <div className="card-info-box">
               <p>Preço do serviço</p>
               <div className="card-info-borda"></div>
-              <p>R$ {card[0].preco}</p>
+              <p>R$ {motorista.preco}</p>
             </div>
             <div className="card-info-box">
               <p>Impostos / Taxas</p>
@@ -101,7 +115,7 @@ const InfoContrato = () => {
       </div> */}
         <div className="box-prosseguir">
           <Link to={`/proposta`}>
-            <button className="prosseguir">
+            <button className="prosseguir" onClick={submitContrato}>
               Contratar por R$ {formattedPrice} /Mês
             </button>
           </Link>

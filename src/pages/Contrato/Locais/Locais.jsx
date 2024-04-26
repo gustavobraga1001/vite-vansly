@@ -12,10 +12,10 @@ import { useDadosViagem } from "../../../contexts/DadosViagemContext";
 const Locais = () => {
   const { id } = useParams();
 
-  const { ida, destino, desembarque, setIda, setDestino, setDesembarque } =
+  const { ida, destino, desembarque, setIda, setDestino, setDesembarque, motorista, setMotorista } =
     useDadosViagem();
 
-  console.log(ida);
+  console.log(motorista);
 
   const [ativado, setAtivado] = useState(false);
   const [error, setError] = useState("");

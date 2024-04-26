@@ -20,7 +20,7 @@ const Footer = ({home, presenca, percurso, perfil}) => {
             
         </div>
         <div>
-            <Link to={'/presenca'}>
+            <Link to={'/home'}>
                 {presenca ? <img src={presencaImg} alt="" /> : <img src={presencaImg}/>}
                 <p>Presença</p>
             </Link>

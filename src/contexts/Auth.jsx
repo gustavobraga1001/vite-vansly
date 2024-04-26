@@ -14,8 +14,6 @@ export const AuthProvider = ({ children }) => {
         (user) => user.email === JSON.parse(userToken).email
       );
 
-      console.log(hasUser);
-
       if (hasUser) setUser(hasUser);
     }
   }, []);

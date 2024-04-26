@@ -4,7 +4,6 @@ import Carrossel from "../Carrossel/Carrossel";
 import { Link } from "react-router-dom";
 
 const Card = ({ key, id, img, title, local, preco, stars }) => {
-  console.log(local);
   return (
     <Link to={`/anuncio/${id}`}>
       <div className="card" key={key}>

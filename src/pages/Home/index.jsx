@@ -4,12 +4,8 @@ import BemVindo from "../../components/BemVindo";
 import Card from "../../components/Card";
 import Header from "../../components/Header";
 import infoCards from "./infoCard";
-import useAuth from "../../hooks/useAuth";
-import { useUserContext } from "../../contexts/UserContext";
 
 const Home = () => {
-
-
   return (
     <div className="box-home">
       <Header />
@@ -17,9 +13,9 @@ const Home = () => {
         <BemVindo />
         <h3>Rotas disponíveis</h3>
         <div className="cards">
-          {infoCards.map((info) => (
+          {infoCards.map((info,i) => (
             <Card
-              key={info.id}
+              key={i}
               id={info.id}
               img={info.img}
               title={info.title}
