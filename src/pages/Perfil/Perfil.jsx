@@ -24,7 +24,7 @@ const Perfil = () => {
         <div className="info">
           <h3>{user.name}</h3>
           <p>{user.email}</p>
-          <Link to={"/editarPerfil"}>
+          <Link to={"/perfil"}>
             <button className="button-perfil">Editar Perfil</button>
           </Link>
         </div>
