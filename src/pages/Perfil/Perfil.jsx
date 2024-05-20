@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import HeaderFixo from "../../components/HeaderFixo/headerFixo";
 import returnImg from "../../assets/Return.svg";
-import imgPerfil from "../../assets/fotoPerfil.svg";
+import imgPerfil from "../../assets/icons/perfilAcionado.svg";
 import "./Perfil.css";
 import Footer from "../../components/Footer";
 import OpcoesPerfil from "../../components/OpcoesPerfil/OpcoesPerfil";
@@ -18,9 +18,9 @@ const Perfil = () => {
     <div className="container-perfil">
       <HeaderFixo tela={"home"} img={returnImg} text={"Perfil"} />
       <div className="box-perfil">
-        {/* <div className="foto">
+        <div className="foto">
           <img src={imgPerfil} />
-        </div> */}
+        </div>
         <div className="info">
           <h3>{user.name}</h3>
           <p>{user.email}</p>

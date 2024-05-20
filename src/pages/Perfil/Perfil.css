@@ -59,6 +59,10 @@
     display: flex;
     width: 150px;
     height: 150px;
+    justify-content: center;
+    padding: 10px;
+    border: 1px solid #003B6D;
+    border-radius: 15px;
 }
 
 .opcoes{

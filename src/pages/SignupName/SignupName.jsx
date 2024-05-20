@@ -16,7 +16,7 @@ const SignupName = () => {
     }
 
   return (
-    <div className="container-signup">
+    <div className="container-signup-name">
       <Link to={"/"}>
         <div className="return-sign">
           <img src={voltar} />
