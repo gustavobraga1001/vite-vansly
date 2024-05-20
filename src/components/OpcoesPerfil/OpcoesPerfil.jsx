@@ -1,13 +1,12 @@
-import React from 'react';
-import seta from '../../assets/GoSeta.svg';
-import './OpcoesPerfil.css';
-import useAuth from '../../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import React from "react";
+import seta from "../../assets/GoSeta.svg";
+import "./OpcoesPerfil.css";
+import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const OpcoesPerfil = ({ img, text, sair, link }) => {
-
-    const { signout } = useAuth();
+  const { signout } = useAuth();
   const navigate = useNavigate();
 
   const handleSignOut = () => {
@@ -16,24 +15,22 @@ const OpcoesPerfil = ({ img, text, sair, link }) => {
   };
   return (
     <div>
-      <Link to={link} >
-      <div className="opcao-perfil">
-        {sair === true ? (
-          <div className="inicio" onClick={handleSignOut}>
-            <img src={img} alt="Imagem" />
-            <p>{text}</p>
-          </div>
-        ) : (
-          
-          <div className="inicio">
-            
+      <Link to={link}>
+        <div className="opcao-perfil">
+          {sair === true ? (
+            <div className="inicio" onClick={handleSignOut}>
               <img src={img} alt="Imagem" />
               <p>{text}</p>
-          </div>
-        )}
-        <img src={seta} alt="Seta" />
-      </div>
-        </Link>
+            </div>
+          ) : (
+            <div className="inicio">
+              <img src={img} alt="Imagem" />
+              <p>{text}</p>
+            </div>
+          )}
+          <img src={seta} alt="Seta" />
+        </div>
+      </Link>
     </div>
   );
 };
