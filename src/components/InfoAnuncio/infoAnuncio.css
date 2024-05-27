@@ -55,14 +55,20 @@
 
 .regiao {
   display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 72px;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 20px;
+  gap: 20px;
 }
 
+.regiao div{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.regiao div p{
+  padding: 10px;
+}
 .regiao p {
   display: flex;
   background: rgba(207, 207, 207, 1);
@@ -70,21 +76,19 @@
   padding: 2px 5px 2px 5px;
 }
 
+
 .inst-destino {
   display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 72px;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 25px;
+  gap: 20px;
 }
 
 .inst-destino p {
   display: flex;
   background: rgba(207, 207, 207, 1);
   border-radius: 5px;
-  padding: 2px 5px 2px 5px;
+  padding: 10px
 }
 
 .horario {
@@ -104,6 +108,10 @@
   margin-top: 20px;
 }
 
-.divisoria-nova {
-    margin: 15px 0;
+.divisoria-van {
+    margin: 25px 0;
+}
+
+.divisoria-van img {
+  width: 100%;
 }

@@ -19,8 +19,19 @@ const infoCards = [
     stars: "4,95",
     motorista: "Lucas Moreira",
     instituicoes: ["USCS - Conceição", "USCS - Centro", "USCS - Barcelona"],
-    horario: ["08:00", "18:00"],
-    vagas: 5,
+    horarios: { manha : {
+      horario: "07:00",
+      vagas: 10
+    },
+    tarde : {
+      horario: "13:00",
+      vagas: 5
+    },
+    noite : {
+      horario: "17:00",
+      vagas: 7
+    }
+  },
   },
   {
     id: 2,
@@ -31,8 +42,19 @@ const infoCards = [
     stars: "2,80",
     motorista: "Gustavo Santos",
     instituicoes: ["USCS - Conceição", "USCS - Barcelona"],
-    horario: ["08:00", "18:00"],
-    vagas: 3,
+    horarios: {"Manhã": {
+      horario: "07:00",
+      vagas: 10
+    },
+    "Tarde" : {
+      horario: "13:00",
+      vagas: 5
+    },
+    "Noite" : {
+      horario: "17:00",
+      vagas: 7
+    }
+  },
   },
   {
     id: 3,
@@ -43,8 +65,19 @@ const infoCards = [
     stars: "4,95",
     motorista: "Bruno Moreira",
     instituicoes: ["USCS - Conceição", "USCS - Centro", "USCS - Barcelona"],
-    horario: ["08:00", "18:00"],
-    vagas: 5,
+    horarios: {"Manhã": {
+      horario: "07:00",
+      vagas: 10
+    },
+    "Tarde" : {
+      horario: "13:00",
+      vagas: 5
+    },
+    "Noite" : {
+      horario: "17:00",
+      vagas: 7
+    }
+  },
   },
   {
     id: 4,
@@ -55,8 +88,19 @@ const infoCards = [
     stars: "3,50",
     motorista: "Lucas Moreira",
     instituicoes: ["USCS - Conceição", "USCS - Centro", "USCS - Barcelona"],
-    horario: ["08:00", "18:00"],
-    vagas: 5,
+    horarios: {"Manhã": {
+      horario: "07:00",
+      vagas: 10
+    },
+    "Tarde" : {
+      horario: "13:00",
+      vagas: 5
+    },
+    "Noite" : {
+      horario: "17:00",
+      vagas: 7
+    }
+  },
   },
   {
     id: 5,
@@ -67,8 +111,19 @@ const infoCards = [
     stars: "4,95",
     motorista: "Lucas Moreira",
     instituicoes: ["USCS - Conceição", "USCS - Centro", "USCS - Barcelona"],
-    horario: ["08:00", "18:00"],
-    vagas: 5,
+    horarios: {"Manhã": {
+      horario: "07:00",
+      vagas: 10
+    },
+    "Tarde" : {
+      horario: "13:00",
+      vagas: 5
+    },
+    "Noite" : {
+      horario: "17:00",
+      vagas: 7
+    }
+  },
   },
   {
     id: 6,
@@ -79,8 +134,19 @@ const infoCards = [
     stars: "4,95",
     motorista: "Lucas Moreira",
     instituicoes: ["USCS - Conceição", "USCS - Centro", "USCS - Barcelona"],
-    horario: ["08:00", "18:00"],
-    vagas: 5,
+    horarios: {"Manhã": {
+      horario: "07:00",
+      vagas: 10
+    },
+    "Tarde" : {
+      horario: "13:00",
+      vagas: 5
+    },
+    "Noite" : {
+      horario: "17:00",
+      vagas: 7
+    }
+  },
   },
 ];
 

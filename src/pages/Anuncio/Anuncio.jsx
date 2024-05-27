@@ -20,7 +20,6 @@ const Anuncio = () => {
   
   const submitAnuncio = () => {
     setMotorista(card);
-    console.log(motorista)
     
   }
   return (
@@ -37,15 +36,12 @@ const Anuncio = () => {
         stars={card.stars}
         locals={card.local}
         instituicoes={card.instituicoes}
-        horario={card.horario}
+        horarios={card.horarios}
         vagas={card.vagas}
+        motorista={card.motorista}
       />
       <div className="divisoria-anuncio">
         <img src={divisoria} alt="" />
-      </div>
-      <InfoMotorista nomeMotor={card.motorista} />
-      <div className="divisoria-anuncio">
-        <img src={divisoria} />
       </div>
       <Recursos />
       <div className="divisoria-anuncio">
