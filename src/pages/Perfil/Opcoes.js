@@ -15,11 +15,11 @@ const opcoes = [
     text: "Contratos",
     link: "/contratos",
   },
-  // {
-  //   img: volanteImg,
-  //   text: "Seja um motorista",
-  //   link: "/motorista",
-  // },
+  {
+    img: volanteImg,
+    text: "Seja um motorista",
+    link: "/motorista",
+  },
   {
     img: logOutImg,
     text: "Log Out",

@@ -14,6 +14,7 @@ import Proposta from "../pages/Contrato/Proposta/Proposta";
 import SignupName from "../pages/SignupName/SignupName";
 import Notificacoes from "../pages/Notificacoes/Notificacoes";
 import Contratos from "../pages/Contratos/Contratos";
+import Motorista from "../pages/Motorista/Motorista";
 
 const Private = ({ Item }) => {
   const { signed } = useAuth();
@@ -41,6 +42,7 @@ const RoutesApp = () => {
           <Route path="/proposta" element={<Proposta />} />
           <Route path="/notificacoes" element={<Notificacoes />} />
           <Route path="/contratos" element={<Contratos />} />
+          <Route path="/motorista" element={<Motorista />} />
         </Routes>
       </Fragment>
     </BrowserRouter>
