@@ -18,7 +18,6 @@ const opcoes = [
   {
     img: volanteImg,
     text: "Seja um motorista",
-    link: "/motorista",
   },
   {
     img: logOutImg,
