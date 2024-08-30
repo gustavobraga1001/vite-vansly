@@ -6,11 +6,6 @@ import logOutImg from "../../assets/logOut.svg";
 
 const opcoes = [
   {
-    img: notificacaoImg,
-    text: "Notificações",
-    link: "/notificacoes",
-  },
-  {
     img: contratosImg,
     text: "Contratos",
     link: "/contratos",
@@ -18,6 +13,7 @@ const opcoes = [
   {
     img: volanteImg,
     text: "Seja um motorista",
+    link: "/motorista",
   },
   {
     img: logOutImg,
