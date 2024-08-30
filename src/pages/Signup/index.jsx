@@ -5,18 +5,12 @@ import useAuth from "../../hooks/useAuth";
 import "./index.css";
 import Input from "../../components/Input";
 import voltar from "../../assets/Return.svg";
-import { useUserContext } from "../../contexts/UserContext";
 
 const Signup = () => {
-  const { signup } = useAuth();
+  const { signup, user } = useAuth();
   const navigate = useNavigate();
-  const { name, data, addUser , emailUser, setEmailUser} = useUserContext();
 
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
   const [error, setError] = useState("");
-
-  console.log(name, data)
 
   const handleSignup = () => {
     if (!email | !senha) {
@@ -24,10 +18,7 @@ const Signup = () => {
       return;
     }
 
-
-
-    addUser(name, data, emailUser)
-    const res = signup(email, senha);
+    const res = signup(email, senha, data, name);
 
     if (res) {
       setError(res);
@@ -47,9 +38,7 @@ const Signup = () => {
       </Link>
       <div className="titulo">
         <h1>Cadastrar</h1>
-        <p>
-          Insira seu email para prosseguirmos com seu cadastro.
-        </p>
+        <p>Insira seu email para prosseguirmos com seu cadastro.</p>
       </div>
       <div className="content" action="/home">
         <Input

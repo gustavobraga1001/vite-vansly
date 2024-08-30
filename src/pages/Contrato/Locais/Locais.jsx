@@ -15,8 +15,6 @@ const Locais = () => {
   const { ida, destino, desembarque, setIda, setDestino, setDesembarque, motorista, setMotorista } =
     useDadosViagem();
 
-  console.log(motorista);
-
   const [ativado, setAtivado] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();

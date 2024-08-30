@@ -11,7 +11,7 @@ const InfoAnuncio = ({
   locals,
   instituicoes,
   horarios,
-  motorista
+  motorista,
 }) => {
   const number = parseFloat(stars.replace(",", "."));
   return (
@@ -24,7 +24,7 @@ const InfoAnuncio = ({
         </div>
         <div className="qtdAvaliacao">
           <p>154</p>
-          <a href>Avaliações</a>
+          <a>Avaliações</a>
         </div>
       </div>
 
@@ -38,8 +38,8 @@ const InfoAnuncio = ({
         <div className="regiao">
           <h5>Regiões de atendimento</h5>
           <div>
-            {locals.map((local, i) => (
-              <p key={i}>{local}</p>
+            {locals.map((local) => (
+              <p key={local}>{local}</p>
             ))}
           </div>
         </div>
@@ -50,8 +50,8 @@ const InfoAnuncio = ({
 
         <div className="inst-destino">
           <h5>Instituições de destino</h5>
-          {instituicoes.map((instituicao, i) => (
-            <p key={i}>{instituicao}</p>
+          {instituicoes.map((instituicao) => (
+            <p key={instituicao}>{instituicao}</p>
           ))}
         </div>
 
@@ -63,7 +63,7 @@ const InfoAnuncio = ({
           <h5>Horários e vagas disponíveis</h5>
         </div>
 
-        <TabelaHorarios horarios={horarios}/>
+        <TabelaHorarios horarios={horarios} />
       </div>
     </div>
   );

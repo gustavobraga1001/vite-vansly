@@ -2,17 +2,16 @@ import React, { useEffect } from "react";
 import HeaderFixo from "../../components/HeaderFixo/headerFixo";
 import returnImg from "../../assets/Return.svg";
 import imgPerfil from "../../assets/icons/perfilAcionado.svg";
-import "./Perfil.css";
 import Footer from "../../components/Footer";
 import OpcoesPerfil from "../../components/OpcoesPerfil/OpcoesPerfil";
 import opcoes from "./Opcoes";
 import { Link } from "react-router-dom";
-import { useUserContext } from "../../contexts/UserContext";
+
+import "./Perfil.css";
+import useAuth from "../../hooks/useAuth";
 
 const Perfil = () => {
-  const { users, findUserByEmail } = useUserContext();
-
-  const user = findUserByEmail();
+  const { user } = useAuth();
 
   return (
     <div className="container-perfil">
@@ -32,10 +31,23 @@ const Perfil = () => {
       {opcoes.map((info, i) => {
         if (info.onClick) {
           return (
-            <OpcoesPerfil key={i} img={info.img} text={info.text} sair={true} link={info.link}/>
+            <OpcoesPerfil
+              key={i}
+              img={info.img}
+              text={info.text}
+              sair={true}
+              link={info.link}
+            />
           );
         } else {
-          return <OpcoesPerfil key={i} img={info.img} text={info.text} link={info.link}/>;
+          return (
+            <OpcoesPerfil
+              key={i}
+              img={info.img}
+              text={info.text}
+              link={info.link}
+            />
+          );
         }
       })}
       <Footer home={false} presenca={false} percurso={false} perfil={true} />

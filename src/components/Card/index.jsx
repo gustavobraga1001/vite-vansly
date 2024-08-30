@@ -3,18 +3,18 @@ import "./card.css";
 import Carrossel from "../Carrossel/Carrossel";
 import { Link } from "react-router-dom";
 
-const Card = ({ key, id, img, title, local, preco, stars }) => {
+const Card = ({ id, img, title, local, preco, stars }) => {
   return (
     <Link to={`/anuncio/${id}`}>
-      <div className="card" key={key}>
+      <div className="card" key={id}>
         <Carrossel images={img} />
         <div className="container-card">
           <p>{title}</p>
           <div className="card-info">
             <div className="local-card">
-            {local.map((loc, i) => (
-              <p key={i}>{loc}</p>
-            ))}
+              {local.map((loc, i) => (
+                <p key={i}>{loc}</p>
+              ))}
             </div>
             <div className="card-star">
               <img src={star} alt="" />

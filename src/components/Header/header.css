@@ -10,9 +10,6 @@
     max-height: 200px;
   }
 
-  .header-fixo {
-      background-color: antiquewhite;
-  }
   
   .header .titulo-home{
     display: flex;

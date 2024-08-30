@@ -9,7 +9,7 @@ const BemVindo = () => {
             <h2>Bem vindo!</h2>
             <p>O Vansly é uma plataforma que conecta você ao seu motorista  de transporte escolar.</p>
         </div>
-        <img src={carro} alt="" />
+        <img src={carro} />
     </div>
   )
 }

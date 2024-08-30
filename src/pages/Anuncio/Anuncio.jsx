@@ -12,16 +12,14 @@ import divisoria from "../../assets/Divisoria.svg";
 import { useDadosViagem } from "../../contexts/DadosViagemContext";
 
 const Anuncio = () => {
-  const { motorista, setMotorista } = useDadosViagem();
+  const { setMotorista } = useDadosViagem();
 
   const { id } = useParams();
-  const card = infoCards.find(card => card.id == id);
+  const card = infoCards.find((card) => card.id == id);
 
-  
   const submitAnuncio = () => {
     setMotorista(card);
-    
-  }
+  };
   return (
     <div className="box-anuncio">
       <div className="card-anuncio">
@@ -41,15 +39,15 @@ const Anuncio = () => {
         motorista={card.motorista}
       />
       <div className="divisoria-anuncio">
-        <img src={divisoria} alt="" />
+        <img src={divisoria} />
       </div>
       <Recursos />
       <div className="divisoria-anuncio">
-        <img src={divisoria} alt="" />
+        <img src={divisoria} />
       </div>
       <Regras />
       <div className="contratar" onClick={submitAnuncio}>
-        <Link to={`/contrato/locais/${id}`} >
+        <Link to={`/contrato/locais/${id}`}>
           <button>Contratar por R$ {card.preco} /Mês</button>
         </Link>
       </div>

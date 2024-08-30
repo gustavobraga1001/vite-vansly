@@ -10,12 +10,10 @@ import { useContrato } from "../../../contexts/Contrato";
 
 const InfoContrato = () => {
   const { id } = useParams();
-  // const card = infoCards.filter((card) => card.id == id);
 
-  const { ida, destino, desembarque, setIda, setDestino, setDesembarque, motorista } =
-    useDadosViagem();
-  const {setContrato} = useContrato();
-  
+  const { ida, destino, desembarque, motorista } = useDadosViagem();
+  const { contrato, setContrato } = useContrato();
+
   const taxa = 48.0;
   const number = parseFloat(motorista.preco.replace(",", "."));
   const total = taxa + number;
@@ -27,17 +25,21 @@ const InfoContrato = () => {
     .toFixed(2)
     .replace(".", ",")
     .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    
-    const submitContrato = () => {
-      setContrato({
-        motorista,
-        ida,
-        desembarque,
-        destino,
-        formattedPriceTaxa,
-        formattedPrice
-    })
-    }
+
+  const submitContrato = () => {
+    const newContract = {
+      motorista,
+      ida,
+      desembarque,
+      destino,
+      formattedPriceTaxa,
+      formattedPrice,
+    };
+
+    setContrato(newContract);
+
+    localStorage.setItem("contratos", JSON.stringify([newContract]));
+  };
 
   return (
     <div className="container-info">
@@ -58,11 +60,8 @@ const InfoContrato = () => {
             {motorista.motorista}
           </p>
           <p>
-            <span>Rota - </span>Santo André - São Caetano do Sul
-          </p>
-          <p>
             <span>Horário de início - </span>
-            {motorista.horario[1]}
+            {motorista.horarios.manha.horario}
           </p>
         </div>
         <div className="divisoria-anuncio">
@@ -110,9 +109,6 @@ const InfoContrato = () => {
             </div>
           </div>
         </div>
-        {/* <div className="divisoria-anuncio">
-        <img src={divisoria} alt="" />
-      </div> */}
         <div className="box-prosseguir">
           <Link to={`/proposta`}>
             <button className="prosseguir" onClick={submitContrato}>

@@ -1,32 +1,33 @@
-import sino from '../../assets/sino.svg'
-import mapa from '../../assets/loc.svg'
-import pesquisa from '../../assets/pesquisa.svg'
-import './header.css'
-import Pesquisa from '../Pesquisa/pesquisa'
-import { useUserContext } from '../../contexts/UserContext'
-import { Link } from 'react-router-dom'
+import sino from "../../assets/sino.svg";
+import pesquisa from "../../assets/pesquisa.svg";
+import Pesquisa from "../Pesquisa/pesquisa";
+import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import "./header.css";
 
 const Header = () => {
+  const { user } = useAuth();
 
-  const { findUserByEmail } = useUserContext();
-  const user = findUserByEmail();
-  
-  return (
-    <header className='header'>
-        <div className="titulo-home">
-          <h1>Olá, {user.name}</h1>
-          <Link to="/notificacoes">
-            <img src={sino} />
-          </Link>
-        </div>
-        <Pesquisa 
-          img={pesquisa} 
-          placeholder={'Para onde?'} 
-          type={'text'}
-          color={"white"}
-        />
-      </header>
-  )
-}
+  console.log(user);
 
-export default Header
+  return user ? (
+    <header className="header">
+      <div className="titulo-home">
+        <h1>Olá, {user.name}</h1>
+        <Link to="/notificacoes">
+          <img src={sino} />
+        </Link>
+      </div>
+      <Pesquisa
+        img={pesquisa}
+        placeholder={"Para onde?"}
+        type={"text"}
+        color={"white"}
+      />
+    </header>
+  ) : (
+    <h1>Loading</h1>
+  );
+};
+
+export default Header;

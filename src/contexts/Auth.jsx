@@ -3,9 +3,21 @@ import { createContext, useEffect, useState } from "react";
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({});
 
   useEffect(() => {
+    localStorage.setItem(
+      "users_bd",
+      JSON.stringify([
+        {
+          email: "braga@gmail.com",
+          password: "123",
+          data: "14/10/2004",
+          name: "Gustavo Braga",
+        },
+      ])
+    );
+
     const userToken = localStorage.getItem("user_token");
 
     if (userToken) {
@@ -37,7 +49,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const signup = (email, password) => {
+  const signup = ({ email, password, data, name }) => {
     const storedUsers = JSON.parse(localStorage.getItem("users_bd"));
 
     const hasUser = storedUsers?.find((user) => user.email === email);
@@ -46,7 +58,7 @@ export const AuthProvider = ({ children }) => {
       return "Já existe uma conta com este e-mail";
     }
 
-    const newUser = [...(storedUsers || []), { email, password }];
+    const newUser = [...(storedUsers || []), { email, password, data, name }];
     localStorage.setItem("users_bd", JSON.stringify(newUser));
 
     return;

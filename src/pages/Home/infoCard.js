@@ -8,11 +8,10 @@ const images = [carro, carro2, carro];
 
 const images2 = [van2, vaninterna, vanmotor];
 
-const infoCards = [
+export const infoCards = [
   {
     id: 1,
     img: images2,
-    // foto: fotoMotor,
     title: "Van1",
     local: ["Santo André", " São Caetano do Sul"],
     preco: "448,00",
@@ -42,15 +41,15 @@ const infoCards = [
     stars: "2,80",
     motorista: "Gustavo Santos",
     instituicoes: ["USCS - Conceição", "USCS - Barcelona"],
-    horarios: {"Manhã": {
+    horarios: { manha : {
       horario: "07:00",
       vagas: 10
     },
-    "Tarde" : {
+    tarde : {
       horario: "13:00",
       vagas: 5
     },
-    "Noite" : {
+    noite : {
       horario: "17:00",
       vagas: 7
     }
@@ -65,15 +64,15 @@ const infoCards = [
     stars: "4,95",
     motorista: "Bruno Moreira",
     instituicoes: ["USCS - Conceição", "USCS - Centro", "USCS - Barcelona"],
-    horarios: {"Manhã": {
+    horarios: { manha : {
       horario: "07:00",
       vagas: 10
     },
-    "Tarde" : {
+    tarde : {
       horario: "13:00",
       vagas: 5
     },
-    "Noite" : {
+    noite : {
       horario: "17:00",
       vagas: 7
     }
@@ -88,15 +87,15 @@ const infoCards = [
     stars: "3,50",
     motorista: "Lucas Moreira",
     instituicoes: ["USCS - Conceição", "USCS - Centro", "USCS - Barcelona"],
-    horarios: {"Manhã": {
+    horarios: { manha : {
       horario: "07:00",
       vagas: 10
     },
-    "Tarde" : {
+    tarde : {
       horario: "13:00",
       vagas: 5
     },
-    "Noite" : {
+    noite : {
       horario: "17:00",
       vagas: 7
     }
@@ -111,15 +110,15 @@ const infoCards = [
     stars: "4,95",
     motorista: "Lucas Moreira",
     instituicoes: ["USCS - Conceição", "USCS - Centro", "USCS - Barcelona"],
-    horarios: {"Manhã": {
+    horarios: { manha : {
       horario: "07:00",
       vagas: 10
     },
-    "Tarde" : {
+    tarde : {
       horario: "13:00",
       vagas: 5
     },
-    "Noite" : {
+    noite : {
       horario: "17:00",
       vagas: 7
     }
@@ -134,15 +133,15 @@ const infoCards = [
     stars: "4,95",
     motorista: "Lucas Moreira",
     instituicoes: ["USCS - Conceição", "USCS - Centro", "USCS - Barcelona"],
-    horarios: {"Manhã": {
+    horarios: { manha : {
       horario: "07:00",
       vagas: 10
     },
-    "Tarde" : {
+    tarde : {
       horario: "13:00",
       vagas: 5
     },
-    "Noite" : {
+    noite : {
       horario: "17:00",
       vagas: 7
     }
