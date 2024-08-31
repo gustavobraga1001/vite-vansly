@@ -2,14 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { DirectionsRenderer, DirectionsService, GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import imgVan from '../../assets/iconeMovel.svg';
 import { stylesMaps } from './StyleMaps';
-import btnLoc from '../../assets/btn-loc.svg'
-
+import btnLoc from '../../assets/btn-loc.svg';
 import './Maps.css';
-
-const center = {
-  lat: -23.62178148779765,
-  lng: -46.56528250493589,
-};
 
 const MapPage = ({ userLocation }) => {
   const [waypoints, setWaypoints] = useState([]);
@@ -23,13 +17,19 @@ const MapPage = ({ userLocation }) => {
   };
 
   useEffect(() => {
-    setOrigin({ lat: -23.625046561701133, lng: -46.52039028647473 });
-    setDestination({ lat: -23.618485377185664, lng: -46.57856412063509 });
-    setWaypoints([
-      { lat: -23.634274926423352, lng: -46.526985241377645 },
-      { lat: -23.636358643864003, lng: -46.54355056389266 }
-    ]);
-  }, []);
+    if (userLocation) {
+      const userLatLng = { lat: userLocation.latitude, lng: userLocation.longitude };
+      setOrigin(userLatLng);
+      setDestination({ lat: -23.618485377185664, lng: -46.57856412063509 });
+      setWaypoints([
+        { lat: -23.634274926423352, lng: -46.526985241377645 },
+        { lat: -23.636358643864003, lng: -46.54355056389266 }
+      ]);
+
+      // Set map center to user's location
+      map?.panTo(userLatLng);
+    }
+  }, [userLocation, map]);
 
   const directionsServiceoptions = React.useMemo(() => {
     return {
@@ -54,9 +54,12 @@ const MapPage = ({ userLocation }) => {
     };
   }, [response]);
 
-  function myFunction() {
-    map?.panTo(waypoints[0]);
-  }
+  const recenterMap = () => {
+    if (userLocation && map) {
+      const userLatLng = { lat: userLocation.latitude, lng: userLocation.longitude };
+      map.panTo(userLatLng);
+    }
+  };
 
   return (
     <div className="map">
@@ -66,7 +69,7 @@ const MapPage = ({ userLocation }) => {
       >
         <GoogleMap
           onLoad={onMapLoad}
-          center={userLocation || center}
+          center={userLocation ? { lat: userLocation.latitude, lng: userLocation.longitude } : center}
           zoom={15}
           options={{
             zoomControl: false,
@@ -74,15 +77,17 @@ const MapPage = ({ userLocation }) => {
             streetViewControl: false,
             mapTypeControl: false,
             scaleControl: true,
-            styles: stylesMaps
+            styles: stylesMaps,
           }}
           mapContainerStyle={{ width: '100%', height: '100%' }}
         >
-          <img src={btnLoc} alt="" className="button-maps" onClick={myFunction} />
+          <img src={btnLoc} alt="" className="button-maps" onClick={recenterMap} />
 
-          <Marker position={userLocation} icon={{
-            url: imgVan,
-          }} />
+          {userLocation && (
+            <Marker position={{ lat: userLocation.latitude, lng: userLocation.longitude }} icon={{
+              url: imgVan,
+            }} />
+          )}
 
           {origin && destination && (
             <DirectionsService
@@ -101,6 +106,3 @@ const MapPage = ({ userLocation }) => {
 };
 
 export default MapPage;
-
-
-
