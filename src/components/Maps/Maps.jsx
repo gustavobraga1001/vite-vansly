@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { DirectionsRenderer, DirectionsService, GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-import './Maps.css';
 import imgVan from '../../assets/iconeMovel.svg';
 import { stylesMaps } from './StyleMaps';
 import btnLoc from '../../assets/btn-loc.svg'
+
+import './Maps.css';
 
 const center = {
   lat: -23.62178148779765,
   lng: -46.56528250493589,
 };
 
-const MapPage = () => {
+const MapPage = ({ userLocation }) => {
   const [waypoints, setWaypoints] = useState([]);
   const [map, setMap] = useState(null);
   const [origin, setOrigin] = useState(null);
@@ -65,7 +66,7 @@ const MapPage = () => {
       >
         <GoogleMap
           onLoad={onMapLoad}
-          center={center}
+          center={userLocation}
           zoom={15}
           options={{
             zoomControl: false,
@@ -77,7 +78,7 @@ const MapPage = () => {
           }}
           mapContainerStyle={{ width: '100%', height: '100%' }}
         >
-            <img src={btnLoc} alt="" className="button-maps" onClick={myFunction} />
+          <img src={btnLoc} alt="" className="button-maps" onClick={myFunction} />
 
           <Marker position={{ lat: -23.627367263149733, lng: -46.519162653963555 }} icon={{
             url: imgVan,
@@ -100,3 +101,6 @@ const MapPage = () => {
 };
 
 export default MapPage;
+
+
+
