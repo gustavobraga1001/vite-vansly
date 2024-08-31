@@ -66,7 +66,7 @@ const MapPage = ({ userLocation }) => {
       >
         <GoogleMap
           onLoad={onMapLoad}
-          center={userLocation}
+          center={userLocation || center}
           zoom={15}
           options={{
             zoomControl: false,
@@ -80,7 +80,7 @@ const MapPage = ({ userLocation }) => {
         >
           <img src={btnLoc} alt="" className="button-maps" onClick={myFunction} />
 
-          <Marker position={{ lat: -23.627367263149733, lng: -46.519162653963555 }} icon={{
+          <Marker position={userLocation} icon={{
             url: imgVan,
           }} />
 
