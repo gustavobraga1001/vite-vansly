@@ -1,37 +1,69 @@
-import React, { useEffect, useState } from 'react';
-import { DirectionsRenderer, DirectionsService, GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import React, { useEffect, useState, useCallback } from 'react';
+import { GoogleMap, Marker, LoadScript, DirectionsService, DirectionsRenderer } from '@react-google-maps/api';
 import imgVan from '../../assets/iconeMovel.svg';
 import { stylesMaps } from './StyleMaps';
 import btnLoc from '../../assets/btn-loc.svg';
 import './Maps.css';
 
 const MapPage = ({ userLocation }) => {
-  const [waypoints, setWaypoints] = useState([]);
   const [map, setMap] = useState(null);
   const [origin, setOrigin] = useState(null);
   const [destination, setDestination] = useState(null);
+  const [waypoints, setWaypoints] = useState([]);
   const [response, setResponse] = useState(null);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [currentUserLocation, setCurrentUserLocation] = useState(userLocation);
 
-  const onMapLoad = map => {
-    setMap(map);
-  };
+  // Atualiza a localização do usuário a cada 30 segundos
+  useEffect(() => {
+    const updateLocation = () => {
+      setCurrentUserLocation(userLocation);
+    };
+
+    updateLocation(); // Atualiza a localização inicial
+
+    const intervalId = setInterval(updateLocation, 30000); // Atualiza a localização a cada 30 segundos
+
+    return () => clearInterval(intervalId); // Limpa o intervalo quando o componente é desmontado
+  }, [userLocation]);
 
   useEffect(() => {
-    if (userLocation) {
-      const userLatLng = { lat: userLocation.latitude, lng: userLocation.longitude };
+    if (currentUserLocation) {
+      const userLatLng = { lat: currentUserLocation.latitude, lng: currentUserLocation.longitude };
       setOrigin(userLatLng);
       setDestination({ lat: -23.618485377185664, lng: -46.57856412063509 });
       setWaypoints([
         { lat: -23.634274926423352, lng: -46.526985241377645 },
-        { lat: -23.636358643864003, lng: -46.54355056389266 }
+        { lat: -23.636358643864003, lng: -46.54355056389266 },
       ]);
 
-      // Set map center to user's location
+      // Centraliza o mapa na localização do usuário
       map?.panTo(userLatLng);
     }
-  }, [userLocation, map]);
+  }, [currentUserLocation, map]);
 
-  const directionsServiceoptions = React.useMemo(() => {
+  useEffect(() => {
+    if (response && response.routes[0] && response.routes[0].legs[0]) {
+      const routeSteps = response.routes[0].legs[0].steps;
+
+      const moveAlongRoute = () => {
+        if (currentStep < routeSteps.length) {
+          const nextStep = routeSteps[currentStep];
+          setCurrentUserLocation({
+            latitude: nextStep.end_location.lat(),
+            longitude: nextStep.end_location.lng(),
+          });
+          setCurrentStep(currentStep + 1);
+        }
+      };
+
+      const intervalId = setInterval(moveAlongRoute, 3000); // Move a cada 3 segundos
+
+      return () => clearInterval(intervalId);
+    }
+  }, [response, currentStep]);
+
+  const directionsServiceOptions = React.useMemo(() => {
     return {
       origin,
       destination,
@@ -55,8 +87,8 @@ const MapPage = ({ userLocation }) => {
   }, [response]);
 
   const recenterMap = () => {
-    if (userLocation && map) {
-      const userLatLng = { lat: userLocation.latitude, lng: userLocation.longitude };
+    if (currentUserLocation && map) {
+      const userLatLng = { lat: currentUserLocation.latitude, lng: currentUserLocation.longitude };
       map.panTo(userLatLng);
     }
   };
@@ -68,8 +100,8 @@ const MapPage = ({ userLocation }) => {
         libraries={['places']}
       >
         <GoogleMap
-          onLoad={onMapLoad}
-          center={userLocation ? { lat: userLocation.latitude, lng: userLocation.longitude } : center}
+          onLoad={setMap}
+          center={currentUserLocation ? { lat: currentUserLocation.latitude, lng: currentUserLocation.longitude } : undefined}
           zoom={15}
           options={{
             zoomControl: false,
@@ -83,20 +115,21 @@ const MapPage = ({ userLocation }) => {
         >
           <img src={btnLoc} alt="" className="button-maps" onClick={recenterMap} />
 
-          {userLocation && (
-            <Marker position={{ lat: userLocation.latitude, lng: userLocation.longitude }} icon={{
-              url: imgVan,
-            }} />
+          {currentUserLocation && (
+            <Marker
+              position={{ lat: currentUserLocation.latitude, lng: currentUserLocation.longitude }}
+              icon={{ url: imgVan }}
+            />
           )}
 
           {origin && destination && (
             <DirectionsService
-              options={directionsServiceoptions}
+              options={directionsServiceOptions}
               callback={directionsCallback}
             />
           )}
 
-          {response && directionsRendererOptions && (
+          {response && (
             <DirectionsRenderer options={directionsRendererOptions} />
           )}
         </GoogleMap>
