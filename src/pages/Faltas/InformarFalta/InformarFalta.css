@@ -1,0 +1,27 @@
+.main-informar-falta {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    padding: 16px;
+}
+
+.box-ausensia {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-informar-falta form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.151);
+}
+
+.main-informar-falta form label {
+    font-size: 1.1rem;
+    color:rgba(30, 30, 30, 1);
+    font-weight: 600;
+}

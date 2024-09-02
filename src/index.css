@@ -8,11 +8,7 @@
 }
 
 body, html {
-    width: 100vw;
-    height: 100vh;
     font-family: "Roboto", sans-serif;
-    display: flex;
-    justify-content: center;
     overflow-x: hidden;
 }
 
@@ -20,7 +16,7 @@ a{
     color: #003B6D;
 }
 
-button {
+button, h1, a, textarea, p {
     font-family: "Roboto", sans-serif;
     
 }

@@ -15,6 +15,8 @@ import SignupName from "../pages/SignupName/SignupName";
 import Notificacoes from "../pages/Notificacoes/Notificacoes";
 import Contratos from "../pages/Contratos/Contratos";
 import Motorista from "../pages/Motorista/Motorista";
+import { Faltas } from "../pages/Faltas/Faltas";
+import { InfomarFalta } from "../pages/Faltas/InformarFalta/InformarFalta";
 
 const Private = ({ Item }) => {
   const { signed } = useAuth();
@@ -27,14 +29,14 @@ const RoutesApp = () => {
     <BrowserRouter>
       <Fragment>
         <Routes>
-          <Route exact path="/home" element={<Private Item={Home} />} />
           <Route path="/" element={<Login />} />
+          <Route path="*" element={<Login />} />
           <Route path="/signupName" element={<SignupName />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="*" element={<Login />} />
+          <Route path="/home" element={<Private Item={Home} />} />
           <Route path="/busca" element={<Busca />} />
           <Route path="/anuncio" element={<Anuncio />} />
-          <Route path="/percurso" element={<Percurso />} />
+          {/* <Route path="/percurso" element={<Percurso />} /> */}
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/anuncio/:id" element={<Anuncio />} />
           <Route path="/contrato/locais/:id" element={<Locais />} />
@@ -43,6 +45,8 @@ const RoutesApp = () => {
           <Route path="/notificacoes" element={<Notificacoes />} />
           <Route path="/contratos" element={<Contratos />} />
           <Route path="/motorista" element={<Motorista />} />
+          <Route path="/faltas" element={<Faltas />} />
+          <Route path="/faltas/informar-faltas" element={<InfomarFalta />} />
         </Routes>
       </Fragment>
     </BrowserRouter>
