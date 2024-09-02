@@ -1,21 +1,46 @@
 import { useState } from "react";
-import Footer from "../../../components/Footer";
 import HeaderFixo from "../../../components/HeaderFixo/headerFixo";
 
 import "./InformarFalta.css";
 
 export function InfomarFalta() {
   const [ativado, setAtivado] = useState(false);
+  const [dataAusencia, setDataAusencia] = useState("");
 
   const handleClick = () => {
     setAtivado(!ativado);
   };
 
+  function formatDate(dateString) {
+    const [year, month, day] = dateString.split("-");
+    return `${day}/${month}/${year}`;
+  }
+
+  function handleNewFalta(e) {
+    e.preventDefault();
+    if (dataAusencia === "") {
+      return;
+    }
+
+    const prevAusencias = JSON.parse(localStorage.getItem("ausencias"));
+
+    if (prevAusencias) {
+      localStorage.setItem(
+        "ausencias",
+        JSON.stringify([...prevAusencias, dataAusencia])
+      );
+    } else {
+      localStorage.setItem("ausencias", JSON.stringify([dataAusencia]));
+    }
+
+    setDataAusencia("")
+  }
+
   return (
     <div>
       <HeaderFixo text={"Informar ausência"} tela="faltas" />
       <main className="main-informar-falta">
-        <div className="box-ausensia">
+        {/* <div className="box-ausensia">
           <span>Ausência recorrente</span>
           <div
             className={`toggle-container ${ativado ? "ativo" : ""}`}
@@ -23,27 +48,17 @@ export function InfomarFalta() {
           >
             <div className="toggle-ball"></div>
           </div>
-        </div>
+        </div> */}
 
-        {!ativado ? (
-          <form>
-            <label htmlFor="">Data da ausência</label>
-            <input type="date" name="" id="" />
-          </form>
-        ) : (
-          ""
-        )}
-
-        <div>
-          <div>
-            <span>Ausencias</span>
-            <div>
-              icone
-              <span>19/09/2024</span>
-              img
-            </div>
-          </div>
-        </div>
+        <form onSubmit={handleNewFalta}>
+          <label>Data da ausência</label>
+          <input
+            type="date"
+            onChange={(e) => setDataAusencia(e.target.value)}
+            value={dataAusencia}
+          />
+          <button>Confirmar</button>
+        </form>
       </main>
     </div>
   );
