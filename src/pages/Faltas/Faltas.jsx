@@ -55,9 +55,11 @@ export function Faltas() {
           </>
         )}
 
-        <button>
-          <Link to={"informar-faltas"}>Informar ausência</Link>
-        </button>
+        <Link to={"informar-faltas"}>
+          <button>
+            Informar ausência
+          </button>
+        </Link>
       </main>
 
       <Footer home={false} presenca={true} percurso={false} perfil={false} />

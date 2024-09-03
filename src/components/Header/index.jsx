@@ -8,8 +8,6 @@ import "./header.css";
 const Header = () => {
   const { user } = useAuth();
 
-  console.log(user);
-
   return user ? (
     <header className="header">
       <div className="titulo-home">

@@ -1,0 +1,26 @@
+.box-list-contrato {
+    margin: 1rem;
+    padding: 0.9rem;
+    border: 1px solid rgba(170, 170, 170, 1);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.box-list-contrato span {
+    display: inline;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+.box-list-contrato p {
+    display: inline;
+    font-weight: 400;
+    font-size: 1.1rem;
+
+}
+
+.link-to {
+    color: rgba(30, 30, 30, 1);
+}

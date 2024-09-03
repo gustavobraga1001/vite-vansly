@@ -41,3 +41,7 @@
     width: calc(100% - 30px);
     cursor: pointer;
 }
+
+.main-informar-falta input {
+    width: 100%;
+}

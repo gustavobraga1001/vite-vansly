@@ -1,18 +1,21 @@
 import React from "react";
 import returnImg from "../../../assets/icons/return-anuncio.svg";
 import HeaderFixo from "../../../components/HeaderFixo/headerFixo";
-import infoCards from "../../Home/infoCard";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import divisoria from "../../../assets/Divisoria.svg";
 import "./InfoContrato.css";
 import { useDadosViagem } from "../../../contexts/DadosViagemContext";
 import { useContrato } from "../../../contexts/Contrato";
+
+import { v4 as uuidv4 } from 'uuid';
 
 const InfoContrato = () => {
   const { id } = useParams();
 
   const { ida, destino, desembarque, motorista } = useDadosViagem();
   const { contrato, setContrato } = useContrato();
+
+  const navigate = useNavigate();
 
   const taxa = 48.0;
   const number = parseFloat(motorista.preco.replace(",", "."));
@@ -27,18 +30,26 @@ const InfoContrato = () => {
     .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
   const submitContrato = () => {
+
     const newContract = {
-      motorista,
+      id: uuidv4(),
+      motorista: {
+        id: motorista.id,
+        title: motorista.title,
+        nome: motorista.motorista,
+        horarios: motorista.horarios
+      },
       ida,
       desembarque,
       destino,
-      formattedPriceTaxa,
-      formattedPrice,
-    };
+      precoFinal: formattedPrice
+    }
 
     setContrato(newContract);
 
     localStorage.setItem("contratos", JSON.stringify([newContract]));
+
+    navigate("/proposta")
   };
 
   return (
@@ -110,11 +121,9 @@ const InfoContrato = () => {
           </div>
         </div>
         <div className="box-prosseguir">
-          <Link to={`/proposta`}>
-            <button className="prosseguir" onClick={submitContrato}>
-              Contratar por R$ {formattedPrice} /Mês
-            </button>
-          </Link>
+          <button className="prosseguir" onClick={submitContrato}>
+            Contratar por R$ {formattedPrice} /Mês
+          </button>
         </div>
       </div>
     </div>

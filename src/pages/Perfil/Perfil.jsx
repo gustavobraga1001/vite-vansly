@@ -17,7 +17,7 @@ const Perfil = () => {
     <div className="container-perfil">
       <HeaderFixo tela={"home"} img={returnImg} text={"Perfil"} />
       <div className="box-perfil">
-        <div className="foto">
+        <div className="foto-perfil">
           <img src={imgPerfil} />
         </div>
         <div className="info">

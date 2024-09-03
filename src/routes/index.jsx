@@ -17,6 +17,7 @@ import Contratos from "../pages/Contratos/Contratos";
 import Motorista from "../pages/Motorista/Motorista";
 import { Faltas } from "../pages/Faltas/Faltas";
 import { InfomarFalta } from "../pages/Faltas/InformarFalta/InformarFalta";
+import { VerificarContrato } from "../pages/Contratos/VerificarContrato/VerificarContrato";
 
 const Private = ({ Item }) => {
   const { signed } = useAuth();
@@ -44,6 +45,7 @@ const RoutesApp = () => {
           <Route path="/proposta" element={<Proposta />} />
           <Route path="/notificacoes" element={<Notificacoes />} />
           <Route path="/contratos" element={<Contratos />} />
+          <Route path="/contratos/:id" element={<VerificarContrato />} />
           <Route path="/motorista" element={<Motorista />} />
           <Route path="/faltas" element={<Faltas />} />
           <Route path="/faltas/informar-faltas" element={<InfomarFalta />} />

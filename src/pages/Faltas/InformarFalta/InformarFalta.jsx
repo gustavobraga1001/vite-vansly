@@ -23,11 +23,12 @@ export function InfomarFalta() {
     }
 
     const prevAusencias = JSON.parse(localStorage.getItem("ausencias"));
+    const dateFomatted = formatDate(dataAusencia)
 
     if (prevAusencias) {
       localStorage.setItem(
         "ausencias",
-        JSON.stringify([...prevAusencias, dataAusencia])
+        JSON.stringify([...prevAusencias, dateFomatted])
       );
     } else {
       localStorage.setItem("ausencias", JSON.stringify([dataAusencia]));
