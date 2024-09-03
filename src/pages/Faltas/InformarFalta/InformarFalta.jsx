@@ -23,7 +23,7 @@ export function InfomarFalta() {
     }
 
     const prevAusencias = JSON.parse(localStorage.getItem("ausencias"));
-    const dateFomatted = formatDate(dataAusencia)
+    const dateFomatted = formatDate(dataAusencia);
 
     if (prevAusencias) {
       localStorage.setItem(
@@ -34,7 +34,7 @@ export function InfomarFalta() {
       localStorage.setItem("ausencias", JSON.stringify([dataAusencia]));
     }
 
-    setDataAusencia("")
+    setDataAusencia("");
   }
 
   return (
@@ -56,6 +56,7 @@ export function InfomarFalta() {
           <input
             type="date"
             onChange={(e) => setDataAusencia(e.target.value)}
+            placeholder="00/00/0000"
             value={dataAusencia}
           />
           <button>Confirmar</button>

@@ -21,7 +21,7 @@ const Perfil = () => {
           <img src={imgPerfil} />
         </div>
         <div className="info">
-          <h3>{user.name}</h3>
+          <h3>{user.nome}</h3>
           <p>{user.email}</p>
           <Link>
             <button className="button-perfil">Editar Perfil</button>

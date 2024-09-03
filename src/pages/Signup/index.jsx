@@ -7,9 +7,11 @@ import Input from "../../components/Input";
 import voltar from "../../assets/Return.svg";
 
 const Signup = () => {
-  const { signup, user } = useAuth();
+  const { signup, user, setUser } = useAuth();
   const navigate = useNavigate();
 
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
   const [error, setError] = useState("");
 
   const handleSignup = () => {
@@ -18,7 +20,9 @@ const Signup = () => {
       return;
     }
 
-    const res = signup(email, senha, data, name);
+    const newUser = { ...user, email: email, senha: senha };
+
+    const res = signup(newUser);
 
     if (res) {
       setError(res);
@@ -45,11 +49,7 @@ const Signup = () => {
           label={"Digite seu E-mail"}
           type="email"
           placeholder="E-mail"
-          onChange={(e) => [
-            setEmail(e.target.value),
-            setEmailUser(e.target.value),
-            setError(""),
-          ]}
+          onChange={(e) => [setEmail(e.target.value), setError("")]}
         />
         <Input
           label={"Digite seu senha"}

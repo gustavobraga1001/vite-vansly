@@ -22,7 +22,7 @@ import { VerificarContrato } from "../pages/Contratos/VerificarContrato/Verifica
 const Private = ({ Item }) => {
   const { signed } = useAuth();
 
-  return signed > 0 ? <Item /> : <Login />;
+  return signed ? <Item /> : <Login />;
 };
 
 const RoutesApp = () => {
@@ -34,21 +34,37 @@ const RoutesApp = () => {
           <Route path="*" element={<Login />} />
           <Route path="/signupName" element={<SignupName />} />
           <Route path="/signup" element={<Signup />} />
+
           <Route path="/home" element={<Private Item={Home} />} />
-          <Route path="/busca" element={<Busca />} />
-          <Route path="/anuncio" element={<Anuncio />} />
+          <Route path="/busca" element={<Private Item={Busca} />} />
           {/* <Route path="/percurso" element={<Percurso />} /> */}
-          <Route path="/perfil" element={<Perfil />} />
-          <Route path="/anuncio/:id" element={<Anuncio />} />
-          <Route path="/contrato/locais/:id" element={<Locais />} />
-          <Route path="/contrato/info/:id" element={<InfoContrato />} />
-          <Route path="/proposta" element={<Proposta />} />
-          <Route path="/notificacoes" element={<Notificacoes />} />
-          <Route path="/contratos" element={<Contratos />} />
-          <Route path="/contratos/:id" element={<VerificarContrato />} />
-          <Route path="/motorista" element={<Motorista />} />
-          <Route path="/faltas" element={<Faltas />} />
-          <Route path="/faltas/informar-faltas" element={<InfomarFalta />} />
+          <Route path="/perfil" element={<Private Item={Perfil} />} />
+          <Route path="/anuncio/:id" element={<Private Item={Anuncio} />} />
+          <Route
+            path="/contrato/locais/:id"
+            element={<Private Item={Locais} />}
+          />
+          <Route
+            path="/contrato/info/:id"
+            element={<Private Item={InfoContrato} />}
+          />
+          <Route path="/proposta" element={<Private Item={Proposta} />} />
+          <Route
+            path="/notificacoes"
+            element={<Private Item={Notificacoes} />}
+          />
+          <Route path="/contratos" element={<Private Item={Contratos} />} />
+          <Route
+            path="/contratos/:id"
+            element={<Private Item={VerificarContrato} />}
+          />
+          <Route path="/faltas" element={<Private Item={Faltas} />} />
+          <Route
+            path="/faltas/informar-faltas"
+            element={<Private Item={InfomarFalta} />}
+          />
+
+          <Route path="/motorista" element={<Private Item={Motorista} />} />
         </Routes>
       </Fragment>
     </BrowserRouter>

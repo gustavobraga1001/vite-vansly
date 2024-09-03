@@ -11,7 +11,7 @@ const Header = () => {
   return user ? (
     <header className="header">
       <div className="titulo-home">
-        <h1>Olá, {user.name}</h1>
+        <h1>Olá, {user.nome}</h1>
         <Link to="/notificacoes">
           <img src={sino} />
         </Link>
