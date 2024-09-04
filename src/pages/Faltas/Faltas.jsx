@@ -11,29 +11,59 @@ import "./Faltas.css";
 
 export function Faltas() {
   const [ausencias, setAusencias] = useState([]);
+  const [ausenciasRecorrentes, setAusenciasRecorrentes] = useState([]);
 
   useEffect(() => {
     const prevAusencias = JSON.parse(localStorage.getItem("ausencias"));
+    const prevAusenciasRecorrentes = JSON.parse(localStorage.getItem("ausencias-recorrentes"));
 
     if (prevAusencias) {
       setAusencias(prevAusencias);
     }
+
+    if (prevAusenciasRecorrentes) {
+      setAusenciasRecorrentes(prevAusenciasRecorrentes)
+    }
   }, []); // O array de dependências está vazio para rodar o efeito apenas uma vez
+
+  const formatData = (data) => {
+    return data.map(day => day.substring(0, 3)).join(' | ');
+  };
 
   return (
     <div>
       <HeaderFixo text={"Informar ausência"} tela="home" />
       <main className="main-faltas">
+        {ausenciasRecorrentes.length > 0 ? (
+          <>
+            <p className="title-faltas">Ausencias Recorrentes</p>
+            <div className="card-faltas">
+              <div>
+                <UserCircleMinus size={36} color="#003B6D" />
+                {ausenciasRecorrentes.length > 0 && (
+                  <span>{formatData(ausenciasRecorrentes[0].data)}</span>
+                )}
+              </div>
+              <DotsThreeVertical
+                size={32}
+                color="#AAAAAA"
+                weight="bold"
+              />
+            </div>
+          </>
+        ) : ""
+        }
+
         {ausencias.length > 0 ? (
           <>
             <p className="title-faltas">Ausencias</p>
             <div className="list-faltas">
-              {ausencias.map((data) => {
+              {ausencias.map((ausencia) => {
                 return (
-                  <div className="card-faltas" key={data}>
+                  <div className="card-faltas" key={ausencia.data}>
                     <div>
                       <UserCircleMinus size={36} color="#003B6D" />
-                      <span>{data}</span>
+                      <span>{ausencia.data}</span>
                     </div>
                     <DotsThreeVertical
                       size={32}

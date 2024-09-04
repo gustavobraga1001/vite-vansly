@@ -6,6 +6,9 @@ import "./index.css";
 import Input from "../../components/Input";
 import voltar from "../../assets/Return.svg";
 
+import { v4 as uuidv4 } from 'uuid';
+
+
 const Signup = () => {
   const { signup, user, setUser } = useAuth();
   const navigate = useNavigate();
@@ -20,7 +23,7 @@ const Signup = () => {
       return;
     }
 
-    const newUser = { ...user, email: email, senha: senha };
+    const newUser = { ...user, email: email, senha: senha, id: uuidv4() };
 
     const res = signup(newUser);
 
