@@ -1,0 +1,27 @@
+.veiculo-container header {
+    padding: 0.8rem;
+}
+
+.box-veiculos {
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.a-azul {
+    display: block;
+    background: linear-gradient(96.13deg, #003B6D -8.9%, #005297 115.43%);
+    color: white;
+    border: none;
+    height: 60px;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: normal;
+    box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.158);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

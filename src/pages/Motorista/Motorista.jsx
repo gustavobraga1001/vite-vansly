@@ -2,6 +2,7 @@ import HeaderFixo from "../../components/HeaderFixo/headerFixo";
 import imgTelaMotorista from "../../assets/img-tela-motorista.svg";
 
 import "./Motorista.css";
+import { Link } from "react-router-dom";
 
 const Motorista = () => {
   return (
@@ -14,8 +15,9 @@ const Motorista = () => {
           Torne-se um dos nossos motoristas parceiros e comece a anunciar seus
           serviços no Vansly.
         </p>
-
-        <button>Iniciar cadastro</button>
+        <Link to={"documentos"}>
+          <button>Iniciar cadastro</button>
+        </Link>
       </div>
     </div>
   );

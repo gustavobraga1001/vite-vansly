@@ -18,6 +18,8 @@ import Motorista from "../pages/Motorista/Motorista";
 import { Faltas } from "../pages/Faltas/Faltas";
 import { InfomarFalta } from "../pages/Faltas/InformarFalta/InformarFalta";
 import { VerificarContrato } from "../pages/Contratos/VerificarContrato/VerificarContrato";
+import { Documentos } from "../pages/Driver/Documentos";
+import { Veiculo } from "../pages/Driver/Veiculo";
 
 const Private = ({ Item }) => {
   const { signed } = useAuth();
@@ -66,6 +68,8 @@ const RoutesApp = () => {
           />
 
           <Route path="/motorista" element={<Private Item={Motorista} />} />
+          <Route path="/motorista/documentos" element={<Private Item={Documentos} />} />
+          <Route path="/motorista/veiculo" element={<Private Item={Veiculo} />} />
         </Routes>
       </Fragment>
     </BrowserRouter>
