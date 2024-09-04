@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 import Footer from "../../components/Footer";
 import HeaderFixo from "../../components/HeaderFixo/headerFixo";
@@ -13,22 +14,27 @@ export function Faltas() {
   const [ausencias, setAusencias] = useState([]);
   const [ausenciasRecorrentes, setAusenciasRecorrentes] = useState([]);
 
+  const { user } = useAuth();
+
   useEffect(() => {
     const prevAusencias = JSON.parse(localStorage.getItem("ausencias"));
     const prevAusenciasRecorrentes = JSON.parse(localStorage.getItem("ausencias-recorrentes"));
 
     if (prevAusencias) {
-      setAusencias(prevAusencias);
+      setAusencias(prevAusencias.filter(item => item.userId === user.id));
     }
 
     if (prevAusenciasRecorrentes) {
-      setAusenciasRecorrentes(prevAusenciasRecorrentes)
+      setAusenciasRecorrentes(prevAusenciasRecorrentes
+        .filter(item => item.userId === user.id))
     }
   }, []); // O array de dependências está vazio para rodar o efeito apenas uma vez
 
   const formatData = (data) => {
     return data.map(day => day.substring(0, 3)).join(' | ');
   };
+
+  console.log(ausenciasRecorrentes)
 
   return (
     <div>
