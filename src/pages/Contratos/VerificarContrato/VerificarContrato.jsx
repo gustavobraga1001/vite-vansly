@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom"
 import HeaderFixo from "../../../components/HeaderFixo/headerFixo";
+import returnImgWhite from "../../../assets/icons/return-white.svg"
 
 export function VerificarContrato() {
     const { id } = useParams()
@@ -20,9 +21,10 @@ export function VerificarContrato() {
         <div>
             <HeaderFixo
                 backColor={"#003B6D"}
-            text={"Informações do Contrato"}
-            tela={"contratos"}
-            textColor={"white"}
+                text={"Informações do Contrato"}
+                tela={"contratos"}
+                textColor={"white"}
+                img={returnImgWhite}
             />
             {contrato.length > 0 ? (
                 <div key={contrato[0].id}>
@@ -43,9 +45,9 @@ export function VerificarContrato() {
                                 {contrato[0].motorista.horarios.manha.horario}
                             </p>
                         </div>
-                        {/* <div className="divisoria-anuncio">
-                            <img src={divisoria} alt="" />
-                        </div> */}
+
+                        <div className="divisoria-comp"></div>
+
                         <div className="card-info-contrato">
                             <p>
                                 <span>Embarque - </span>
@@ -64,9 +66,9 @@ export function VerificarContrato() {
                                 ""
                             )}
                         </div>
-                        {/* <div className="divisoria-anuncio">
-                            <img src={divisoria} alt="" />
-                        </div> */}
+
+                        <div className="divisoria-comp"></div>
+
                         <div className="card-info-final">
                             <h1>Preço final do contrato</h1>
                             <div className="card-info-contrato">

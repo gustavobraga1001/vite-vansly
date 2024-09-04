@@ -8,9 +8,12 @@ import { useDadosViagem } from "../../../contexts/DadosViagemContext";
 import { useContrato } from "../../../contexts/Contrato";
 
 import { v4 as uuidv4 } from 'uuid';
+import useAuth from "../../../hooks/useAuth";
 
 const InfoContrato = () => {
   const { id } = useParams();
+
+  const { user } = useAuth()
 
   const { ida, destino, desembarque, motorista } = useDadosViagem();
   const { contrato, setContrato } = useContrato();
@@ -33,6 +36,7 @@ const InfoContrato = () => {
 
     const newContract = {
       id: uuidv4(),
+      userId: user.id,
       motorista: {
         id: motorista.id,
         title: motorista.title,
@@ -47,7 +51,9 @@ const InfoContrato = () => {
 
     setContrato(newContract);
 
-    localStorage.setItem("contratos", JSON.stringify([newContract]));
+    const prevContratos = JSON.parse(localStorage.getItem("contratos")) || [];
+
+    localStorage.setItem("contratos", JSON.stringify([...prevContratos, newContract]));
 
     navigate("/proposta")
   };

@@ -6,14 +6,17 @@ import divisoria from "../../assets/Divisoria.svg";
 
 import "./Contratos.css"
 import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const Contratos = () => {
   const [contratos, setContratos] = useState([]);
 
+  const { user } = useAuth()
+
   useEffect(() => {
     const storedContracts = JSON.parse(localStorage.getItem("contratos"));
     if (storedContracts) {
-      setContratos(storedContracts);
+      setContratos(storedContracts.filter(item => item.userId === user.id));
     }
   }, []);
 
@@ -32,7 +35,7 @@ const Contratos = () => {
         contratos.map((contract) => {
           return (
             <Link to={contract.id} className="link-to" key={contract.id}>
-              <div className="box-list-contrato" key={contract.motorista.title}>
+              <div className="box-list-contrato">
                 <div>
                   <span>{contract.motorista.title}</span>
                 </div>
