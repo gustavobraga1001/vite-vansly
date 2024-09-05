@@ -34,21 +34,17 @@ export function Faltas() {
     return data.map(day => day.substring(0, 3)).join(' | ');
   };
 
-  console.log(ausenciasRecorrentes)
-
   return (
     <div>
       <HeaderFixo text={"Informar ausência"} tela="home" />
       <main className="main-faltas">
-        {ausenciasRecorrentes.length > 0 ? (
+        {ausenciasRecorrentes.length > 0 && (
           <>
             <p className="title-faltas">Ausencias Recorrentes</p>
             <div className="card-faltas">
               <div>
                 <UserCircleMinus size={36} color="#003B6D" />
-                {ausenciasRecorrentes.length > 0 && (
-                  <span>{formatData(ausenciasRecorrentes[0].data)}</span>
-                )}
+                <span>{formatData(ausenciasRecorrentes[0].data)}</span>
               </div>
               <DotsThreeVertical
                 size={32}
@@ -57,31 +53,30 @@ export function Faltas() {
               />
             </div>
           </>
-        ) : ""
-        }
+        )}
 
-        {ausencias.length > 0 ? (
+        {ausencias.length > 0 && (
           <>
             <p className="title-faltas">Ausencias</p>
             <div className="list-faltas">
-              {ausencias.map((ausencia) => {
-                return (
-                  <div className="card-faltas" key={ausencia.data}>
-                    <div>
-                      <UserCircleMinus size={36} color="#003B6D" />
-                      <span>{ausencia.data}</span>
-                    </div>
-                    <DotsThreeVertical
-                      size={32}
-                      color="#AAAAAA"
-                      weight="bold"
-                    />
+              {ausencias.map((ausencia) => (
+                <div className="card-faltas" key={ausencia.data}>
+                  <div>
+                    <UserCircleMinus size={36} color="#003B6D" />
+                    <span>{ausencia.data}</span>
                   </div>
-                );
-              })}
+                  <DotsThreeVertical
+                    size={32}
+                    color="#AAAAAA"
+                    weight="bold"
+                  />
+                </div>
+              ))}
             </div>
           </>
-        ) : (
+        )}
+
+        {ausencias.length === 0 && ausenciasRecorrentes.length === 0 && (
           <>
             <img src={imgFalta} alt="Nenhuma ausência registrada" />
             <h2>Nenhuma ausência registrada</h2>
