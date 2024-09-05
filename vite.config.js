@@ -7,9 +7,32 @@ import { manifestForPlugIn } from "./manifest";
 export default defineConfig({
   plugins: [
     react(),
-    VitePWA(
-      react(), VitePWA(manifestForPlugIn)
-    ),
+    VitePWA({
+      ...manifestForPlugIn,  // Passando o manifest corretamente
+      registerType: 'autoUpdate',  // Ou outro tipo de registro, como necessário
+      workbox: {
+        runtimeCaching: [
+          {
+            urlPattern: ({ request }) => request.destination === 'document',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'pages-cache',
+            },
+          },
+          {
+            urlPattern: ({ request }) => request.destination === 'image',
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'images-cache',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 dias
+              },
+            },
+          },
+        ],
+      },
+    }),
   ],
   server: {
     host: true,  // Ou você pode usar '0.0.0.0'
