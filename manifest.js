@@ -32,8 +32,8 @@ export const manifestForPlugIn = {
           purpose: "any", // Alterado para 'any'
         },
       ],
-      theme_color: "#000000",
-      background_color: "#000000",
+      theme_color: "#003B6D",
+      background_color: "#FFF",
       display: "standalone",
       scope: "/",
       start_url: "/",
