@@ -20,6 +20,7 @@ import { InfomarFalta } from "../pages/Faltas/InformarFalta/InformarFalta";
 import { VerificarContrato } from "../pages/Contratos/VerificarContrato/VerificarContrato";
 import { Documentos } from "../pages/Driver/Documentos";
 import { Veiculo } from "../pages/Driver/Veiculo";
+import { InfoVeiculo } from "../pages/Driver/Veiculo/Infos";
 
 const Private = ({ Item }) => {
   const { signed } = useAuth();
@@ -70,6 +71,7 @@ const RoutesApp = () => {
           <Route path="/motorista" element={<Private Item={Motorista} />} />
           <Route path="/motorista/documentos" element={<Private Item={Documentos} />} />
           <Route path="/motorista/veiculo" element={<Private Item={Veiculo} />} />
+          <Route path="/motorista/veiculo-infos" element={<Private Item={InfoVeiculo} />} />
         </Routes>
       </Fragment>
     </BrowserRouter>

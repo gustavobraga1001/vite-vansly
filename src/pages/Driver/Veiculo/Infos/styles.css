@@ -1,0 +1,35 @@
+.infos-veiculo-container form {
+    margin: 1rem;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 25px;
+}
+
+.infos-veiculo-container form div {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.infos-veiculo-container form select {
+    height: 60px;
+    border: none;
+    background: #EBEBEB;
+    border-radius: 5px;
+    color: #AAAAAA;
+    font-size: 1rem;
+    padding: 1rem;
+
+    /* appearance: none; */
+}
+
+.infos-veiculo-container form input::placeholder {
+    color: #AAAAAA;
+    /* Define a cor do placeholder */
+    opacity: 1;
+    /* Garante que o placeholder não fique translúcido */
+}
