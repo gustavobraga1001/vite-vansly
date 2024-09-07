@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 
 import "./Perfil.css";
 import useAuth from "../../hooks/useAuth";
+import { CaretRight, IdentificationCard, Oven, Wall } from "@phosphor-icons/react";
 
 const Perfil = () => {
   const { user } = useAuth();
@@ -28,6 +29,45 @@ const Perfil = () => {
           </Link>
         </div>
       </div>
+
+      {user.role === 1 ?
+        (
+          <div>
+
+            <Link to={"/documentos-view"}>
+              <div className="opcao-perfil">
+                <div className="inicio">
+                  <IdentificationCard size={40} color="#003B6D" weight="fill" />
+                  <p>Documentos</p>
+                </div>
+                <CaretRight size={23} weight="bold" />
+              </div>
+            </Link>
+
+
+            <Link to={"/documentos-view"}>
+              <div className="opcao-perfil">
+                <div className="inicio">
+                  <Oven size={40} color="#003B6D" weight="bold" />
+                  <p>Anuncio</p>
+                </div>
+                <CaretRight size={23} weight="bold" />
+              </div>
+            </Link>
+
+
+            <Link to={"/documentos-view"}>
+              <div className="opcao-perfil">
+                <div className="inicio">
+                  <Wall size={40} color="#003B6D" weight="bold" />
+                  <p>Relatórios</p>
+                </div>
+                <CaretRight size={23} weight="bold" />
+              </div>
+            </Link>
+          </div>
+        ) : ""}
+
       {opcoes.map((info, i) => {
         if (info.onClick) {
           return (
@@ -50,6 +90,7 @@ const Perfil = () => {
           );
         }
       })}
+
       <Footer home={false} presenca={false} percurso={false} perfil={true} />
     </div>
   );

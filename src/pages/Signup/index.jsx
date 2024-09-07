@@ -23,7 +23,7 @@ const Signup = () => {
       return;
     }
 
-    const newUser = { ...user, email: email, senha: senha, id: uuidv4() };
+    const newUser = { ...user, email: email, senha: senha, id: uuidv4(), role: 1 };
 
     const res = signup(newUser);
 
