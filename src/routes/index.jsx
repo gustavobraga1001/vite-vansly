@@ -23,6 +23,7 @@ import { Veiculo } from "../pages/Driver/Veiculo";
 import { InfoVeiculo } from "../pages/Driver/Veiculo/Infos";
 import { ViewDocs } from "../pages/Driver/Documentos/ViewDocs";
 import { AnuncioEdit } from "../pages/Driver/AnuncioEdit";
+import { HorariosVagas } from "../pages/Driver/AnuncioEdit/HorariosVagas";
 
 const Private = ({ Item }) => {
   const { signed } = useAuth();
@@ -90,6 +91,10 @@ const RoutesApp = () => {
           <Route
             path="/motorista/anuncio-edit"
             element={<Private Item={AnuncioEdit} />}
+          />
+          <Route
+            path="/motorista/anuncio-edit/horarios-vagas"
+            element={<Private Item={HorariosVagas} />}
           />
         </Routes>
       </Fragment>

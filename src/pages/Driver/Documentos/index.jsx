@@ -1,41 +1,55 @@
 import { ArrowLeft } from "@phosphor-icons/react";
-
-import "./styles.css"
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+import useAuth from "../../../hooks/useAuth"
+import "./styles.css";
+
 export function Documentos() {
+    const [fileCnh, setFileCnh] = useState(null);
+    const [fileCrlv, setFileCrlv] = useState(null);
+    const { user } = useAuth();
+    const navigate = useNavigate();
 
-    const [imageCnh, setImageCnh] = useState(null);
-    const [imageCrlv, setImageCrlv] = useState(null);
-
-    const navigate = useNavigate()
-
-    const handleImageUploadCnh = (event) => {
+    const handleImageUpload = (event, setFile) => {
         const file = event.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                setImageCnh(reader.result);
-            };
-            reader.readAsDataURL(file);
+            setFile(file);
         }
     };
 
-    const handleImageUploadCrlv = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                setImageCrlv(reader.result);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
+    const handleSubmitDoc = (event) => {
+        event.preventDefault();
 
-    function handleSubmitDoc() {
-        navigate("/motorista/veiculo")
-    }
+        const docsDb = JSON.parse(localStorage.getItem('docs_bd')) || {};
+
+        if (fileCnh || fileCrlv) {
+            const newEntry = { cnhImage: null, crlvImage: null };
+
+            if (fileCnh) {
+                const readerCnh = new FileReader();
+                readerCnh.onload = () => {
+                    newEntry.cnhImage = readerCnh.result;
+                    docsDb[user.id] = { ...docsDb[user.id], ...newEntry };
+                    localStorage.setItem('docs_bd', JSON.stringify(docsDb));
+                };
+                readerCnh.readAsDataURL(fileCnh);
+            }
+
+            if (fileCrlv) {
+                const readerCrlv = new FileReader();
+                readerCrlv.onload = () => {
+                    newEntry.crlvImage = readerCrlv.result;
+                    docsDb[user.id] = { ...docsDb[user.id], ...newEntry };
+                    localStorage.setItem('docs_bd', JSON.stringify(docsDb));
+                };
+                readerCrlv.readAsDataURL(fileCrlv);
+            }
+        }
+
+        // Navegue para a próxima página ou execute outras ações
+        navigate("/motorista/veiculo");
+    };
 
     return (
         <div className="documentos-container">
@@ -50,17 +64,27 @@ export function Documentos() {
             </div>
             <form className="documentos-box" onSubmit={handleSubmitDoc}>
                 <h2>Envio de documentos</h2>
-                <p>Para prosseguir com o seu cadastro de motorista é necessário realizar o envio da sua Carteira Nacional de Habilitação (CNH) e  do Certificado de registro e licenciamento de veículo (CRLV)</p>
-
+                <p>Para prosseguir com o seu cadastro de motorista é necessário realizar o envio da sua Carteira Nacional de Habilitação (CNH) e do Certificado de registro e licenciamento de veículo (CRLV)</p>
                 <p>Para isso basta enviar uma foto do documento conforme a imagem de exemplo. Garanta que todos os campos estejam visíveis.</p>
 
                 <h3>Selecionar foto da CNH</h3>
-                <input type="file" accept="image/*" onChange={handleImageUploadCnh} required={true} />
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(e, setFileCnh)}
+                />
 
                 <h3>Selecionar foto da CRLV</h3>
-                <input type="file" accept="image/*" onChange={handleImageUploadCrlv} required={true} />
-                <button className="button-azul">Prosseguir</button>
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(e, setFileCrlv)}
+                />
+
+                <button className="button-azul" type="submit">
+                    Prosseguir
+                </button>
             </form>
         </div>
-    )
+    );
 }
