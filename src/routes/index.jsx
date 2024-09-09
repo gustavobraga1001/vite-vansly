@@ -21,6 +21,8 @@ import { VerificarContrato } from "../pages/Contratos/VerificarContrato/Verifica
 import { Documentos } from "../pages/Driver/Documentos";
 import { Veiculo } from "../pages/Driver/Veiculo";
 import { InfoVeiculo } from "../pages/Driver/Veiculo/Infos";
+import { ViewDocs } from "../pages/Driver/Documentos/ViewDocs";
+import { AnuncioEdit } from "../pages/Driver/AnuncioEdit";
 
 const Private = ({ Item }) => {
   const { signed } = useAuth();
@@ -69,9 +71,26 @@ const RoutesApp = () => {
           />
 
           <Route path="/motorista" element={<Private Item={Motorista} />} />
-          <Route path="/motorista/documentos" element={<Private Item={Documentos} />} />
-          <Route path="/motorista/veiculo" element={<Private Item={Veiculo} />} />
-          <Route path="/motorista/veiculo-infos" element={<Private Item={InfoVeiculo} />} />
+          <Route
+            path="/motorista/documentos"
+            element={<Private Item={Documentos} />}
+          />
+          <Route
+            path="/motorista/veiculo"
+            element={<Private Item={Veiculo} />}
+          />
+          <Route
+            path="/motorista/veiculo-infos"
+            element={<Private Item={InfoVeiculo} />}
+          />
+          <Route
+            path="/motorista/documentos-view"
+            element={<Private Item={ViewDocs} />}
+          />
+          <Route
+            path="/motorista/anuncio-edit"
+            element={<Private Item={AnuncioEdit} />}
+          />
         </Routes>
       </Fragment>
     </BrowserRouter>
