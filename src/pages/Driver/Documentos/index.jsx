@@ -21,35 +21,53 @@ export function Documentos() {
     const handleSubmitDoc = (event) => {
         event.preventDefault();
 
-        const docsDb = JSON.parse(localStorage.getItem('docs_bd')) || {};
+        // Recupera os dados atuais ou inicializa um array vazio
+        const docsDb = JSON.parse(localStorage.getItem('docs_bd')) || [];
 
-        if (fileCnh || fileCrlv) {
-            const newEntry = { cnhImage: null, crlvImage: null };
+        const newEntry = { userId: user.id, cnhImage: null, crlvImage: null };
 
-            if (fileCnh) {
-                const readerCnh = new FileReader();
-                readerCnh.onload = () => {
-                    newEntry.cnhImage = readerCnh.result;
-                    docsDb[user.id] = { ...docsDb[user.id], ...newEntry };
-                    localStorage.setItem('docs_bd', JSON.stringify(docsDb));
-                };
-                readerCnh.readAsDataURL(fileCnh);
-            }
+        if (fileCnh) {
+            const readerCnh = new FileReader();
+            readerCnh.onload = () => {
+                newEntry.cnhImage = readerCnh.result;
 
-            if (fileCrlv) {
-                const readerCrlv = new FileReader();
-                readerCrlv.onload = () => {
-                    newEntry.crlvImage = readerCrlv.result;
-                    docsDb[user.id] = { ...docsDb[user.id], ...newEntry };
-                    localStorage.setItem('docs_bd', JSON.stringify(docsDb));
-                };
-                readerCrlv.readAsDataURL(fileCrlv);
-            }
+                // Atualiza ou adiciona a nova entrada ao array
+                const existingIndex = docsDb.findIndex(doc => doc.userId === user.id);
+                if (existingIndex !== -1) {
+                    docsDb[existingIndex] = { ...docsDb[existingIndex], ...newEntry };
+                } else {
+                    docsDb.push(newEntry);
+                }
+
+                // Atualiza o localStorage
+                localStorage.setItem('docs_bd', JSON.stringify(docsDb));
+            };
+            readerCnh.readAsDataURL(fileCnh);
+        }
+
+        if (fileCrlv) {
+            const readerCrlv = new FileReader();
+            readerCrlv.onload = () => {
+                newEntry.crlvImage = readerCrlv.result;
+
+                // Atualiza ou adiciona a nova entrada ao array
+                const existingIndex = docsDb.findIndex(doc => doc.userId === user.id);
+                if (existingIndex !== -1) {
+                    docsDb[existingIndex] = { ...docsDb[existingIndex], ...newEntry };
+                } else {
+                    docsDb.push(newEntry);
+                }
+
+                // Atualiza o localStorage
+                localStorage.setItem('docs_bd', JSON.stringify(docsDb));
+            };
+            readerCrlv.readAsDataURL(fileCrlv);
         }
 
         // Navegue para a próxima página ou execute outras ações
         navigate("/motorista/veiculo");
     };
+
 
     return (
         <div className="documentos-container">

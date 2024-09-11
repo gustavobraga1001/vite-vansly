@@ -38,62 +38,61 @@ export function Faltas() {
     <div>
       <HeaderFixo text={"Informar ausência"} tela="home" />
       <main className="main-faltas">
-        {ausenciasRecorrentes.length > 0 && (
+        {user.role === 2 ? (
+          <div>
+            <h1>Você não tem acesso a essa página</h1>
+          </div>
+        ) : (
           <>
-            <p className="title-faltas">Ausencias Recorrentes</p>
-            <div className="card-faltas">
-              <div>
-                <UserCircleMinus size={36} color="#003B6D" />
-                <span>{formatData(ausenciasRecorrentes[0].data)}</span>
-              </div>
-              <DotsThreeVertical
-                size={32}
-                color="#AAAAAA"
-                weight="bold"
-              />
-            </div>
-          </>
-        )}
-
-        {ausencias.length > 0 && (
-          <>
-            <p className="title-faltas">Ausencias</p>
-            <div className="list-faltas">
-              {ausencias.map((ausencia) => (
-                <div className="card-faltas" key={ausencia.data}>
+            {ausenciasRecorrentes.length > 0 && (
+              <>
+                <p className="title-faltas">Ausências Recorrentes</p>
+                <div className="card-faltas">
                   <div>
                     <UserCircleMinus size={36} color="#003B6D" />
-                    <span>{ausencia.data}</span>
+                    <span>{formatData(ausenciasRecorrentes[0].data)}</span>
                   </div>
-                  <DotsThreeVertical
-                    size={32}
-                    color="#AAAAAA"
-                    weight="bold"
-                  />
+                  <DotsThreeVertical size={32} color="#AAAAAA" weight="bold" />
                 </div>
-              ))}
-            </div>
+              </>
+            )}
+
+            {ausencias.length > 0 && (
+              <>
+                <p className="title-faltas">Ausências</p>
+                <div className="list-faltas">
+                  {ausencias.map((ausencia) => (
+                    <div className="card-faltas" key={ausencia.data}>
+                      <div>
+                        <UserCircleMinus size={36} color="#003B6D" />
+                        <span>{ausencia.data}</span>
+                      </div>
+                      <DotsThreeVertical size={32} color="#AAAAAA" weight="bold" />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {ausencias.length === 0 && ausenciasRecorrentes.length === 0 && (
+              <>
+                <img src={imgFalta} alt="Nenhuma ausência registrada" />
+                <h2>Nenhuma ausência registrada</h2>
+                <span>
+                  Até o momento você não informou nenhuma ausência a seu motorista.
+                </span>
+              </>
+            )}
+
+            <Link to={"informar-faltas"}>
+              <button>Informar ausência</button>
+            </Link>
           </>
         )}
-
-        {ausencias.length === 0 && ausenciasRecorrentes.length === 0 && (
-          <>
-            <img src={imgFalta} alt="Nenhuma ausência registrada" />
-            <h2>Nenhuma ausência registrada</h2>
-            <span>
-              Até o momento você não informou nenhuma ausência a seu motorista.
-            </span>
-          </>
-        )}
-
-        <Link to={"informar-faltas"}>
-          <button>
-            Informar ausência
-          </button>
-        </Link>
       </main>
 
       <Footer home={false} presenca={true} percurso={false} perfil={false} />
     </div>
   );
 }
+

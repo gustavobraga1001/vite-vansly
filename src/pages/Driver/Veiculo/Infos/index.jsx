@@ -26,7 +26,7 @@ export function InfoVeiculo() {
             id: uuidv4(),
             userId: user.id,
             ...formCamps
-        }
+        };
 
         // Pegando os dados já armazenados no localStorage
         const veiculosExistentes = JSON.parse(localStorage.getItem("veiculos_bd")) || [];
@@ -37,7 +37,22 @@ export function InfoVeiculo() {
         // Salvando a lista atualizada no localStorage
         localStorage.setItem("veiculos_bd", JSON.stringify(veiculosAtualizados));
 
-        navigate("/perfil")
+        // Atualizando o role do usuário logado no array de usuários
+        const users = JSON.parse(localStorage.getItem("users_bd")) || [];
+
+        // Encontrando o usuário logado no array e atualizando o role
+        const updatedUsers = users.map(u => {
+            if (u.id === user.id) {
+                return { ...u, role: 2 }; // Atualiza o role para 2
+            }
+            return u; // Mantém os outros usuários inalterados
+        });
+
+        // Salvando o array de usuários atualizado no localStorage
+        localStorage.setItem("users_bd", JSON.stringify(updatedUsers));
+
+        // Navegar para a página de perfil
+        navigate("/perfil");
     }
 
     return (
