@@ -10,6 +10,7 @@ export function EditarPerfil() {
         dataNascimento: "",
         telefone: "",
         email: "",
+        perfilImage: "", // Campo para armazenar a imagem de perfil
     });
 
     const { user } = useAuth(); // Pega o usuário autenticado
@@ -18,8 +19,8 @@ export function EditarPerfil() {
         // Buscar dados do usuário logado no localStorage
         const users_bd = JSON.parse(localStorage.getItem("users_bd"));
 
-        // Encontre o usuário logado em users_bd
-        const loggedUser = users_bd.find(u => u.id === user.id); // Usa o 'user' do contexto
+        // Encontra o usuário logado em users_bd
+        const loggedUser = users_bd.find(u => u.id === user.id);
 
         if (loggedUser) {
             setUserData({
@@ -27,9 +28,10 @@ export function EditarPerfil() {
                 dataNascimento: loggedUser.dataNascimento,
                 telefone: loggedUser.telefone,
                 email: loggedUser.email,
+                perfilImage: loggedUser.perfilImage || "", // Carrega a imagem de perfil se existir
             });
         }
-    }, [user]); // Executa o efeito quando 'user' estiver disponível
+    }, [user]);
 
     const handleChange = (e) => {
         setUserData({
@@ -38,17 +40,29 @@ export function EditarPerfil() {
         });
     };
 
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setUserData({
+                ...userData,
+                perfilImage: reader.result, // Converte a imagem para base64
+            });
+        };
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Aqui você pode salvar as alterações no localStorage ou enviar para uma API
-        const users_bd = JSON.parse(localStorage.getItem("users_bd"));
-
         // Atualiza apenas o usuário logado
+        const users_bd = JSON.parse(localStorage.getItem("users_bd"));
         const updatedUsers = users_bd.map(u =>
             u.id === user.id
                 ? { ...u, ...userData } // Atualiza os dados do usuário logado
-                : u // Mantém os demais usuários inalterados
+                : u
         );
 
         localStorage.setItem("users_bd", JSON.stringify(updatedUsers));
@@ -106,7 +120,19 @@ export function EditarPerfil() {
 
                 <div className="button-foto-perfil">
                     <p>Alterar foto de perfil</p>
-                    <UploadSimple size={25} />
+                    <button
+                        type="button"
+                        onClick={() => document.getElementById("imageInput").click()}
+                    >
+                        <UploadSimple size={25} />
+                    </button>
+                    <input
+                        id="imageInput"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        style={{ display: "none" }} // Esconde o input de arquivo
+                    />
                 </div>
 
                 <input type="submit" value="Salvar Alterações" className="salvar-editar-perfil" />

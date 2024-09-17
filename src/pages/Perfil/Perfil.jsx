@@ -17,7 +17,7 @@ const Perfil = () => {
       <HeaderFixo tela={"home"} img={returnImg} text={"Perfil"} />
       <div className="box-perfil">
         <div className="foto-perfil">
-          <img src={imgPerfil} />
+          <img src={user.perfilImage ? user.perfilImage : imgPerfil} alt="Imagem de perfil" />
         </div>
         <div className="info">
           <h3>{user.nome}</h3>
