@@ -1,0 +1,86 @@
+.header-home-driver {
+    width: 100%;
+    padding: 30px 15px;
+    background: rgba(0, 59, 109, 1);
+    color: #fff;
+}
+
+.header-home-mensagem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.btn-documento {
+    display: flex;
+    background-color: #fff;
+    color: black;
+    padding: 15px 10px;
+    border-radius: 10px;
+    gap: 5px;
+    align-items: center;
+}
+
+.btn-documento p {
+    font-size: 14px;
+}
+
+.main-home-driver {
+    padding: 15px;
+    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.table-container {
+    display: flex;
+    justify-content: center;
+}
+
+.custom-table-home {
+    width: 100%;
+    max-width: 600px;
+    border: 2px solid #e0e0e0;
+    /* Borda ao redor da tabela */
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    border-spacing: 0;
+    margin: 0;
+    /* Remove o espaçamento entre as células */
+}
+
+.custom-table-home th,
+.custom-table-home td {
+    /* padding: 10px 15px; */
+    text-align: left;
+}
+
+.custom-table-home th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+.custom-table-home tbody tr {
+    border-bottom: none;
+    /* Remove a linha entre as linhas da tabela */
+}
+
+.custom-table-home tbody tr:last-child {
+    border-bottom: none;
+}
+
+.arrow-cell {
+    text-align: right;
+    color: #007bff;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Remover bordas das células */
+.custom-table-home th,
+.custom-table-home td {
+    border: none;
+}

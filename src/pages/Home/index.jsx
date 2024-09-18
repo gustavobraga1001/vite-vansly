@@ -4,16 +4,20 @@ import BemVindo from "../../components/BemVindo";
 import Card from "../../components/Card";
 import Header from "../../components/Header";
 import infoCards from "./infoCard";
+import useAuth from "../../hooks/useAuth";
+import { HomeDriver } from "../Driver/Home";
 
 const Home = () => {
-  return (
-    <div className="box-home">
+  const { user } = useAuth()
+
+  return user.role === 1 ? (
+    <div className="box-home" >
       <Header />
       <main className="conteudo-home">
         <BemVindo />
         <h3>Rotas disponíveis</h3>
         <div className="cards">
-          {infoCards.map((info,i) => (
+          {infoCards.map((info, i) => (
             <Card
               key={i}
               id={info.id}
@@ -27,8 +31,11 @@ const Home = () => {
         </div>
       </main>
       <Footer home={true} presenca={false} percurso={false} perfil={false} />
-    </div>
-  );
+    </div >
+  ) : (
+    <HomeDriver />
+  )
+
 };
 
 export default Home;
