@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 
 import "./Perfil.css";
 import useAuth from "../../hooks/useAuth";
+import { FooterDriver } from "../../components/FooterDriver";
 
 const Perfil = () => {
   const { user } = useAuth();
@@ -17,7 +18,10 @@ const Perfil = () => {
       <HeaderFixo tela={"home"} img={returnImg} text={"Perfil"} />
       <div className="box-perfil">
         <div className="foto-perfil">
-          <img src={user.perfilImage ? user.perfilImage : imgPerfil} alt="Imagem de perfil" />
+          <img
+            src={user.perfilImage ? user.perfilImage : imgPerfil}
+            alt="Imagem de perfil"
+          />
         </div>
         <div className="info">
           <h3>{user.nome}</h3>
@@ -30,7 +34,11 @@ const Perfil = () => {
 
       <OpcoesPerfil />
 
-      <Footer home={false} presenca={false} percurso={false} perfil={true} />
+      {user.role === 2 ? (
+        <FooterDriver perfil />
+      ) : (
+        <Footer home={false} presenca={false} percurso={false} perfil={true} />
+      )}
     </div>
   );
 };

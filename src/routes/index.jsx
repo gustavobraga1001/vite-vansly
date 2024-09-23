@@ -25,6 +25,7 @@ import { ViewDocs } from "../pages/Driver/Documentos/ViewDocs";
 import { AnuncioEdit } from "../pages/Driver/AnuncioEdit";
 import { HorariosVagas } from "../pages/Driver/AnuncioEdit/HorariosVagas";
 import { EditarPerfil } from "../pages/Perfil/EditarPerfil";
+import { Estatisticas } from "../pages/Driver/Estatisticas";
 
 const Private = ({ Item }) => {
   const { signed } = useAuth();
@@ -47,7 +48,10 @@ const RoutesApp = () => {
           <Route path="/busca" element={<Private Item={Busca} />} />
           <Route path="/percurso" element={<Percurso />} />
           <Route path="/perfil" element={<Private Item={Perfil} />} />
-          <Route path="/editar-perfil" element={<Private Item={EditarPerfil} />} />
+          <Route
+            path="/editar-perfil"
+            element={<Private Item={EditarPerfil} />}
+          />
           <Route path="/anuncio/:id" element={<Private Item={Anuncio} />} />
           <Route
             path="/contrato/locais/:id"
@@ -97,6 +101,10 @@ const RoutesApp = () => {
           <Route
             path="/motorista/anuncio-edit/horarios-vagas"
             element={<Private Item={HorariosVagas} />}
+          />
+          <Route
+            path="/estatisticas"
+            element={<Private Item={Estatisticas} />}
           />
         </Routes>
       </Fragment>
