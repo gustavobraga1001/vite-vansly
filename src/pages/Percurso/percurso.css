@@ -41,6 +41,32 @@
     background: rgba(0, 59, 109, 1);
 }
 
+.container-item-off .bola-barra {
+    background: rgba(170, 170, 170, 1);
+}
+
+.container-item-percurso button {
+    display: none;
+}
+
+.container-item-off button {
+    display: block;
+    width: 100%;
+    margin-top: 5px;
+    padding: 7px 16px;
+    border-radius: 5px;
+    background: linear-gradient(96.13deg, #003B6D -8.9%, #005297 115.43%);
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.item-final .traco-barra {
+    display: none;
+}
+
+
 @media (min-width: 1024px) {
 
     .main-percurso {
