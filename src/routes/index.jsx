@@ -2,7 +2,6 @@ import { Fragment } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
 import Signup from "../pages/Signup";
-import useAuth from "../hooks/useAuth";
 import Login from "../pages/Login";
 import Busca from "../pages/Busca/busca";
 import Anuncio from "../pages/Anuncio/Anuncio";
@@ -27,13 +26,26 @@ import { HorariosVagas } from "../pages/Driver/AnuncioEdit/HorariosVagas";
 import { EditarPerfil } from "../pages/Perfil/EditarPerfil";
 import { Estatisticas } from "../pages/Driver/Estatisticas";
 
-const Private = ({ Item }) => {
-  const { signed } = useAuth();
-
-  return signed ? <Item /> : <Login />;
-};
 
 const RoutesApp = () => {
+  const Private = ({ Item }) => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      return <Login />;
+    } else {
+      return <Item />;
+    }
+  };
+  
+  const IsLogin = ({ Item }) => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      return <Item />;
+    } else {
+      return <Home />;
+    }
+  };
+
   return (
     <BrowserRouter>
       <Fragment>
@@ -42,10 +54,10 @@ const RoutesApp = () => {
           <Route path="/signupName" element={<SignupName />} />
           <Route path="/signup" element={<Signup />} />
 
-          <Route path="*" element={<Private Item={Home} />} />
-
-          <Route path="/home" element={<Private Item={Home} />} />
-          <Route path="/busca" element={<Private Item={Busca} />} />
+          <Route path="/" element={<IsLogin Item={Login} />} />
+        <Route path="*" element={<IsLogin Item={Login} />} />
+        <Route exact path="/home" element={<Private Item={Home} />} />
+          {/* <Route path="/busca" element={<Private Item={Busca} />} />
           <Route path="/percurso" element={<Percurso />} />
           <Route path="/perfil" element={<Private Item={Perfil} />} />
           <Route
@@ -105,7 +117,7 @@ const RoutesApp = () => {
           <Route
             path="/estatisticas"
             element={<Private Item={Estatisticas} />}
-          />
+          /> */}
         </Routes>
       </Fragment>
     </BrowserRouter>

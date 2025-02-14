@@ -8,10 +8,9 @@ import useAuth from "../../hooks/useAuth";
 import { HomeDriver } from "../Driver/Home";
 
 const Home = () => {
-  const { user } = useAuth()
 
-  return user.role === 1 ? (
-    <div className="box-home" >
+  return (
+    <div className="box-home">
       <Header />
       <main className="conteudo-home">
         <BemVindo />
@@ -32,9 +31,9 @@ const Home = () => {
       </main>
       <Footer home={true} presenca={false} percurso={false} perfil={false} />
     </div >
-  ) : (
-    <HomeDriver />
-  )
+  ) 
+  //   <HomeDriver />
+  // )
 
 };
 

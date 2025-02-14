@@ -2,32 +2,33 @@ import React, { useState } from "react";
 import Input from '../Input/index'
 import Button from "../../components/Button";
 import { Link, useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
 import './index.css'
+import useAuth from "../../contexts/AuthProvider/useAuth";
 
 const Form = () => {
-  const { signin } = useAuth();
   const navigate = useNavigate();
+  const auth = useAuth();
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = () => {
-    if (!email | !senha) {
-      setError("Preencha todos os campos");
-      return;
+    async function onFinish() {
+      if (!email || !senha) {
+        setError("Digite suas credenciais");
+        return;
+      }
+
+      try {
+        await auth.authenticate(email, senha);
+        navigate("/home");
+      } catch (error) {
+        // console.error("Erro ao fazer login:", error);
+        setError(error.message);
+      }
+      // navigate("/home"); 
     }
 
-    const res = signin(email, senha);
-
-    if (res) {
-      setError(res);
-      return;
-    }
-
-    navigate("/home"); 
-  };
   return (
     <div className="conteudo">
             <Input 
@@ -43,7 +44,6 @@ const Form = () => {
                 placeholder="Senha"
                 onChange={(e) => [setSenha(e.target.value), setError("")]}
             />
-            <p className="label-error">{error}</p>
             <div className="opcoes-login">
                 <div className="lembrar">
                     <input type="checkbox" id="check-box" className="check" />
@@ -51,13 +51,14 @@ const Form = () => {
                 </div>
                 <a href="">Esqueci minha senha</a>
             </div>
+            <p>{error}</p>
             <div className="botoes">
-              <Link to="/signupName" className="link-cadastrar">
+              <Link to="/signup" className="link-cadastrar">
                   <p>
                     Cadastrar
                   </p>
               </Link>
-              <Button text="Acessar"  classe={'acessar'} onClick={handleLogin}/>
+              <Button text="Acessar"  classe={'acessar'} onClick={onFinish}/>
             </div>
         </div>
   );

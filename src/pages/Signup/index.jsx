@@ -1,40 +1,33 @@
 import React, { useState } from "react";
 import Button from "../../components/Button";
 import { Link, useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
 import "./index.css";
 import Input from "../../components/Input";
 import voltar from "../../assets/Return.svg";
-
-import { v4 as uuidv4 } from 'uuid';
-
+import useAuth from "../../contexts/AuthProvider/useAuth";
 
 const Signup = () => {
-  const { signup, user, setUser } = useAuth();
-  const navigate = useNavigate();
+  const auth = useAuth();
 
   const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSignup = () => {
-    if (!email | !senha) {
-      setError("Preencha todos os campos");
+  async function onFinish() {
+    if (!name || !email || !password) {
+      setError("Digite suas credenciais");
       return;
     }
 
-    const newUser = { ...user, email: email, senha: senha, id: uuidv4(), role: 1 };
-
-    const res = signup(newUser);
-
-    if (res) {
-      setError(res);
-      return;
+    try {
+      await auth.register(name, email, password);
+    } catch (error) {
+      // console.error("Erro ao fazer login:", error);
+      setError(error.message);
     }
-
-    alert("Usuário cadatrado com sucesso!");
-    navigate("/");
-  };
+    // navigate("/home"); 
+  }
 
   return (
     <div className="container-signup">
@@ -47,7 +40,13 @@ const Signup = () => {
         <h1>Cadastrar</h1>
         <p>Insira seu email para prosseguirmos com seu cadastro.</p>
       </div>
-      <div className="content" action="/home">
+      <div className="content">
+        <Input
+          label={"Digite seu Nome"}
+          type="text"
+          placeholder="Nome"
+          onChange={(e) => [setName(e.target.value), setError("")]}
+        />
         <Input
           label={"Digite seu E-mail"}
           type="email"
@@ -58,7 +57,7 @@ const Signup = () => {
           label={"Digite seu senha"}
           type="password"
           placeholder="Senha"
-          onChange={(e) => [setSenha(e.target.value), setError("")]}
+          onChange={(e) => [setPassword(e.target.value), setError("")]}
         />
         <p className="label-error">{error}</p>
         <div className="button">
@@ -66,7 +65,7 @@ const Signup = () => {
             text="Inscrever-se"
             type="submit "
             classe={"acessar"}
-            onClick={handleSignup}
+            onClick={onFinish}
           />
         </div>
       </div>

@@ -2,16 +2,16 @@ import sino from "../../assets/sino.svg";
 import pesquisa from "../../assets/pesquisa.svg";
 import Pesquisa from "../Pesquisa/pesquisa";
 import { Link } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
 import "./header.css";
+import useAuth from "../../contexts/AuthProvider/useAuth";
 
 const Header = () => {
   const { user } = useAuth();
 
-  return user ? (
+  return (
     <header className="header">
       <div className="titulo-home">
-        <h1>Olá, {user.nome}</h1>
+        <h1>Olá, Seja Bem vindo</h1>
         <Link to="/notificacoes">
           <img src={sino} />
         </Link>
@@ -23,9 +23,7 @@ const Header = () => {
         color={"white"}
       />
     </header>
-  ) : (
-    <h1>Loading</h1>
-  );
+  )
 };
 
 export default Header;
