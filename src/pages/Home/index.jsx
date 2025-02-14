@@ -3,31 +3,36 @@ import Footer from "../../components/Footer";
 import BemVindo from "../../components/BemVindo";
 import Card from "../../components/Card";
 import Header from "../../components/Header";
-import infoCards from "./infoCard";
-import useAuth from "../../hooks/useAuth";
 import { HomeDriver } from "../Driver/Home";
 
 const Home = () => {
+
+  const infoCards = []
 
   return (
     <div className="box-home">
       <Header />
       <main className="conteudo-home">
         <BemVindo />
-        <h3>Rotas disponíveis</h3>
-        <div className="cards">
+        {infoCards.length > 0 ? (
+        <>
+          <h3>Rotas disponíveis</h3>
           {infoCards.map((info, i) => (
-            <Card
-              key={i}
-              id={info.id}
-              img={info.img}
-              title={info.title}
-              local={info.local}
-              preco={info.preco}
-              stars={info.stars}
-            />
+            <div className="cards" key={i}>
+              <Card
+                id={info.id}
+                img={info.img}
+                title={info.title}
+                local={info.local}
+                preco={info.preco}
+                stars={info.stars}
+              />
+            </div>
           ))}
-        </div>
+        </>
+      ) : (
+        <p>Nenhum anúncio disponível</p>
+      )}
       </main>
       <Footer home={true} presenca={false} percurso={false} perfil={false} />
     </div >

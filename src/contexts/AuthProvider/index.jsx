@@ -41,6 +41,7 @@ export const AuthProvider = ({ children }) => {
 
     if (response != null) {
       localStorage.setItem("accessToken", response.token);
+      localStorage.setItem("refreshToken", response.refreshToken)
     } else {
       throw new Error("E-mail ou senha inválidas");
     }

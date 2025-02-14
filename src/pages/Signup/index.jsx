@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import Button from "../../components/Button";
 import { Link, useNavigate } from "react-router-dom";
 import "./index.css";
@@ -8,6 +8,7 @@ import useAuth from "../../contexts/AuthProvider/useAuth";
 
 const Signup = () => {
   const auth = useAuth();
+  const navigate = useNavigate()
 
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -26,7 +27,7 @@ const Signup = () => {
       // console.error("Erro ao fazer login:", error);
       setError(error.message);
     }
-    // navigate("/home"); 
+    navigate("/login"); 
   }
 
   return (
