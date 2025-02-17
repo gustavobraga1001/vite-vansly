@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
 
 import Footer from "../../components/Footer";
 import HeaderFixo from "../../components/HeaderFixo/headerFixo";
@@ -9,36 +8,34 @@ import { UserCircleMinus, DotsThreeVertical } from "@phosphor-icons/react";
 import imgFalta from "../../assets/img-falta.svg";
 
 import "./Faltas.css";
+import { useQuery } from "react-query";
+import useAuth from "../../contexts/AuthProvider/useAuth";
 
 export function Faltas() {
   const [ausencias, setAusencias] = useState([]);
   const [ausenciasRecorrentes, setAusenciasRecorrentes] = useState([]);
 
-  const { user } = useAuth();
-
-  useEffect(() => {
-    const prevAusencias = JSON.parse(localStorage.getItem("ausencias"));
-    const prevAusenciasRecorrentes = JSON.parse(localStorage.getItem("ausencias-recorrentes"));
-
-    if (prevAusencias) {
-      setAusencias(prevAusencias.filter(item => item.userId === user.id));
-    }
-
-    if (prevAusenciasRecorrentes) {
-      setAusenciasRecorrentes(prevAusenciasRecorrentes
-        .filter(item => item.userId === user.id))
-    }
-  }, []); // O array de dependências está vazio para rodar o efeito apenas uma vez
-
   const formatData = (data) => {
     return data.map(day => day.substring(0, 3)).join(' | ');
-  };
+  }
+
+  const auth = useAuth();
+
+  const { data, isLoading } = useQuery(["user"], () => auth.getUser(), {
+    staleTime: 10000,
+  });  
+
+  const user = data?.user;
+
+  if (isLoading || !user) {
+    return <p>Carregando...</p>;
+  }
 
   return (
     <div>
       <HeaderFixo text={"Informar ausência"} tela="home" />
       <main className="main-faltas">
-        {user.role === 2 ? (
+        {user.cnh ? (
           <div>
             <h1>Você não tem acesso a essa página</h1>
           </div>

@@ -36,16 +36,17 @@ const RoutesApp = () => {
           <Route path="/" element={<Login />} />
           <Route path="/signupName" element={<SignupName />} />
           <Route path="/signup" element={<Signup />} />
-        <Route path="*" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/perfil" element={<Perfil /> } />          
+          <Route path="*" element={<Login />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/perfil" element={<Perfil /> } />          
+          <Route path="/anuncio/:id" element={<Anuncio/>} />
+          <Route path="/faltas" element={<Faltas />} />
         {/* <Route path="/busca" element={<Private Item={Busca} />} />
           <Route path="/percurso" element={<Percurso />} />
           <Route
             path="/editar-perfil"
             element={<Private Item={EditarPerfil} />}
           />
-          <Route path="/anuncio/:id" element={<Private Item={Anuncio} />} />
           <Route
             path="/contrato/locais/:id"
             element={<Private Item={Locais} />}
@@ -64,7 +65,6 @@ const RoutesApp = () => {
             path="/contratos/:id"
             element={<Private Item={VerificarContrato} />}
           />
-          <Route path="/faltas" element={<Private Item={Faltas} />} />
           <Route
             path="/faltas/informar-faltas"
             element={<Private Item={InfomarFalta} />}
