@@ -7,14 +7,15 @@ const Card = ({ id, img, title, local, preco, stars }) => {
   return (
     <Link to={`/anuncio/${id}`}>
       <div className="card" key={id}>
-        <Carrossel images={img} />
+        {/* <Carrossel images={img} /> */}
         <div className="container-card">
           <p>{title}</p>
           <div className="card-info">
             <div className="local-card">
-              {local.map((loc, i) => (
+            <p >{local}</p>
+              {/* {local.map((loc, i) => (
                 <p key={i}>{loc}</p>
-              ))}
+              ))} */}
             </div>
             <div className="card-star">
               <img src={star} alt="" />

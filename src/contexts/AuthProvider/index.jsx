@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
 
   async function getUser() {
     try {
-      const response = await Api.get("users/profile");
+      const response = await Api.get("me");
 
       return response.data;
     } catch (error) {
@@ -41,7 +41,6 @@ export const AuthProvider = ({ children }) => {
 
     if (response != null) {
       localStorage.setItem("accessToken", response.token);
-      localStorage.setItem("refreshToken", response.refreshToken)
     } else {
       throw new Error("E-mail ou senha inválidas");
     }
@@ -50,12 +49,15 @@ export const AuthProvider = ({ children }) => {
   async function register(name, email, password) {
     const response = await RegisterRequest(name, email, password);
 
-    if (response != null) {
-      return "Ok"
-    } else {
-      throw new Error("E-mail ou senha inválidas");
+    if (response.status !== 201) {
+      // Aqui você lança o erro para cair no catch
+      throw new Error(response.response.data.message);
     }
+  
+    // Se deu tudo certo, retorna a resposta
+    return response.data;
   }
+  
 
   const logout = async () => {
     try {

@@ -69,8 +69,8 @@
 
 .foto-perfil>img {
     width: 130px;
-    object-fit: cover;
-    /* Ensures the image covers the area without stretching */
+    object-fit: fill;
+    padding: 5px;
     border-radius: 13px;
 }
 

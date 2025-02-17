@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "../pages/Home";
 import Signup from "../pages/Signup";
 import Login from "../pages/Login";
@@ -25,27 +25,10 @@ import { AnuncioEdit } from "../pages/Driver/AnuncioEdit";
 import { HorariosVagas } from "../pages/Driver/AnuncioEdit/HorariosVagas";
 import { EditarPerfil } from "../pages/Perfil/EditarPerfil";
 import { Estatisticas } from "../pages/Driver/Estatisticas";
+import { jwtDecode } from "jwt-decode";
 
 
 const RoutesApp = () => {
-  const Private = ({ Item }) => {
-    const token = localStorage.getItem("accessToken");
-    if (!token) {
-      return <Login />;
-    } else {
-      return <Item />;
-    }
-  };
-  
-  const IsLogin = ({ Item }) => {
-    const token = localStorage.getItem("accessToken");
-    if (!token) {
-      return <Item />;
-    } else {
-      return <Home />;
-    }
-  };
-
   return (
     <BrowserRouter>
       <Fragment>
@@ -53,13 +36,11 @@ const RoutesApp = () => {
           <Route path="/" element={<Login />} />
           <Route path="/signupName" element={<SignupName />} />
           <Route path="/signup" element={<Signup />} />
-
-          <Route path="/" element={<IsLogin Item={Login} />} />
-        <Route path="*" element={<IsLogin Item={Login} />} />
-        <Route exact path="/home" element={<Private Item={Home} />} />
-          {/* <Route path="/busca" element={<Private Item={Busca} />} />
+        <Route path="*" element={<Login />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/perfil" element={<Perfil /> } />          
+        {/* <Route path="/busca" element={<Private Item={Busca} />} />
           <Route path="/percurso" element={<Percurso />} />
-          <Route path="/perfil" element={<Private Item={Perfil} />} />
           <Route
             path="/editar-perfil"
             element={<Private Item={EditarPerfil} />}

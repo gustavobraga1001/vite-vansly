@@ -16,17 +16,17 @@ import contratosImg from "../../assets/contratos.svg";
 import volanteImg from "../../assets/volante.svg";
 import logOutImg from "../../assets/logOut.svg";
 
-const OpcoesPerfil = () => {
-  const { signout, user } = useAuth();
+const OpcoesPerfil = ({user}) => {
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-    signout();
     navigate("/");
   };
+
+  console.log(user.cnh)
   return (
     <div>
-      {user.role === 2 ? (
+      {user.cnh ? (
         <div>
           <Link to={"/motorista/documentos-view"}>
             <div className="opcao-perfil">

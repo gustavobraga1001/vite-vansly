@@ -21,12 +21,10 @@ const Form = () => {
 
       try {
         await auth.authenticate(email, senha);
-        navigate("/home");
       } catch (error) {
-        // console.error("Erro ao fazer login:", error);
         setError(error.message);
       }
-      // navigate("/home"); 
+      navigate("/home");
     }
 
   return (

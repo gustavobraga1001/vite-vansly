@@ -22,8 +22,11 @@ export async function LoginRequest(email, password) {
 export async function RegisterRequest(name, email, password) {
   try {
     const request = await Api.post("/users", { name, email, password });
-    return request.data;
+
+    console.log(request)
+    return request;
   } catch (error) {
-    return null;
+    console.log(error)
+    return error;
   }
 }

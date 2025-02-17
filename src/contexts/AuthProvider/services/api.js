@@ -2,29 +2,23 @@ import axios from "axios";
 
 const Api = axios.create({
   baseURL: 'http://localhost:3333',
+  withCredentials: true, // Envia cookies automaticamente
 });
 
 // Função para obter o token de acesso do localStorage
 const getAccessToken = () => localStorage.getItem("accessToken");
 
-// Função para obter o token de refresh do localStorage
-const getRefreshToken = () => localStorage.getItem("refreshToken");
-
-// Função para definir os tokens no localStorage
-const setTokens = (accessToken, refreshToken) => {
+// Função para definir o token de acesso no localStorage
+const setAccessToken = (accessToken) => {
   localStorage.setItem("accessToken", accessToken);
-  localStorage.setItem("refreshToken", refreshToken);
 };
 
 // Interceptor de requisição para adicionar o token de acesso
 Api.interceptors.request.use(
   (config) => {
-    // Verifica se a requisição não é para o endpoint de logout
-    if (!config.url.includes("/auth/logout")) {
-      const accessToken = getAccessToken();
-      if (accessToken) {
-        config.headers.Authorization = `Bearer ${accessToken}`;
-      }
+    const accessToken = getAccessToken();
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
   },
@@ -33,20 +27,19 @@ Api.interceptors.request.use(
   }
 );
 
-let isRefreshing = false; // Indica se a atualização do token está em andamento
-let refreshSubscribers = []; // Lista de funções a serem chamadas após a atualização do token
+let isRefreshing = false;
+let refreshSubscribers = [];
 
-// Função para adicionar funções à lista de espera
 const subscribeTokenRefresh = (cb) => {
   refreshSubscribers.push(cb);
 };
 
-// Função para notificar todas as funções na lista de espera após a atualização do token
 const onRefreshed = (token) => {
   refreshSubscribers.forEach((cb) => cb(token));
-  refreshSubscribers = []; // Limpa a lista após notificar todos
+  refreshSubscribers = [];
 };
 
+// Interceptor de resposta
 Api.interceptors.response.use(
   (response) => {
     return response;
@@ -54,106 +47,56 @@ Api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // Verifica se é um erro 401 não relacionado ao login inicial
-    if (
-      error.response.status === 401 &&
-      !originalRequest.url.includes("/auth/login") &&
-      !originalRequest.url.includes("/auth/logout") // Evita interceptar a tentativa de login e logout
-    ) {
-      console.log("Erro 401 detectado. Tentando atualizar o token..."); // Log para debug
-      originalRequest._retry = true; // Marca a requisição como já tentada
-      const refreshToken = getRefreshToken(); // Obtém o token de refresh
+    if (error.response.status === 401 && !originalRequest._retry) {
+      console.log("Erro 401 detectado. Tentando atualizar o token...");
+      originalRequest._retry = true;
 
-      console.log(refreshToken);
+      if (!isRefreshing) {
+        isRefreshing = true;
+        try {
+          const response = await axios.patch(
+            `${Api.defaults.baseURL}/token/refresh`,
+            {},
+            { withCredentials: true } // Envia o cookie de refresh
+          );
 
-      if (refreshToken) {
-        // Verifica se uma atualização de token já está em andamento
-        if (!isRefreshing) {
-          isRefreshing = true; // Define como verdadeiro para impedir múltiplas chamadas
+          const { token } = response.data;
 
-          try {
-            // Chama a API de refresh token
-            const response = await axios.post(`${apiUrl}auth/refresh-token`, {
-              token: refreshToken,
-            });
-            console.log(response)
+          // Verifique se o token foi retornado corretamente
+          console.log("Novo token recebido:", token);
 
-            const tokens = response.data;
+          // Salva o novo token no localStorage
+          setAccessToken(token);
 
-            if (tokens.accessToken) {
-              // Atualiza tanto o access token quanto o refresh token no localStorage
-              setTokens(tokens.accessToken, tokens.refreshToken);
+          // Atualiza o token nas requisições subsequentes
+          Api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+          onRefreshed(token);
 
-              // Atualiza o header Authorization da instância do Axios
-              Api.defaults.headers.common[
-                "Authorization"
-              ] = `Bearer ${tokens.accessToken}`;
+          isRefreshing = false;
+          return Api(originalRequest); // Reenvia a requisição original com o novo token
+        } catch (refreshError) {
+          console.error("Refresh token is invalid", refreshError);
 
-              // Notifica todas as requisições em espera para usar o novo token
-              onRefreshed(tokens.accessToken);
+          // Redireciona para a tela de login em caso de erro
+          window.location.href = '/login';
 
-              // Rechama a requisição original com o novo token
-              originalRequest.headers[
-                "Authorization"
-              ] = `Bearer ${tokens.accessToken}`;
-
-              isRefreshing = false; // Reseta o estado de atualização
-
-              return Api(originalRequest);
-            } else {
-              console.error(
-                "Nenhum novo access token ou refresh token recebido."
-              );
-
-              return Promise.reject(
-                "Nenhum novo access token ou refresh token recebido."
-              );
-            }
-          } catch (refreshError) {
-            console.error("Refresh token is invalid", refreshError);
-            handleLogout();
-            return Promise.reject(refreshError);
-          } finally {
-            isRefreshing = false; // Certifique-se de resetar o estado mesmo em caso de falha
-          }
+          return Promise.reject(refreshError);
+        } finally {
+          isRefreshing = false;
         }
-
-        // Adiciona as requisições subsequentes à fila de espera
-        return new Promise((resolve, reject) => {
-          subscribeTokenRefresh((token) => {
-            // Atualiza o header Authorization da requisição original
-            originalRequest.headers["Authorization"] = `Bearer ${token}`;
-            resolve(Api(originalRequest)); // Rechama a requisição original
-          });
-        });
-      } else {
-        handleLogout();
-        return Promise.reject("Refresh token não disponível.");
       }
+
+      // Caso já tenha iniciado o processo de refresh, aguarda o token
+      return new Promise((resolve) => {
+        subscribeTokenRefresh((token) => {
+          originalRequest.headers["Authorization"] = `Bearer ${token}`;
+          resolve(Api(originalRequest));
+        });
+      });
     }
 
-    return Promise.reject(error); // Adicionado para garantir que o erro seja propagado
+    return Promise.reject(error);
   }
 );
-
-const handleLogout = async () => {
-  try {
-    const deviceId = localStorage.getItem("device");
-    const refreshToken = getRefreshToken();
-
-    const request = await axios.post(`${apiUrl}auth/logout`, {
-      device_id: deviceId,
-      refresh_token: refreshToken,
-    });
-
-    // Limpa os tokens do localStorage e redireciona para a página de login
-    localStorage.clear();
-    window.location.href = "/login";
-    return request;
-  } catch (error) {
-    console.error("Erro ao realizar logout:", error);
-    return null;
-  }
-};
 
 export default Api;

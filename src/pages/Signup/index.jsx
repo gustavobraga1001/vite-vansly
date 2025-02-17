@@ -20,14 +20,18 @@ const Signup = () => {
       setError("Digite suas credenciais");
       return;
     }
-
+  
     try {
-      await auth.register(name, email, password);
+      const response = await auth.register(name, email, password);
+      console.log(response);
+  
+      // Se deu tudo certo, limpa o erro e navega
+      setError("");
+      navigate("/login");
     } catch (error) {
-      // console.error("Erro ao fazer login:", error);
-      setError(error.message);
+      // Aqui o error.message terá a mensagem do throw
+      setError(error.message)
     }
-    navigate("/login"); 
   }
 
   return (
