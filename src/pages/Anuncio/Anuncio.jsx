@@ -8,14 +8,32 @@ import InfoAnuncio from "../../components/InfoAnuncio/InfoAnuncio";
 import Recursos from "../../components/Recursos/Recursos";
 import Regras from "../../components/Regras/Regras";
 import divisoria from "../../assets/Divisoria.svg";
+import ImgVan from "../../assets/VansImg/vaninterna.jpg";
 import { useDadosViagem } from "../../contexts/DadosViagemContext";
+import { useQuery } from "react-query";
+import Api from "../../contexts/AuthProvider/services/api";
 
 const Anuncio = () => {
-  const { setMotorista } = useDadosViagem();
-
   const navigate = useNavigate()
 
+  const { announcementId } = useParams()
   const [showPopup, setShowPopup] = useState(false); // Controle do popup
+
+  const { data: announcement, isLoading } = useQuery(
+    ["announcement", announcementId], 
+    () => Api.get(`get-specific-announcement/${announcementId}`).then(res => res.data),
+    {
+      staleTime: 30000,
+      select: (data) => data.announcement, // Retorna apenas o anúncio
+    }
+  );
+  
+  if (isLoading || !announcement) {
+    return <p>Carregando...</p>;
+  }
+
+  console.log(announcement)
+
 
   // const submitAnuncio = () => {
   //   // Verifica se o usuário tem o role 2
@@ -36,17 +54,17 @@ const Anuncio = () => {
           <img src={returnImg} className="img-return" />
         </Link>
         <img src={shareImg} className="img-compartilhar" />
-        {/* <Carousel images={card.img} /> */}
+        <Carousel image={ImgVan} />
       </div>
-      {/* <InfoAnuncio
-        title={card.title}
-        stars={card.stars}
-        locals={card.local}
-        instituicoes={card.instituicoes}
-        horarios={card.horarios}
-        vagas={card.vagas}
-        motorista={card.motorista}
-      /> */}
+      <InfoAnuncio
+        title={announcement.title}
+        stars={announcement.stars}
+        locals={announcement.city}
+        // instituicoes={card.instituicoes}
+        // horarios={card.horarios}
+        // vagas={card.vagas}
+        motorista={announcement.driver.name}
+      />
       <div className="divisoria-anuncio">
         <img src={divisoria} />
       </div>
@@ -55,9 +73,9 @@ const Anuncio = () => {
         <img src={divisoria} />
       </div>
       <Regras />
-      {/* <div className="contratar" onClick={submitAnuncio}>
-        <button>Contratar por R$ {card.preco} /Mês</button>
-      </div> */}
+      <div className="contratar">
+        <button>Contratar por R$ {announcement.monthlyAmount} /Mês</button>
+      </div>
 
       {/* Popup de aviso */}
       {showPopup && (

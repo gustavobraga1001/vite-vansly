@@ -39,7 +39,7 @@ const RoutesApp = () => {
           <Route path="*" element={<Login />} />
           <Route path="/home" element={<Home />} />
           <Route path="/perfil" element={<Perfil /> } />          
-          <Route path="/anuncio/:id" element={<Anuncio/>} />
+          <Route path="/anuncio/:announcementId" element={<Anuncio/>} />
           <Route path="/faltas" element={<Faltas />} />
         {/* <Route path="/busca" element={<Private Item={Busca} />} />
           <Route path="/percurso" element={<Percurso />} />

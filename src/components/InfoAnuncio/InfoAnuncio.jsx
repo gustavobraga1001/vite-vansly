@@ -13,13 +13,20 @@ const InfoAnuncio = ({
   horarios,
   motorista,
 }) => {
-  const number = parseFloat(stars.replace(",", "."));
+  // const number = parseFloat(stars.replace(",", "."));
+
+  function citiesArray(str) {
+    return str.split(' - ');
+  }
+
+  const cities = citiesArray(locals);
+
   return (
     <div className="box-info-anuncio">
       <h1>{title}</h1>
       <div className="nota">
         <div className="avaliacao">
-          <Stars count={number} img={star} />
+          <Stars count={stars} img={star} />
           <p>{stars}</p>
         </div>
         <div className="qtdAvaliacao">
@@ -38,32 +45,32 @@ const InfoAnuncio = ({
         <div className="regiao">
           <h5>Regiões de atendimento</h5>
           <div>
-            {locals.map((local) => (
+            {cities.map((local) => (
               <p key={local}>{local}</p>
             ))}
           </div>
-        </div>
+        </div>  
 
         <div className="divisoria-van">
           <img src={divisoria} alt="" />
         </div>
 
-        <div className="inst-destino">
+        {/* <div className="inst-destino">
           <h5>Instituições de destino</h5>
           {instituicoes.map((instituicao) => (
             <p key={instituicao}>{instituicao}</p>
           ))}
-        </div>
+        </div> */}
 
-        <div className="divisoria-van">
+        {/* <div className="divisoria-van">
           <img src={divisoria} alt="" />
-        </div>
+        </div> */}
 
         <div className="vagas">
           <h5>Horários e vagas disponíveis</h5>
         </div>
 
-        <TabelaHorarios horarios={horarios} />
+        {/* <TabelaHorarios horarios={horarios} /> */}
       </div>
     </div>
   );

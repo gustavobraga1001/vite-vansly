@@ -4,7 +4,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Carrossel.css'; // Arquivo de estilos
 
-const Carousel = ({ images }) => {
+const Carousel = ({ image, repeatTimes = 5 }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -17,14 +17,21 @@ const Carousel = ({ images }) => {
       <ul> {dots} </ul>
     )
   };
+
+  // Criando as imagens com base na quantidade de repetições
+  const images = [];
+  for (let i = 0; i < repeatTimes; i++) {
+    images.push(
+      <div key={i}>
+        <img src={image} alt={`Image ${i}`} />
+      </div>
+    );
+  }
+
   return (
     <div className="carousel-container">
       <Slider {...settings}>
-        {images.map((image, index) => (
-          <div key={index}>
-            <img src={image} alt={`Image ${index}`} />
-          </div>
-        ))}
+        {images}
       </Slider>
     </div>
   );

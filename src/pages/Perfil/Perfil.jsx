@@ -16,8 +16,6 @@ const Perfil = () => {
   const auth = useAuth();
 
   // Dentro do componente
-  const queryClient = useQueryClient();
-
   // Quando o usuário muda, invalidar a query "user"
 
   const { data, isLoading } = useQuery(["user"], () => auth.getUser(), {
@@ -53,11 +51,11 @@ const Perfil = () => {
 
       <OpcoesPerfil user={user} />
 
-      <Footer home={false} presenca={false} percurso={false} perfil={true} />
-      {/* {user.role === 2 ? (
+      {user.cnh ? (
         <FooterDriver perfil />
       ) : (
-      )} */}
+        <Footer home={false} presenca={false} percurso={false} perfil={true} />
+      )}
     </div>
   );
 };
