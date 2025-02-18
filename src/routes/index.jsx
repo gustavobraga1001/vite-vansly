@@ -41,6 +41,10 @@ const RoutesApp = () => {
           <Route path="/perfil" element={<Perfil /> } />          
           <Route path="/anuncio/:announcementId" element={<Anuncio/>} />
           <Route path="/faltas" element={<Faltas />} />
+          <Route
+            path="/faltas/informar-faltas"
+            element={<InfomarFalta />}
+          />
         {/* <Route path="/busca" element={<Private Item={Busca} />} />
           <Route path="/percurso" element={<Percurso />} />
           <Route
@@ -64,10 +68,6 @@ const RoutesApp = () => {
           <Route
             path="/contratos/:id"
             element={<Private Item={VerificarContrato} />}
-          />
-          <Route
-            path="/faltas/informar-faltas"
-            element={<Private Item={InfomarFalta} />}
           />
 
           <Route path="/motorista" element={<Private Item={Motorista} />} />

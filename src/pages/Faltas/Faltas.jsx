@@ -1,35 +1,78 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-
 import Footer from "../../components/Footer";
 import HeaderFixo from "../../components/HeaderFixo/headerFixo";
 import { UserCircleMinus, DotsThreeVertical } from "@phosphor-icons/react";
-
 import imgFalta from "../../assets/img-falta.svg";
-
 import "./Faltas.css";
 import { useQuery } from "react-query";
 import useAuth from "../../contexts/AuthProvider/useAuth";
+import Api from "../../contexts/AuthProvider/services/api";
+
+// Função para buscar as ausências do usuário
+const fetchAbsencesWithBody = async (userId) => {
+  try {
+    const response = await Api.post('/get-absences', { userId });
+    return response.data;
+  } catch (error) {
+    throw new Error('Erro ao buscar ausências: ' + error.message);
+  }
+};
+
+// Função para formatar a data
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+
+  // Verifica se a data é válida
+  if (isNaN(date)) {
+    return "Data inválida";
+  }
+
+  // Garantir que a data está no formato correto: DD-MM-YYYY
+  const day = String(date.getUTCDate()).padStart(2, '0');
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // getUTCMonth() retorna 0-11
+  const year = date.getUTCFullYear();
+
+  return `${day}-${month}-${year}`;
+};
+
 
 export function Faltas() {
-  const [ausencias, setAusencias] = useState([]);
-  const [ausenciasRecorrentes, setAusenciasRecorrentes] = useState([]);
-
-  const formatData = (data) => {
-    return data.map(day => day.substring(0, 3)).join(' | ');
-  }
-
   const auth = useAuth();
 
-  const { data, isLoading } = useQuery(["user"], () => auth.getUser(), {
-    staleTime: 10000,
-  });  
+  // Query para obter o usuário
+  const { data: userData, isLoading: isLoadingUser } = useQuery(
+    ["user"],
+    () => auth.getUser(),
+    { staleTime: 10000 }
+  );
 
-  const user = data?.user;
+  const user = userData?.user;
 
-  if (isLoading || !user) {
+  // Query para buscar as ausências
+  const { data, isLoading: isLoadingAbsences, error } = useQuery(
+    ["absences", user?.id],
+    () => user?.id ? fetchAbsencesWithBody(user.id) : [],
+    { staleTime: 20000, enabled: !!user }
+  );
+
+  // Garante que `absences` seja sempre um array
+  const absences = data?.absences || [];
+
+  // Se o usuário ou as ausências estão carregando
+  if (isLoadingUser || isLoadingAbsences) {
     return <p>Carregando...</p>;
   }
+
+  // Se ocorrer um erro
+  if (error) {
+    return <p>Erro ao carregar as ausências.</p>;
+  }
+
+  // Verificando se há ausências
+  const hasAbsences = absences.length > 0;
+
+  console.log(absences)
 
   return (
     <div>
@@ -41,28 +84,15 @@ export function Faltas() {
           </div>
         ) : (
           <>
-            {ausenciasRecorrentes.length > 0 && (
-              <>
-                <p className="title-faltas">Ausências Recorrentes</p>
-                <div className="card-faltas">
-                  <div>
-                    <UserCircleMinus size={36} color="#003B6D" />
-                    <span>{formatData(ausenciasRecorrentes[0].data)}</span>
-                  </div>
-                  <DotsThreeVertical size={32} color="#AAAAAA" weight="bold" />
-                </div>
-              </>
-            )}
-
-            {ausencias.length > 0 && (
+            {hasAbsences && (
               <>
                 <p className="title-faltas">Ausências</p>
                 <div className="list-faltas">
-                  {ausencias.map((ausencia) => (
-                    <div className="card-faltas" key={ausencia.data}>
+                  {absences.map((ausencia) => (
+                    <div className="card-faltas" key={ausencia.id}>
                       <div>
                         <UserCircleMinus size={36} color="#003B6D" />
-                        <span>{ausencia.data}</span>
+                        <span>{formatDate(ausencia.date_of_absence)}</span>
                       </div>
                       <DotsThreeVertical size={32} color="#AAAAAA" weight="bold" />
                     </div>
@@ -71,7 +101,7 @@ export function Faltas() {
               </>
             )}
 
-            {ausencias.length === 0 && ausenciasRecorrentes.length === 0 && (
+            {!hasAbsences && (
               <>
                 <img src={imgFalta} alt="Nenhuma ausência registrada" />
                 <h2>Nenhuma ausência registrada</h2>
@@ -92,4 +122,3 @@ export function Faltas() {
     </div>
   );
 }
-
