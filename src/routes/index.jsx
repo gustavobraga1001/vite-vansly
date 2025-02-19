@@ -45,21 +45,21 @@ const RoutesApp = () => {
             path="/faltas/informar-faltas"
             element={<InfomarFalta />}
           />
+          <Route
+            path="/contrato/locais/:id"
+            element={<Locais />}
+          />
+          <Route
+            path="/contrato/info/:id"
+            element={<InfoContrato />}
+          />
+          <Route path="/proposta" element={<Proposta />} />
         {/* <Route path="/busca" element={<Private Item={Busca} />} />
           <Route path="/percurso" element={<Percurso />} />
           <Route
             path="/editar-perfil"
             element={<Private Item={EditarPerfil} />}
           />
-          <Route
-            path="/contrato/locais/:id"
-            element={<Private Item={Locais} />}
-          />
-          <Route
-            path="/contrato/info/:id"
-            element={<Private Item={InfoContrato} />}
-          />
-          <Route path="/proposta" element={<Private Item={Proposta} />} />
           <Route
             path="/notificacoes"
             element={<Private Item={Notificacoes} />}

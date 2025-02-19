@@ -19,6 +19,8 @@ const Anuncio = () => {
   const { announcementId } = useParams()
   const [showPopup, setShowPopup] = useState(false); // Controle do popup
 
+  const { setContrato } = useDadosViagem()
+
   const { data: announcement, isLoading } = useQuery(
     ["announcement", announcementId], 
     () => Api.get(`get-specific-announcement/${announcementId}`).then(res => res.data),
@@ -32,8 +34,12 @@ const Anuncio = () => {
     return <p>Carregando...</p>;
   }
 
-  console.log(announcement)
+  function pushPage(){
+    setContrato({announcement})
+    navigate(`/contrato/locais/${announcement.id}`)
+  }
 
+  console.log(announcement)
 
   // const submitAnuncio = () => {
   //   // Verifica se o usuário tem o role 2
@@ -74,7 +80,7 @@ const Anuncio = () => {
       </div>
       <Regras />
       <div className="contratar">
-        <button>Contratar por R$ {announcement.monthlyAmount} /Mês</button>
+        <button onClick={pushPage}>Contratar por R$ {announcement.monthlyAmount} /Mês</button>
       </div>
 
       {/* Popup de aviso */}

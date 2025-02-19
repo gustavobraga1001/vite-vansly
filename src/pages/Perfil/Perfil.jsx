@@ -11,6 +11,7 @@ import { useQuery, useQueryClient } from "react-query";
 import "./Perfil.css";
 import { FooterDriver } from "../../components/FooterDriver";
 import useAuth from "../../contexts/AuthProvider/useAuth";
+import Loading from "../../components/Loading";
 
 const Perfil = () => {
   const auth = useAuth();
@@ -27,7 +28,7 @@ const Perfil = () => {
   const user = data?.user;
 
   if (isLoading || !user) {
-    return <p>Carregando...</p>;
+    return <Loading />;
   }
 
   return (

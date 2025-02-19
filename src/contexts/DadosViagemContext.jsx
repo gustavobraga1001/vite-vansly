@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 // Criando o contexto
 const DadosViagemContext = createContext();
@@ -12,10 +12,11 @@ export const DadosViagemProvider = ({ children }) => {
   const [destino, setDestino] = useState("");
   const [desembarque, setDesembarque] = useState("");
   const [motorista, setMotorista] = useState({})
+  const [contrato, setContrato] = useState({})
 
   return (
     <DadosViagemContext.Provider
-      value={{ ida, setIda, destino, setDestino, desembarque, setDesembarque, motorista, setMotorista }}
+      value={{ contrato, setContrato, ida, setIda, destino, setDestino, desembarque, setDesembarque, motorista, setMotorista }}
     >
       {children}
     </DadosViagemContext.Provider>

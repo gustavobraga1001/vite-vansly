@@ -1,27 +1,26 @@
-import React from "react";
 import returnImg from "../../../assets/icons/return-anuncio.svg";
 import HeaderFixo from "../../../components/HeaderFixo/headerFixo";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import divisoria from "../../../assets/Divisoria.svg";
 import "./InfoContrato.css";
 import { useDadosViagem } from "../../../contexts/DadosViagemContext";
-import { useContrato } from "../../../contexts/Contrato";
+import Api from "../../../contexts/AuthProvider/services/api";
+import { useQuery } from "react-query";
+import useAuth from "../../../contexts/AuthProvider/useAuth";
 
-import { v4 as uuidv4 } from 'uuid';
-import useAuth from "../../../hooks/useAuth";
 
 const InfoContrato = () => {
   const { id } = useParams();
 
-  const { user } = useAuth()
-
-  const { ida, destino, desembarque, motorista } = useDadosViagem();
-  const { contrato, setContrato } = useContrato();
+  const { contrato } = useDadosViagem();
+  const auth = useAuth();
 
   const navigate = useNavigate();
 
+  console.log(contrato)
+
   const taxa = 48.0;
-  const number = parseFloat(motorista.preco.replace(",", "."));
+  const number = contrato.announcement.monthlyAmount
   const total = taxa + number;
   const formattedPriceTaxa = taxa
     .toFixed(2)
@@ -32,28 +31,45 @@ const InfoContrato = () => {
     .replace(".", ",")
     .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
-  const submitContrato = () => {
+  const { data, isLoading } = useQuery(["user"], () => auth.getUser(), {
+    staleTime: 10000,
+  });  
 
+  const user = data?.user;
+
+  if (isLoading || !user) {
+    return <p>Carregando...</p>;
+  }
+
+  const submitContrato = async () => {
     const newContract = {
-      id: uuidv4(),
-      userId: user.id,
-      motorista: {
-        id: motorista.id,
-        title: motorista.title,
-        nome: motorista.motorista,
-        horarios: motorista.horarios
-      },
-      ida,
-      desembarque,
-      destino,
-      precoFinal: formattedPrice
+        "shift": contrato.shift,
+        "boarding": contrato.boarding,
+        "landing": contrato.boarding,
+        "institution": contrato.institution,
+        "monthlyAmount": contrato.announcement.monthlyAmount,
+        "status": true,
+        "userId" : user.id,
+        "driverId": contrato.announcement.id
     }
 
-    setContrato(newContract);
+    console.log(newContract)
 
-    const prevContratos = JSON.parse(localStorage.getItem("contratos")) || [];
+    try {
+      await Api.post("/contracts", {
+        "period": contrato.period.toUpperCase(),
+        "boarding": contrato.boarding,
+        "landing": contrato.boarding,
+        "institution": contrato.institution,
+        "monthlyAmount": contrato.announcement.monthlyAmount,
+        "status": true,
+        "userId" : user.id,
+        "driverId": contrato.announcement.driver.id
+    } );
+    } catch (error) {
+      return null;
+    }
 
-    localStorage.setItem("contratos", JSON.stringify([...prevContratos, newContract]));
 
     navigate("/proposta")
   };
@@ -70,15 +86,15 @@ const InfoContrato = () => {
       <div className="box-info-contrato">
         <div className="card-info-contrato">
           <p>
-            <span>{motorista.title}</span>
+            <span>{contrato.announcement.title}</span>
           </p>
           <p>
             <span>Motorista - </span>
-            {motorista.motorista}
+            {contrato.announcement.driver.name}
           </p>
           <p>
             <span>Horário de início - </span>
-            {motorista.horarios.manha.horario}
+            {contrato.period}
           </p>
         </div>
         <div className="divisoria-anuncio">
@@ -87,16 +103,16 @@ const InfoContrato = () => {
         <div className="card-info-contrato">
           <p>
             <span>Embarque - </span>
-            {ida}
+            {contrato.boarding}
           </p>
           <p>
             <span>Destino - </span>
-            {destino}
+            {contrato.institution}
           </p>
-          {desembarque ? (
+          {contrato.landing ? (
             <p>
               <span>Desembarque - </span>
-              {desembarque}
+              {contrato.landing}
             </p>
           ) : (
             ""
@@ -111,7 +127,7 @@ const InfoContrato = () => {
             <div className="card-info-box">
               <p>Preço do serviço</p>
               <div className="card-info-borda"></div>
-              <p>R$ {motorista.preco}</p>
+              <p>R$ {contrato.announcement.monthlyAmount}</p>
             </div>
             <div className="card-info-box">
               <p>Impostos / Taxas</p>
