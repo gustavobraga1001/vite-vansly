@@ -1,7 +1,6 @@
 import React from "react";
 import seta from "../../assets/GoSeta.svg";
 import "./OpcoesPerfil.css";
-import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {
@@ -15,12 +14,13 @@ import {
 import contratosImg from "../../assets/contratos.svg";
 import volanteImg from "../../assets/volante.svg";
 import logOutImg from "../../assets/logOut.svg";
+import useAuth from "../../contexts/AuthProvider/useAuth";
 
 const OpcoesPerfil = ({user}) => {
-  const navigate = useNavigate();
+  const auth = useAuth();
 
   const handleSignOut = () => {
-    navigate("/");
+    auth.logout()
   };
 
   console.log(user.cnh)

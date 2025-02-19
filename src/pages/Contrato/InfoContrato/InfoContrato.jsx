@@ -42,26 +42,13 @@ const InfoContrato = () => {
   }
 
   const submitContrato = async () => {
-    const newContract = {
-        "shift": contrato.shift,
-        "boarding": contrato.boarding,
-        "landing": contrato.boarding,
-        "institution": contrato.institution,
-        "monthlyAmount": contrato.announcement.monthlyAmount,
-        "status": true,
-        "userId" : user.id,
-        "driverId": contrato.announcement.id
-    }
-
-    console.log(newContract)
-
     try {
       await Api.post("/contracts", {
         "period": contrato.period.toUpperCase(),
         "boarding": contrato.boarding,
         "landing": contrato.boarding,
         "institution": contrato.institution,
-        "monthlyAmount": contrato.announcement.monthlyAmount,
+        "monthlyAmount": parseFloat(formattedPrice),
         "status": true,
         "userId" : user.id,
         "driverId": contrato.announcement.driver.id

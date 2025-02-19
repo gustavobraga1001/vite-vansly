@@ -1,21 +1,31 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import { useParams } from "react-router-dom"
 import HeaderFixo from "../../../components/HeaderFixo/headerFixo";
 import returnImgWhite from "../../../assets/icons/return-white.svg"
+import Api from "../../../contexts/AuthProvider/services/api";
+import { useQuery } from "react-query";
+import Loading from "../../../components/Loading";
 
 export function VerificarContrato() {
-    const { id } = useParams()
-
-    const [contrato, setContrato] = useState([]);
-
-    useEffect(() => {
-        const storedContracts = JSON.parse(localStorage.getItem("contratos"));
-        if (storedContracts) {
-            setContrato(storedContracts.filter(contrato => contrato.id === id));
+    async function getContract() {
+        try {
+          const response = await Api.get("/get-contract");
+    
+          return response.data;
+        } catch (error) {
+          console.log(error.response.status);
         }
-
-    }, []);
+      }
+    
+      const { data, isLoading } = useQuery(["contract"], getContract, {
+        staleTime: 20000,
+      });
+      
+      const contract = data?.contract;
+    
+      if (isLoading || !contract) {
+        return <Loading />;
+      }
+    
+      console.log(contract)
 
     return (
         <div>
@@ -26,23 +36,20 @@ export function VerificarContrato() {
                 textColor={"white"}
                 img={returnImgWhite}
             />
-            {contrato.length > 0 ? (
-                <div key={contrato[0].id}>
+            {contract ? (
+                <div key={contract.id}>
                     <div>
                         <div className="card-info-contrato">
                             <p>
-                                <span>{contrato[0].motorista.title}</span>
+                                <span>{data.title}</span>
                             </p>
                             <p>
                                 <span>Motorista - </span>
-                                {contrato[0].motorista.nome}
-                            </p>
-                            <p>
-                                <span>Rota - </span>Santo André - São Caetano do Sul
+                                {data.nameDriver}
                             </p>
                             <p>
                                 <span>Horário de início - </span>
-                                {contrato[0].motorista.horarios.manha.horario}
+                                {contract.period}
                             </p>
                         </div>
 
@@ -51,16 +58,16 @@ export function VerificarContrato() {
                         <div className="card-info-contrato">
                             <p>
                                 <span>Embarque - </span>
-                                {contrato[0].ida}
+                                {contract.boarding}
                             </p>
                             <p>
                                 <span>Destino - </span>
-                                {contrato[0].destino}
+                                {contract.institution}
                             </p>
-                            {contrato[0].desembarque ? (
+                            {contract.landing ? (
                                 <p>
                                     <span>Desembarque - </span>
-                                    {contrato[0].desembarque}
+                                    {contract.landing}
                                 </p>
                             ) : (
                                 ""
@@ -75,7 +82,7 @@ export function VerificarContrato() {
                                 <div className="card-info-box">
                                     <p>Total do serviço</p>
                                     <div className="card-info-borda-menor"></div>
-                                    <p>R$ {contrato[0].precoFinal} /Mês</p>
+                                    <p>R$ {contract.monthlyAmount} /Mês</p>
                                 </div>
                             </div>
                         </div>

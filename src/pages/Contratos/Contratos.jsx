@@ -1,61 +1,68 @@
-import React, { useEffect, useState } from "react";
 import returnImg from "../../assets/Return.svg";
 import telaContrato from "../../assets/contrato.svg";
 import HeaderFixo from "../../components/HeaderFixo/headerFixo";
-import divisoria from "../../assets/Divisoria.svg";
 
 import "./Contratos.css"
 import { Link } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+import Api from "../../contexts/AuthProvider/services/api";
+import { useQuery } from "react-query";
+import Loading from "../../components/Loading";
 
 const Contratos = () => {
-  const [contratos, setContratos] = useState([]);
 
-  const { user } = useAuth()
+  async function getContract() {
+    try {
+      const response = await Api.get("/get-contract");
 
-  useEffect(() => {
-    const storedContracts = JSON.parse(localStorage.getItem("contratos"));
-    if (storedContracts) {
-      setContratos(storedContracts.filter(item => item.userId === user.id));
+      return response.data;
+    } catch (error) {
+      console.log(error.response.status);
     }
-  }, []);
+  }
 
-  console.log(contratos)
+  const { data, isLoading } = useQuery(["contract"], getContract, {
+    staleTime: 20000,
+  });
+  
+  const contract = data?.contract;
+
+  if (isLoading || !contract) {
+    return <Loading />;
+  }
+
+  console.log(contract)
 
   return (
     <div className="notificacao-container">
       <HeaderFixo tela={"perfil"} img={returnImg} text={"Contratos"} />
 
-      {contratos.length <= 0 ? (
+      {!contract ? (
         <div className="notificacao-box">
           <img src={telaContrato} />
           <p>Você ainda não firmou nenhum contrato</p>
         </div>
       ) : (
-        contratos.map((contract) => {
-          return (
             <Link to={contract.id} className="link-to" key={contract.id}>
               <div className="box-list-contrato">
                 <div>
-                  <span>{contract.motorista.title}</span>
+                  <span>{data.title}</span>
                 </div>
                 <div>
-                  <span>Motorista </span><p>- {contract.motorista.nome}</p>
+                  <span>Motorista </span><p>- {data.nameDriver}</p>
                 </div>
                 <div>
-                  <span>Horário de início </span><p>- {contract.motorista.horarios.manha.horario}</p>
+                  <span>Horário de início </span><p>- {contract.period}</p>
                 </div>
                 <div>
-                  <span>Embarque </span><p>- {contract.ida}</p>
+                  <span>Embarque </span><p>- {contract.boarding}</p>
                 </div>
                 <div>
-                  <span>Desembarque </span><p>- {contract.destino}</p>
+                  <span>Desembarque </span><p>- {contract.institution}</p>
                 </div>
               </div>
             </Link>
           )
-        })
-      )}
+        }
     </div>
   );
 };

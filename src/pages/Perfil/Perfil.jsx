@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
 import HeaderFixo from "../../components/HeaderFixo/headerFixo";
 import returnImg from "../../assets/Return.svg";
 import imgPerfil from "../../assets/icons/perfilAcionado.svg";
 import Footer from "../../components/Footer";
 import OpcoesPerfil from "../../components/OpcoesPerfil/OpcoesPerfil";
 import { Link } from "react-router-dom";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 
 
 import "./Perfil.css";
@@ -22,8 +21,6 @@ const Perfil = () => {
   const { data, isLoading } = useQuery(["user"], () => auth.getUser(), {
     staleTime: 10000,
   });  
-
-  // queryClient.invalidateQueries(["user"]);
 
   const user = data?.user;
 

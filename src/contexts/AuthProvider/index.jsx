@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { getUserLocalStorage, LoginRequest, RegisterRequest, setUserLocalStorage } from "./util";
-import { useQueryClient } from "react-query";
+import { getUserLocalStorage, LoginRequest, RegisterRequest } from "./util";
 import Api from "./services/api";
 
 export const AuthContext = createContext();
@@ -60,24 +59,20 @@ export const AuthProvider = ({ children }) => {
   
 
   const logout = async () => {
+    // Limpa o localStorage
+    localStorage.clear();
+  
+    // Expira todos os cookies
     try {
-      const deviceId = localStorage.getItem("device");
-      const refreshToken = localStorage.getItem("refreshToken");
-
-      const request = await Api.post(`auth/logout`, {
-        device_id: deviceId,
-        refresh_token: refreshToken,
-      });
-
-      setUser(null);
-      localStorage.clear();
-      window.location.reload();
-      return request;
+      const request = await Api.post("/logout");
+      window.location.href = "/login";
+      return request.data;
     } catch (error) {
       return null;
     }
-  };
 
+  };
+  
   return (
     <AuthContext.Provider
       value={{ ...user, authenticate, logout, getUser, getUsers, register, }}

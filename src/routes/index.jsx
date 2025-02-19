@@ -54,6 +54,11 @@ const RoutesApp = () => {
             element={<InfoContrato />}
           />
           <Route path="/proposta" element={<Proposta />} />
+          <Route path="/contratos" element={<Contratos />} />
+          <Route
+            path="/contratos/:id"
+            element={<VerificarContrato />}
+          />
         {/* <Route path="/busca" element={<Private Item={Busca} />} />
           <Route path="/percurso" element={<Percurso />} />
           <Route
@@ -63,11 +68,6 @@ const RoutesApp = () => {
           <Route
             path="/notificacoes"
             element={<Private Item={Notificacoes} />}
-          />
-          <Route path="/contratos" element={<Private Item={Contratos} />} />
-          <Route
-            path="/contratos/:id"
-            element={<Private Item={VerificarContrato} />}
           />
 
           <Route path="/motorista" element={<Private Item={Motorista} />} />
