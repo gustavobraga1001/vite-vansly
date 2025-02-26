@@ -37,7 +37,7 @@ const Home = () => {
             <div className="cards" key={i}>
               <Card
                 id={info.id}
-                // img={info.img}
+                images={info.images}
                 title={info.title}
                 local={info.city}
                 preco={info.monthlyAmount}

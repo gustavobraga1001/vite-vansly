@@ -3,11 +3,11 @@ import "./card.css";
 import Carrossel from "../Carrossel/Carrossel";
 import { Link } from "react-router-dom";
 
-const Card = ({ id, img, title, local, preco, stars }) => {
+const Card = ({ id, images, title, local, preco, stars }) => {
   return (
     <Link to={`/anuncio/${id}`}>
       <div className="card" key={id}>
-        {/* <Carrossel images={img} /> */}
+        <Carrossel images={images} />
         <div className="container-card">
           <p>{title}</p>
           <div className="card-info">

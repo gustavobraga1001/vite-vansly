@@ -4,7 +4,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Carrossel.css'; // Arquivo de estilos
 
-const Carousel = ({ image, repeatTimes = 5 }) => {
+const Carousel = ({ images }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -13,25 +13,23 @@ const Carousel = ({ image, repeatTimes = 5 }) => {
     slidesToScroll: 1,
     arrows: false, // Desabilitar os botões laterais de navegação
     dotsClass: 'slick-dots-custom', // Classe personalizada para os dots
-    appendDots: dots => (
-      <ul> {dots} </ul>
-    )
+    appendDots: dots => <ul> {dots} </ul>,
   };
 
-  // Criando as imagens com base na quantidade de repetições
-  const images = [];
-  for (let i = 0; i < repeatTimes; i++) {
-    images.push(
-      <div key={i}>
-        <img src={image} alt={`Image ${i}`} />
-      </div>
-    );
+  console.log(images)
+
+  if (!Array.isArray(images) || images.length === 0) {
+    return <div className="carousel-container">Nenhuma imagem disponível</div>;
   }
 
   return (
     <div className="carousel-container">
       <Slider {...settings}>
-        {images}
+        {images.map((image, index) => (
+          <div key={index}>
+            <img src={image} alt={`Imagem ${index}`} style={{ width: '100%', height: 'auto' }} />
+          </div>
+        ))}
       </Slider>
     </div>
   );
