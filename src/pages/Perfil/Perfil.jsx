@@ -5,8 +5,6 @@ import Footer from "../../components/Footer";
 import OpcoesPerfil from "../../components/OpcoesPerfil/OpcoesPerfil";
 import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
-
-
 import "./Perfil.css";
 import { FooterDriver } from "../../components/FooterDriver";
 import useAuth from "../../contexts/AuthProvider/useAuth";
@@ -14,9 +12,6 @@ import Loading from "../../components/Loading";
 
 const Perfil = () => {
   const auth = useAuth();
-
-  // Dentro do componente
-  // Quando o usuário muda, invalidar a query "user"
 
   const { data, isLoading } = useQuery(["user"], () => auth.getUser(), {
     staleTime: 10000,

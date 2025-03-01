@@ -60,7 +60,7 @@ const Anuncio = () => {
           <img src={returnImg} className="img-return" />
         </Link>
         <img src={shareImg} className="img-compartilhar" />
-        <Carousel image={ImgVan} />
+        <Carousel images={announcement.images} />
       </div>
       <InfoAnuncio
         title={announcement.title}

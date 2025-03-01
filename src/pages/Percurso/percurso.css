@@ -66,6 +66,28 @@
     display: none;
 }
 
+.main-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+
+    gap: 20px;
+
+    height: 70vh;
+    /* Garante que ocupa toda a altura da tela */
+}
+
+.hour-invisible {
+    opacity: 0;
+}
+
+.field-address {
+    font-weight: bold;
+}
+
+
 
 @media (min-width: 1024px) {
 

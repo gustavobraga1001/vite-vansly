@@ -26,6 +26,7 @@ import { HorariosVagas } from "../pages/Driver/AnuncioEdit/HorariosVagas";
 import { EditarPerfil } from "../pages/Perfil/EditarPerfil";
 import { Estatisticas } from "../pages/Driver/Estatisticas";
 import { jwtDecode } from "jwt-decode";
+import ImgurUploader from "../services/ingur-config";
 
 
 const RoutesApp = () => {
@@ -33,6 +34,8 @@ const RoutesApp = () => {
     <BrowserRouter>
       <Fragment>
         <Routes>
+          <Route path="/image-test" element={<ImgurUploader />} />
+
           <Route path="/" element={<Login />} />
           <Route path="/signupName" element={<SignupName />} />
           <Route path="/signup" element={<Signup />} />
@@ -59,8 +62,8 @@ const RoutesApp = () => {
             path="/contratos/:id"
             element={<VerificarContrato />}
           />
-        {/* <Route path="/busca" element={<Private Item={Busca} />} />
           <Route path="/percurso" element={<Percurso />} />
+        {/* <Route path="/busca" element={<Private Item={Busca} />} />
           <Route
             path="/editar-perfil"
             element={<Private Item={EditarPerfil} />}

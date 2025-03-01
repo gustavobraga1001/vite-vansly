@@ -3,11 +3,11 @@ import Footer from "../../components/Footer";
 import BemVindo from "../../components/BemVindo";
 import Card from "../../components/Card";
 import Header from "../../components/Header";
-import { HomeDriver } from "../Driver/Home";
 import { useQuery } from "react-query";
 import Api from "../../contexts/AuthProvider/services/api";
 
 const Home = () => {
+
 
   const { data , isLoading } = useQuery(
     ["announcements"], 
@@ -22,8 +22,6 @@ const Home = () => {
   }
 
   const announcemnts = data.data.announcements
-
-  console.log(data.data.announcements)
 
   return (
     <div className="box-home">

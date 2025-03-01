@@ -3,6 +3,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Carrossel.css'; // Arquivo de estilos
+import CarrosselItem from './CarrosselItem/CarrosselItem';
 
 const Carousel = ({ images }) => {
   const settings = {
@@ -26,9 +27,7 @@ const Carousel = ({ images }) => {
     <div className="carousel-container">
       <Slider {...settings}>
         {images.map((image, index) => (
-          <div key={index}>
-            <img src={image} alt={`Imagem ${index}`} style={{ width: '100%', height: 'auto' }} />
-          </div>
+          <CarrosselItem image={image} key={index}/>
         ))}
       </Slider>
     </div>
