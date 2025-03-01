@@ -1,68 +1,54 @@
 import { ArrowLeft } from "@phosphor-icons/react";
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import useAuth from "../../../hooks/useAuth"
 import "./styles.css";
+import { useState } from "react";
+import Api from "../../../contexts/AuthProvider/services/api";
+import { useQuery } from "react-query";
+import useAuth from "../../../contexts/AuthProvider/useAuth";
+import Loading from "../../../components/Loading";
+
 
 export function Documentos() {
-    const [fileCnh, setFileCnh] = useState(null);
-    const [fileCrlv, setFileCrlv] = useState(null);
-    const { user } = useAuth();
     const navigate = useNavigate();
+    const [cnhImage,setCnhImage] = useState('')
+    const [crlvImage,setCrlvImage] = useState('')
+    const [cpf,setCpf] = useState('')
+    const [cnh,setCnh] = useState('')
 
-    const handleImageUpload = (event, setFile) => {
-        const file = event.target.files[0];
-        if (file) {
-            setFile(file);
-        }
-    };
+    const auth = useAuth();
 
-    const handleSubmitDoc = (event) => {
+    const { data, isLoading } = useQuery(["user"], () => auth.getUser(), {
+        staleTime: 10000,
+    });  
+
+    const user = data?.user;
+
+    if (isLoading || !user) {
+        return <Loading />;
+    }
+
+
+    const handleSubmitDoc = async (event) => {
         event.preventDefault();
 
-        // Recupera os dados atuais ou inicializa um array vazio
-        const docsDb = JSON.parse(localStorage.getItem('docs_bd')) || [];
-
-        const newEntry = { userId: user.id, cnhImage: null, crlvImage: null };
-
-        if (fileCnh) {
-            const readerCnh = new FileReader();
-            readerCnh.onload = () => {
-                newEntry.cnhImage = readerCnh.result;
-
-                // Atualiza ou adiciona a nova entrada ao array
-                const existingIndex = docsDb.findIndex(doc => doc.userId === user.id);
-                if (existingIndex !== -1) {
-                    docsDb[existingIndex] = { ...docsDb[existingIndex], ...newEntry };
-                } else {
-                    docsDb.push(newEntry);
-                }
-
-                // Atualiza o localStorage
-                localStorage.setItem('docs_bd', JSON.stringify(docsDb));
-            };
-            readerCnh.readAsDataURL(fileCnh);
+        const newDriver = {
+            cpf, 
+            cnh, 
+            userId: user.id,
+            images: [cnhImage,crlvImage],
         }
 
-        if (fileCrlv) {
-            const readerCrlv = new FileReader();
-            readerCrlv.onload = () => {
-                newEntry.crlvImage = readerCrlv.result;
-
-                // Atualiza ou adiciona a nova entrada ao array
-                const existingIndex = docsDb.findIndex(doc => doc.userId === user.id);
-                if (existingIndex !== -1) {
-                    docsDb[existingIndex] = { ...docsDb[existingIndex], ...newEntry };
-                } else {
-                    docsDb.push(newEntry);
-                }
-
-                // Atualiza o localStorage
-                localStorage.setItem('docs_bd', JSON.stringify(docsDb));
-            };
-            readerCrlv.readAsDataURL(fileCrlv);
+        console.log(newDriver)
+        
+        try {
+            await Api.post('/drivers',  newDriver);
+            
+        } catch (error) {
+            throw new Error(error.message);
         }
+
+
 
         // Navegue para a próxima página ou execute outras ações
         navigate("/motorista/veiculo");
@@ -85,18 +71,20 @@ export function Documentos() {
                 <p>Para prosseguir com o seu cadastro de motorista é necessário realizar o envio da sua Carteira Nacional de Habilitação (CNH) e do Certificado de registro e licenciamento de veículo (CRLV)</p>
                 <p>Para isso basta enviar uma foto do documento conforme a imagem de exemplo. Garanta que todos os campos estejam visíveis.</p>
 
-                <h3>Selecionar foto da CNH</h3>
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => handleImageUpload(e, setFileCnh)}
-                />
+                <h3>Digite o seu CPF</h3>
 
-                <h3>Selecionar foto da CRLV</h3>
+                <input type="text" onChange={(e) => setCpf(e.target.value)}/>
+                <h3>Digite sua CNH</h3>
+
+                <input type="text" onChange={(e) => setCnh(e.target.value)}/>
+                <h3>Coloque o link da foto da CNH</h3>
+
+                <input type="text" onChange={(e) => setCnhImage(e.target.value)}/>
+
+                <h3>Coloque a link da foto do CRLV</h3>
                 <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => handleImageUpload(e, setFileCrlv)}
+                    type="text"
+                    onChange={(e) => setCrlvImage(e.target.value)}
                 />
 
                 <button className="button-azul" type="submit">

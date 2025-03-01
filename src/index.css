@@ -7,16 +7,20 @@
     text-decoration: none;
 }
 
-body, html {
+body,
+html {
     font-family: "Roboto", sans-serif;
     overflow-x: hidden;
 }
 
-a{
+a {
     color: #003B6D;
 }
 
-button, h1, a, textarea, p {
+button,
+h1,
+a,
+textarea,
+p {
     font-family: "Roboto", sans-serif;
-    
 }

@@ -63,6 +63,19 @@ const RoutesApp = () => {
             element={<VerificarContrato />}
           />
           <Route path="/percurso" element={<Percurso />} />
+          <Route path="/motorista" element={<Motorista />} />
+          <Route
+            path="/motorista/documentos"
+            element={<Documentos />}
+          />
+          <Route
+            path="/motorista/veiculo"
+            element={<Veiculo />}
+          />
+          <Route
+            path="/motorista/veiculo-infos"
+            element={<InfoVeiculo />}
+          />
         {/* <Route path="/busca" element={<Private Item={Busca} />} />
           <Route
             path="/editar-perfil"
@@ -73,19 +86,6 @@ const RoutesApp = () => {
             element={<Private Item={Notificacoes} />}
           />
 
-          <Route path="/motorista" element={<Private Item={Motorista} />} />
-          <Route
-            path="/motorista/documentos"
-            element={<Private Item={Documentos} />}
-          />
-          <Route
-            path="/motorista/veiculo"
-            element={<Private Item={Veiculo} />}
-          />
-          <Route
-            path="/motorista/veiculo-infos"
-            element={<Private Item={InfoVeiculo} />}
-          />
           <Route
             path="/motorista/documentos-view"
             element={<Private Item={ViewDocs} />}
