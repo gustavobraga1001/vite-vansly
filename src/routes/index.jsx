@@ -76,6 +76,10 @@ const RoutesApp = () => {
             path="/motorista/veiculo-infos"
             element={<InfoVeiculo />}
           />
+          <Route
+            path="/estatisticas"
+            element={<Estatisticas />}
+          /> 
         {/* <Route path="/busca" element={<Private Item={Busca} />} />
           <Route
             path="/editar-perfil"
@@ -98,10 +102,7 @@ const RoutesApp = () => {
             path="/motorista/anuncio-edit/horarios-vagas"
             element={<Private Item={HorariosVagas} />}
           />
-          <Route
-            path="/estatisticas"
-            element={<Private Item={Estatisticas} />}
-          /> */}
+            */}
         </Routes>
       </Fragment>
     </BrowserRouter>

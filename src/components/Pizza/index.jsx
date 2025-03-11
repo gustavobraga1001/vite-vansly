@@ -23,7 +23,7 @@ class Donut extends Component {
           },
         },
       },
-      series: [26.5, 26.5, 47], // Valores do gráfico
+      series: [props.data.MANHA, props.data.TARDE, props.data.NOITE], // Valores do gráfico
     };
   }
 

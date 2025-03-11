@@ -13,13 +13,13 @@ import Loading from "../../components/Loading";
 const Perfil = () => {
   const auth = useAuth();
 
-  const { data, isLoading } = useQuery(["user"], () => auth.getUser(), {
-    staleTime: 10000,
-  });  
+  const { data, isLoading } = useQuery(["user"], () => auth.getUser());  
 
   const user = data?.user;
 
-  if (isLoading || !user) {
+  console.log(data)
+  
+  if (isLoading || !data || !user) {
     return <Loading />;
   }
 

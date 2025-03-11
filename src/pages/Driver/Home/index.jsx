@@ -3,21 +3,34 @@ import { FooterDriver } from "../../../components/FooterDriver";
 
 import "./styles.css"
 import { Bell, CaretRight, WarningCircle } from "@phosphor-icons/react";
+import { useQuery } from "react-query";
+import Api from "../../../contexts/AuthProvider/services/api";
 
 export function HomeDriver() {
 
     const data = [
-        { destino: "USCS - Conceição", envio: "13/09/24", turno: "Noite" },
-        { destino: "USCS - Barcelona", envio: "11/09/24", turno: "Tarde" },
-        { destino: "USCS - Centro", envio: "07/09/24", turno: "Manhã" },
+    
     ];
 
-    const ocupacao = [
-        { periodo: "Manhã", vagas: 10, porcentagem: 50 },
-        { periodo: "Manhã", vagas: 10, porcentagem: 50 },
-        { periodo: "Manhã", vagas: 10, porcentagem: 50 },
+    const { data: capacity, isLoading } = useQuery(
+        ["capacity"],
+        () => Api.get("capacity-vehicle"),
+        {
+          staleTime: 10000,
+        }
+      );
 
-    ]
+
+    if (!capacity || isLoading) {
+        return <p>Carregando</p>
+    }
+
+    const metrics = [capacity.data]
+
+    const periods = Object.entries(metrics[0]).map(([period, values]) => ({
+        period,
+        ...values
+      }));
 
     return (
         <div>
@@ -46,7 +59,7 @@ export function HomeDriver() {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.map((row, index) => (
+                            {data.length > 0 ? data.map((row, index) => (
                                 <tr key={index}>
                                     <td>{row.destino}</td>
                                     <td>{row.envio}</td>
@@ -55,7 +68,9 @@ export function HomeDriver() {
                                         <CaretRight size={20} color="rgba(0, 59, 109, 1)" />
                                     </td>
                                 </tr>
-                            ))}
+                            )) : (
+                                <p>Sem novas propostas</p>
+                            )}
                         </tbody>
                     </table>
                 </div>
@@ -73,11 +88,11 @@ export function HomeDriver() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {ocupacao.map((row, index) => (
+                                {periods.map((row, index) => (
                                     <tr key={index}>
-                                        <td>{row.periodo}</td>
-                                        <td>{row.vagas}</td>
-                                        <td>{row.porcentagem} %</td>
+                                        <td>{row.period}</td>
+                                        <td>{row.remainingCapacity}</td>
+                                        <td>{row.occupancyPercentage} %</td>
                                     </tr>
                                 ))}
                             </tbody>
