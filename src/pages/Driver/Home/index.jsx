@@ -7,11 +7,6 @@ import { useQuery } from "react-query";
 import Api from "../../../contexts/AuthProvider/services/api";
 
 export function HomeDriver() {
-
-    const data = [
-    
-    ];
-
     const { data: capacity, isLoading } = useQuery(
         ["capacity"],
         () => Api.get("capacity-vehicle"),
@@ -20,10 +15,20 @@ export function HomeDriver() {
         }
       );
 
+    const { data: contracts, isLoading: {isLoadingContarcts} } = useQuery(
+        ["contracts"],
+        () => Api.get("get-contracts-driver/PENDENTE"),
+        {
+          staleTime: 10000,
+        }
+      );
 
-    if (!capacity || isLoading) {
+
+    if (!capacity || isLoading || !contracts || isLoadingContarcts) {
         return <p>Carregando</p>
     }
+
+    const contractsPending = contracts.data.contracts
 
     const metrics = [capacity.data]
 
@@ -59,11 +64,11 @@ export function HomeDriver() {
                             </tr>
                         </thead>
                         <tbody>
-                            {data.length > 0 ? data.map((row, index) => (
+                            {contractsPending.length > 0 ? contractsPending.map((row, index) => (
                                 <tr key={index}>
-                                    <td>{row.destino}</td>
-                                    <td>{row.envio}</td>
-                                    <td>{row.turno}</td>
+                                    <td>{row.institution}</td>
+                                    <td>{new Date(row.created_at).toLocaleDateString('pt-BR')}</td>
+                                    <td>{row.period}</td>
                                     <td className="icon-cell">
                                         <CaretRight size={20} color="rgba(0, 59, 109, 1)" />
                                     </td>
@@ -74,7 +79,11 @@ export function HomeDriver() {
                         </tbody>
                     </table>
                 </div>
-                <Link>Ver todas as propostas</Link>
+                {contractsPending.length > 5 ? (
+                    <Link>Ver todas as propostas</Link>
+                ) : (
+                    ""
+                )}
 
                 <h2>Status de Ocupação</h2>
                 <div>

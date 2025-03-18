@@ -2,129 +2,129 @@ import { useEffect, useState } from "react";
 import { FooterDriver } from "../../../components/FooterDriver";
 import HeaderFixo from "../../../components/HeaderFixo/headerFixo";
 import Api from "../../../contexts/AuthProvider/services/api";
+import { useQuery } from "react-query";
 
 export function PercursoDriver() {
+  const [date, setDate] = useState(new Date('2025-03-18T00:00:00.000Z').toISOString());
+  const [hasRouteActive, setHasRouteActive] = useState(null);
+  const [selectedPeriod, setSelectedPeriod] = useState(""); // Criação do estado para controlar o valor selecionado
 
-    const [date, setDate] = useState('')
-    const [hasRouteActive, setHasRouteActive] = useState(null)
-    const [selectedPeriod, setSelectedPeriod] = useState(""); // Criação do estado para controlar o valor selecionado
+  useEffect(() => {
+    setHasRouteActive(localStorage.getItem("routeActive"));
+  }, []);
 
-    useEffect(() => {
-        setHasRouteActive(localStorage.getItem('routeActive'))
-    }, [])
+  async function getRoute() {
+    try {
+      const response = await Api.get(`get-route/${hasRouteActive}`);
 
-    console.log(hasRouteActive)
-
-    async function getRoute() {
-        try {
-          date.setUTCHours(0, 0, 0, 0);
-    
-          const dateNow = new Date();
-          const hours = dateNow.getHours();
-    
-          let period = '';
-    
-          if (hours >= 6 && hours < 14) {
-            period = 'MANHA';
-          } else if (hours >= 14 && hours < 18) {
-            period = 'TARDE';
-          } else if (hours >= 18 && hours < 24) {
-            period = 'NOITE';
-          }
-    
-          const response = await Api.post("get-route", { date, period });
-    
-          if (!response.data || !response.data.route) {
-            return {};  // Retorna um objeto vazio caso não encontre a rota
-          }
-    
-          // Caso contrário, limpa o erro
-          return response.data;  
-        } catch (error) {
-          return {};  // Retorna um objeto vazio em caso de erro
-        }
+      if (!response.data || !response.data.route) {
+        return {}; // Retorna um objeto vazio caso não encontre a rota
       }
 
-      async function startRoute() {
-        if (hasRouteActive === null) {
-            try {
-                console.log(selectedPeriod) 
-                const currentDate = new Date();
-                const currentDateString = new Date(currentDate.setHours(0, 0, 0, 0)).toISOString();
-                console.log(currentDateString);
+      // Caso contrário, retorna os dados da rota
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      return {}; // Retorna um objeto vazio em caso de erro
+    }
+  }
 
-                
-                // const response = await Api.post("create-route", { date, period });
+  const { data, isLoading: isLoadingPoints ,refetch} = useQuery(
+    ["points"],
+    () => getRoute(),
+    {
+      staleTime: 10000,
+      enabled: !!hasRouteActive,
+    }
+  )
+  
+  async function startRoute() {
+    if (hasRouteActive === null) {
+      try {
+        console.log(`Data: ${date}`);
+        console.log(`Período: ${selectedPeriod}`);
 
-              } catch (error) {
-                return {};  // Retorna um objeto vazio em caso de erro
-              }
-        }
+        const response = await Api.post("create-route", { date, period: selectedPeriod });
+        console.log(response)
+        localStorage.setItem("routeActive", response.data.route.id)
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
       }
+    }
+  }
 
-    return (
-        <div>
-            <HeaderFixo tela="home" text="Percurso" />
-            {hasRouteActive === null ? (
-        <>
-          <select 
-            value={selectedPeriod} // Controlando o valor selecionado
-            onChange={(e) => setSelectedPeriod(e.target.value)} // Atualizando o valor do estado
+  const validPoint = async (pointId) => {
+    console.log(pointId)
+
+    const response = await Api.patch("confirm-boarding", { stopId: pointId });
+    console.log("Resposta da API:", response);
+    refetch();
+
+  }
+
+  const allStopsCompleted = data?.route?.stops?.every(stop => stop.status === true);
+
+  return (
+    <div>
+      <HeaderFixo tela="home" text="Percurso" />
+      {hasRouteActive === null ? (
+        <div className="start-route">
+          <label htmlFor="">Selecione o periodo da rota: </label>
+          <select
+            value={selectedPeriod}
+            onChange={(e) => setSelectedPeriod(e.target.value)}
           >
             <option value="MANHA">Manhã</option>
             <option value="TARDE">Tarde</option>
             <option value="NOITE">Noite</option>
           </select>
-          <button onClick={startRoute}>Iniciar Rota</button>
-        </>
-      ) : ''}
+          <button className="container-item-off-button" onClick={startRoute}>Iniciar Rota</button>
+        </div>
+      ) : null}
 
+      <div className="container-percurso">
+        {data?.route?.stops && data.route.stops.map((stop, index) => {
+          // Encontrar o primeiro índice com status false
+          const firstIncompleteIndex = data.route.stops.findIndex((stop) => !stop.status);
+          return (
+            <div
+              key={stop.id}
+              className={`container-item-percurso ${!stop.status ? 'container-item-off' : ''} 
+                         ${index === data.route.stops.length - 1 ? "item-final" : ""}`}
+            >
+              <p className={`${!stop.validated_at ? 'hour-invisible' : ''}`}>
+                {stop.validated_at 
+                  ? new Date(new Date(stop.validated_at).getTime() + 3 * 60 * 60 * 1000)
+                      .toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })  
+                  : "00:00"}
+              </p>
 
-            <div className="container-percurso">
-                <div className="container-item-percurso">
-                    <p>16:43</p>
-                    <div className="container-barra"><div className="bola-barra"></div> <span className="traco-barra"></span></div>
-                    <div>
-                        <p>Rua das figuerias, 150</p>
-                        <span>Jardim Bela vista</span>
-                    </div>
-                </div>
-
-                <div className="container-item-percurso">
-                    <p>16:43</p>
-                    <div className="container-barra"><div className="bola-barra"></div> <span className="traco-barra"></span></div>
-                    <div>
-                        <p>Rua das figuerias, 150</p>
-                        <span>Jardim Bela vista</span>
-                    </div>
-                </div>
-                <div className="container-item-percurso container-item-off">
-                    <p>16:58</p>
-                    <div className="container-barra">
-                        <div className="bola-barra"></div>
-                        <span className="traco-barra"></span>
-                    </div>
-                    <div>
-                        <p>Avenida Portugal, 1010</p>
-                        <span>Centro, Santo André - SP, 09040-001</span>
-                        <button>Confirmar embarque</button>
-                    </div>
-                </div>
-                <div className="container-item-percurso container-item-off item-final">
-                    <p>16:58</p>
-                    <div className="container-barra">
-                        <div className="bola-barra"></div>
-                        <span className="traco-barra"></span>
-                    </div>
-                    <div>
-                        <p>Universidade Municipal de São Caetano do Sul - Campus Conceição</p>
-                        <span>R. Conceição, 321 - Santo Antônio, São Caetano do Sul - SP, 09530-060</span>
-                    </div>
-                </div>
-
+              <div className="container-barra">
+                <div className="bola-barra"></div>
+                <span className="traco-barra"></span>
+              </div>
+              <div>
+                <p className="field-address">{stop.address}</p>
+                <span></span>
+                {/* Exibe o botão apenas se for o primeiro elemento com status false */}
+                {index === firstIncompleteIndex && !stop.status ? (
+                  <button onClick={() => validPoint(stop.id)}>Confirmar embarque</button>
+                ) : null}
+              </div>
             </div>
+          );
+        })}
+        {allStopsCompleted && (
+          <div>
+            <button className="container-item-off-button" onClick={() => localStorage.removeItem("routeActive")}>
+              Finalizar Rota
+            </button>
+          </div>
+        )}
+      </div>
 
-            <FooterDriver percurso />
-        </div >
-    )
+      <FooterDriver percurso />
+    </div>
+  );
 }
