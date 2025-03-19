@@ -36,7 +36,7 @@ export function Documentos() {
             cpf, 
             cnh, 
             userId: user.id,
-            images: [cnhImage,crlvImage],
+            images: [{name: "CNH", url: cnhImage}, {name: "CRLV", url:crlvImage}],
         }
 
         console.log(newDriver)

@@ -5,7 +5,7 @@ import Api from "../../../contexts/AuthProvider/services/api";
 import { useQuery } from "react-query";
 
 export function PercursoDriver() {
-  const [date, setDate] = useState(new Date('2025-03-18T00:00:00.000Z').toISOString());
+  const [date, setDate] = useState(new Date().toISOString());
   const [hasRouteActive, setHasRouteActive] = useState(null);
   const [selectedPeriod, setSelectedPeriod] = useState(""); // Criação do estado para controlar o valor selecionado
 

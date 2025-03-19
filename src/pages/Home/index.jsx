@@ -30,6 +30,10 @@ const Home = () => {
   
   const announcemnts = annocements.data.announcements;
 
+  if (user.cnh) {
+    return <HomeDriver />
+  }
+
   return (
     !user.cnh ? (
       <div className="box-home">

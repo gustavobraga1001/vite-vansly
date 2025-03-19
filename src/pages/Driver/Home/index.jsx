@@ -74,7 +74,7 @@ export function HomeDriver() {
                                     </td>
                                 </tr>
                             )) : (
-                                <p>Sem novas propostas</p>
+                                <p className="zero-propostas">Sem novas propostas</p>
                             )}
                         </tbody>
                     </table>

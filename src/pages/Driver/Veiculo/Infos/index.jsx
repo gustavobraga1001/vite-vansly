@@ -1,58 +1,55 @@
 import HeaderFixo from "../../../../components/HeaderFixo/headerFixo";
 import "./styles.css";
 
-import { v4 as uuidv4 } from 'uuid';
-import useAuth from "../../../../hooks/useAuth";
+import useAuth from "../../../../contexts/AuthProvider/useAuth";
+import { useQuery } from "react-query";
+import Loading from "../../../../components/Loading";
 import { useNavigate } from "react-router-dom";
+import Api from "../../../../contexts/AuthProvider/services/api";
 
 
 export function InfoVeiculo() {
 
-    const { user } = useAuth()
-
     const navigate = useNavigate();
 
+    const auth = useAuth();
 
-    function handleSubmitVeiculo(e) {
+    const { data, isLoading } = useQuery(["user"], () => auth.getUser());  
+
+    const user = data?.user;
+    
+    if (isLoading || !user) {
+        return <Loading />;
+    }
+
+
+
+    async function handleSubmitVeiculo(e) {
         e.preventDefault();
 
-        // Usando FormData para pegar todos os valores do formulário
-        const formData = new FormData(e.target);
+        // Cria um objeto FormData com os dados do formulário
+        const formData = new FormData(e.target)
 
-        // Convertendo para um objeto para facilitar o uso
-        const formCamps = Object.fromEntries(formData.entries());
+        // Converte os dados para um objeto
+        const data = Object.fromEntries(formData.entries())
 
         const newVehicle = {
-            id: uuidv4(),
-            userId: user.id,
-            ...formCamps
-        };
+            model: data.modelo,
+            plate: data.placa,
+            mark: data.marca,
+            year: data.ano,
+            totalCapacity: Number(data.capacidade),
+            driverId: user.driver_id
+        }
 
-        // Pegando os dados já armazenados no localStorage
-        const veiculosExistentes = JSON.parse(localStorage.getItem("veiculos_bd")) || [];
+        try {
+            await Api.post('/vehicles',  newVehicle);
+        } catch (error) {
+            throw new Error(error.message);
+        }
 
-        // Adicionando o novo veículo à lista existente
-        const veiculosAtualizados = [...veiculosExistentes, newVehicle];
+        navigate('/perfil')
 
-        // Salvando a lista atualizada no localStorage
-        localStorage.setItem("veiculos_bd", JSON.stringify(veiculosAtualizados));
-
-        // Atualizando o role do usuário logado no array de usuários
-        const users = JSON.parse(localStorage.getItem("users_bd")) || [];
-
-        // Encontrando o usuário logado no array e atualizando o role
-        const updatedUsers = users.map(u => {
-            if (u.id === user.id) {
-                return { ...u, role: 2 }; // Atualiza o role para 2
-            }
-            return u; // Mantém os outros usuários inalterados
-        });
-
-        // Salvando o array de usuários atualizado no localStorage
-        localStorage.setItem("users_bd", JSON.stringify(updatedUsers));
-
-        // Navegar para a página de perfil
-        navigate("/perfil");
     }
 
     return (

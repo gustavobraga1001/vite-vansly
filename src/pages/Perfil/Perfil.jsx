@@ -16,10 +16,8 @@ const Perfil = () => {
   const { data, isLoading } = useQuery(["user"], () => auth.getUser());  
 
   const user = data?.user;
-
-  console.log(data)
   
-  if (isLoading || !data || !user) {
+  if (isLoading || !user) {
     return <Loading />;
   }
 
