@@ -84,6 +84,10 @@ const RoutesApp = () => {
             path="/motorista/documentos-view"
             element={<ViewDocs />}
           />
+          <Route
+            path="/motorista/anuncio-edit"
+            element={<AnuncioEdit />}
+          />
         {/* <Route path="/busca" element={<Private Item={Busca} />} />
           <Route
             path="/editar-perfil"
@@ -94,10 +98,6 @@ const RoutesApp = () => {
             element={<Private Item={Notificacoes} />}
           />
 
-          <Route
-            path="/motorista/anuncio-edit"
-            element={<Private Item={AnuncioEdit} />}
-          />
           <Route
             path="/motorista/anuncio-edit/horarios-vagas"
             element={<Private Item={HorariosVagas} />}

@@ -1,120 +1,115 @@
-import { Link, useNavigate } from "react-router-dom";
-import HeaderFixo from "../../../components/HeaderFixo/headerFixo";
-import { useState, useEffect } from "react";
-import { UploadSimple } from "@phosphor-icons/react";
-import { v4 as uuidv4 } from 'uuid';  // Importando o UUID
-import Swal from "sweetalert2";  // Para o popup
+import { useNavigate } from "react-router-dom"
+import HeaderFixo from "../../../components/HeaderFixo/headerFixo"
+import { useState, useEffect } from "react"
 
-import useAuth from "../../../hooks/useAuth"
-
-import "./styles.css";
+import "./styles.css"
+import useAuth from "../../../contexts/AuthProvider/useAuth"
+import { useQuery } from "react-query"
+import Loading from "../../../components/Loading"
+import Api from "../../../contexts/AuthProvider/services/api"
 
 export function AnuncioEdit() {
-  const { user } = useAuth()
-
   const [formValues, setFormValues] = useState({
     regiao: "",
     instituicao: "",
     valor: "",
-    infos: "",
-    selectedImages: [],
-  });
+    images: "",
+  })
+  
+  const [announcementId, setAnnouncementId] = useState(null)
+  
+  const navigate = useNavigate()
+  const auth = useAuth()
 
-  const [horarios, setHorarios] = useState({});
-  const navigate = useNavigate();
+  const { data, isLoading } = useQuery(["user"], () => auth.getUser())
+  const user = data?.user || {}
 
-  useEffect(() => {
-    // Recupera os horários do localStorage que foram salvos na tela anterior
-    const storedHorarios = JSON.parse(localStorage.getItem("anuncios_horarios"));
-    if (storedHorarios) {
-      setHorarios(storedHorarios);
+  const { data: vehicleData } = useQuery(
+    ["vehicle"],
+    () => user?.driver_id ? Api.get(`get-vehicle/${user.driver_id}`) : Promise.resolve(),
+    {
+      enabled: !!user?.driver_id
     }
-  }, []);
+  )
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues({
-      ...formValues,
-      [name]: value,
-    });
-  };
+  const vehicle = vehicleData?.data?.vehicle
 
+  // Busca o anúncio existente, se houver
+  const { data: announcementData } = useQuery(
+    ["announcement", user?.driver_id],
+    () => user?.driver_id ? Api.get(`get-announcement-driver/${user.driver_id}`) : Promise.resolve(),
+    {
+      enabled: !!user?.driver_id,
+      retry: false, // Não tenta novamente automaticamente
+      onSuccess: (data) => {
+        const announcement = data.data.announcement
+        if (data?.data.announcement) {
+          setFormValues({
+            regiao: announcement.city || "",
+            valor: formatCurrency(String(announcement.monthlyAmount * 100 || "0")),
+            images: announcement.images?.join(", ") || "",
+          })
+          setAnnouncementId(announcement.id)
+        }
+      },
+    }
+  )
+  
   const formatCurrency = (value) => {
-    const valueOnlyDigits = value.replace(/\D/g, "");
+    const valueOnlyDigits = value.replace(/\D/g, "")
     const formattedValue = (Number(valueOnlyDigits) / 100).toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
-    });
-    return formattedValue;
-  };
+    })
+    return formattedValue
+  }
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    })
+  }
 
   const handleValueChange = (e) => {
-    const formattedValue = formatCurrency(e.target.value);
+    const formattedValue = formatCurrency(e.target.value)
     setFormValues({
       ...formValues,
       valor: formattedValue,
-    });
-  };
+    })
+  }
 
-  const handleFileChange = (e) => {
-    const files = Array.from(e.target.files);
-    const imageUrls = files.map((file) => URL.createObjectURL(file));
-    setFormValues({
-      ...formValues,
-      selectedImages: imageUrls,
-    });
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault()
 
-  const handleButtonClick = (e) => {
-    e.preventDefault();
-    document.getElementById("fileInput").click();
-  };
+    const anuncio = {
+      title: `Van do ${user.name}`,
+      stars: 0,
+      city: formValues.regiao,
+      monthlyAmount: Number(formValues.valor.replace(/[^\d,]/g, "").replace(",", ".")),
+      imagesUrl: formValues.images.split(",").map((image) => image.trim()),
+      driverId: user.driver_id,
+      vehicleId: vehicle?.id
+    }
 
+    try {
+      if (announcementId) {
+        // Se já existe um anúncio, faz PATCH
+        await Api.patch(`edit-announcement/${announcementId}`, anuncio)
+      } else {
+        // Se não existe anúncio, faz POST
+        await Api.post("announcements", anuncio)
+      }
+      navigate("/perfil")
+    } catch (error) {
+      console.error("Erro ao salvar o anúncio:", error)
+    }
+  }
 
-  console.log(horarios)
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Recupera os anúncios já existentes ou inicializa um array vazio
-    const anuncios = JSON.parse(localStorage.getItem("anuncios_bd")) || [];
-
-
-    // Cria um novo anúncio com ID único usando o uuid
-    const newAnuncio = {
-      id: uuidv4(),
-      img: formValues.selectedImages,  // Aqui você pode ajustar o formato de armazenamento das imagens
-      title: `Van do ${user.nome}`,
-      local: formValues.regiao,
-      preco: formValues.valor,
-      infos: formValues.infos,
-      instituicoes: [formValues.instituicao],
-      horarios,  // Os horários que foram salvos em outra tela
-      userId: user.id
-    };
-
-    // Adiciona o novo anúncio à lista de anúncios e salva no localStorage
-    anuncios.push(newAnuncio);
-    localStorage.setItem("anuncios_bd", JSON.stringify(anuncios));
-
-    // Mostra um popup de sucesso com SweetAlert2
-    Swal.fire({
-      title: 'Anúncio Salvo!',
-      text: 'Seu anúncio foi salvo com sucesso.',
-      icon: 'success',
-      confirmButtonText: 'OK'
-    });
-
-    // Redireciona para outra página, por exemplo, a página inicial
-    // Limpa o formulário
-    setFormValues({
-      regiao: "",
-      instituicao: "",
-      valor: "",
-      infos: "",
-      selectedImages: [],
-    });
-  };
+  if (isLoading) {
+    return <Loading />
+  }
 
   return (
     <div className="anuncio-edit-container">
@@ -157,10 +152,6 @@ export function AnuncioEdit() {
           </select>
         </div>
 
-        <Link className="edit-horarios-anuncio" to={"horarios-vagas"}>
-          Adicionar horários e vagas
-        </Link>
-
         <div>
           <label htmlFor="valor">Preço mensal do serviço</label>
           <input
@@ -175,34 +166,20 @@ export function AnuncioEdit() {
         </div>
 
         <div>
-          <label htmlFor="infos">Informações adicionais</label>
+          <label htmlFor="images">Url imagens</label>
           <textarea
-            name="infos"
-            id="infos"
-            placeholder="Informações..."
-            value={formValues.infos}
+            name="images"
+            id="images"
+            placeholder="Imagens..."
+            value={formValues.images}
             onChange={handleInputChange}
-          ></textarea>
+          />
         </div>
-
-        <input
-          type="file"
-          id="fileInput"
-          accept="image/*"
-          multiple
-          style={{ display: "none" }}
-          onChange={handleFileChange}
-        />
-
-        <button id="customButton" onClick={handleButtonClick}>
-          Enviar fotos
-          <UploadSimple size={25} />
-        </button>
 
         <div className="box-fix-button">
           <input type="submit" value="Salvar" />
         </div>
       </form>
     </div>
-  );
+  )
 }
