@@ -37,6 +37,8 @@ export function InfomarFalta() {
     const userId = user.id 
     const dateOfAbsence = formatDate(dataAusencia)
 
+    console.log(dateOfAbsence)
+
       if (dataAusencia !== "" ) {
         const request = await Api.post("/absence", { dateOfAbsence , userId });
         navigate('/faltas')

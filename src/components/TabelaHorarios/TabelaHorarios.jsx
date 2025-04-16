@@ -1,7 +1,7 @@
 import React from 'react'
 import './TabelaHorarios.css'
 
-const TabelaHorarios = ({ horarios }) => {
+const TabelaHorarios = ({ capacityVehicle }) => {
   return (
     <div className='table-box'>
         <table>
@@ -15,18 +15,18 @@ const TabelaHorarios = ({ horarios }) => {
         <tbody>
             <tr>
                 <td>Manhã</td>
-                <td>{horarios.manha.horario}</td>
-                <td>{horarios.manha.vagas}</td>
+                <td>7:00</td>
+                <td>{capacityVehicle.capacityVehicle.Manha}</td>
             </tr>
             <tr>
                 <td>Tarde</td>
-                <td>{horarios.tarde.horario}</td>
-                <td>{horarios.tarde.vagas}</td>
+                <td>13:00</td>
+                <td>{capacityVehicle.capacityVehicle.Tarde}</td>
             </tr>
             <tr>
                 <td>Noite</td>
-                <td>{horarios.noite.horario}</td>
-                <td>{horarios.noite.vagas}</td>
+                <td>19:00</td>
+                <td>{capacityVehicle.capacityVehicle.Noite}</td>
             </tr>
         </tbody>
     </table>

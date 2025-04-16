@@ -33,6 +33,15 @@ Entre na pasta do projeto:
 cd vite-vasnly
 ```
 
+# 🔐 Variáveis de ambiente
+O sistema usa um sistema de upload da Cloudifary para o sistema de imagens.
+Crie uma conta na Cloudifary e renomeie o arquivo .env.example e popule com os seguintes dados no seu ambiente:
+```bash
+ASSETS_CLOUD=your_assests_cloudifary
+APISECRET=your_api_secret_cloudifary
+APIKEY=your_api_key_cloudifary
+```
+
 # 📁 Instalando dependências
 Instale as dependências do projeto com:
 
@@ -50,13 +59,13 @@ yarn install
 Para iniciar o servidor de desenvolvimento, execute:
 
 ```bash
-npm start
+npm run dev
 ```
 
 ou
 
 ```bash
-yarn start
+yarn run dev
 ```
 
 O projeto estará disponível em:

@@ -47,16 +47,6 @@ const OpcoesPerfil = ({user}) => {
               <CaretRight size={23} weight="bold" />
             </div>
           </Link>
-
-          <Link to={"/documentos-view"}>
-            <div className="opcao-perfil">
-              <div className="inicio">
-                <Wall size={40} color="#003B6D" weight="bold" />
-                <p>Relatórios</p>
-              </div>
-              <CaretRight size={23} weight="bold" />
-            </div>
-          </Link>
         </div>
       ) : (
         <Link to={"/motorista"}>

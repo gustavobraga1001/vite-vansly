@@ -9,7 +9,7 @@ export function VerificarContrato() {
         try {
           const response = await Api.get("/get-contract");
     
-          return response.data;
+          return response.data; 
         } catch (error) {
           console.log(error.response.status);
         }

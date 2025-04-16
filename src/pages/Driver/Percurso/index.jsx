@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { FooterDriver } from "../../../components/FooterDriver";
 import HeaderFixo from "../../../components/HeaderFixo/headerFixo";
 import Api from "../../../contexts/AuthProvider/services/api";
+import PercursoImg from "../../../assets/percursoImg.svg";
 import { useQuery } from "react-query";
 
 export function PercursoDriver() {
   const [date, setDate] = useState(new Date().toISOString());
   const [hasRouteActive, setHasRouteActive] = useState(null);
-  const [selectedPeriod, setSelectedPeriod] = useState(""); // Criação do estado para controlar o valor selecionado
+  const [selectedPeriod, setSelectedPeriod] = useState("");
 
   useEffect(() => {
     setHasRouteActive(localStorage.getItem("routeActive"));
@@ -18,59 +19,70 @@ export function PercursoDriver() {
       const response = await Api.get(`get-route/${hasRouteActive}`);
 
       if (!response.data || !response.data.route) {
-        return {}; // Retorna um objeto vazio caso não encontre a rota
+        return {};
       }
 
-      // Caso contrário, retorna os dados da rota
       return response.data;
     } catch (error) {
       console.error(error);
-      return {}; // Retorna um objeto vazio em caso de erro
+      return {};
     }
   }
 
-  const { data, isLoading: isLoadingPoints ,refetch} = useQuery(
+  const { data, isLoading: isLoadingPoints, refetch } = useQuery(
     ["points"],
     () => getRoute(),
     {
       staleTime: 10000,
       enabled: !!hasRouteActive,
     }
-  )
-  
-  async function startRoute() {
-    if (hasRouteActive === null) {
-      try {
-        console.log(`Data: ${date}`);
-        console.log(`Período: ${selectedPeriod}`);
+  );
 
+  // 🔥 Criação da rota e atualização automática da view
+  async function startRoute() {
+    if (!hasRouteActive) {
+      try {
         const response = await Api.post("create-route", { date, period: selectedPeriod });
-        console.log(response)
-        localStorage.setItem("routeActive", response.data.route.id)
-        console.log(response.data);
+        localStorage.setItem("routeActive", response.data.route.id);
+        setHasRouteActive(response.data.route.id); // ✅ Atualiza o estado local
+        refetch(); // ✅ Atualiza a view automaticamente
       } catch (error) {
         console.error(error);
       }
     }
   }
 
+  // 🔥 Validação de ponto e atualização automática
   const validPoint = async (pointId) => {
-    console.log(pointId)
+    try {
+      await Api.patch("confirm-boarding", { stopId: pointId });
+      refetch(); // ✅ Atualiza automaticamente após a validação
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    const response = await Api.patch("confirm-boarding", { stopId: pointId });
-    console.log("Resposta da API:", response);
-    refetch();
-
-  }
+  // 🔥 Finalização da rota e atualização automática
+  const finishRoute = () => {
+    localStorage.removeItem("routeActive");
+    setHasRouteActive(null); // ✅ Atualiza o estado local
+    refetch(); // ✅ Atualiza automaticamente após finalizar
+  };
 
   const allStopsCompleted = data?.route?.stops?.every(stop => stop.status === true);
 
   return (
     <div>
       <HeaderFixo tela="home" text="Percurso" />
+      
       {hasRouteActive === null ? (
         <div className="start-route">
-          <label htmlFor="">Selecione o periodo da rota: </label>
+          <div className="not-route-active-box">
+            <img src={PercursoImg} alt="" />
+            <h1>Nenhum trajeto ativo</h1>
+            <p>Nenhuma viagem foi iniciada ainda. Se deseja iniciar o trajeto, clique no botão abaixo.</p>
+          </div>
+          <label>Selecione o período da rota: </label>
           <select
             value={selectedPeriod}
             onChange={(e) => setSelectedPeriod(e.target.value)}
@@ -79,13 +91,14 @@ export function PercursoDriver() {
             <option value="TARDE">Tarde</option>
             <option value="NOITE">Noite</option>
           </select>
-          <button className="container-item-off-button" onClick={startRoute}>Iniciar Rota</button>
+          <button className="container-item-off-button" onClick={startRoute}>
+            Iniciar Viagem
+          </button>
         </div>
       ) : null}
 
       <div className="container-percurso">
-        {data?.route?.stops && data.route.stops.map((stop, index) => {
-          // Encontrar o primeiro índice com status false
+        {data?.route?.stops?.map((stop, index) => {
           const firstIncompleteIndex = data.route.stops.findIndex((stop) => !stop.status);
           return (
             <div
@@ -99,15 +112,12 @@ export function PercursoDriver() {
                       .toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })  
                   : "00:00"}
               </p>
-
               <div className="container-barra">
                 <div className="bola-barra"></div>
                 <span className="traco-barra"></span>
               </div>
               <div>
                 <p className="field-address">{stop.address}</p>
-                <span></span>
-                {/* Exibe o botão apenas se for o primeiro elemento com status false */}
                 {index === firstIncompleteIndex && !stop.status ? (
                   <button onClick={() => validPoint(stop.id)}>Confirmar embarque</button>
                 ) : null}
@@ -115,9 +125,10 @@ export function PercursoDriver() {
             </div>
           );
         })}
+        
         {allStopsCompleted && (
           <div>
-            <button className="container-item-off-button" onClick={() => localStorage.removeItem("routeActive")}>
+            <button className="container-item-off-button" onClick={finishRoute}>
               Finalizar Rota
             </button>
           </div>

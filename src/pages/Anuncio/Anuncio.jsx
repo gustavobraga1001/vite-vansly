@@ -67,7 +67,7 @@ const Anuncio = () => {
         stars={announcement.stars}
         locals={announcement.city}
         // instituicoes={card.instituicoes}
-        // horarios={card.horarios}
+        capacityVehicle={announcement.vehicle}
         // vagas={card.vagas}
         motorista={announcement.driver.name}
       />

@@ -7,6 +7,7 @@ import Footer from "../../components/Footer";
 import { PercursoDriver } from "../Driver/Percurso";
 import useAuth from "../../contexts/AuthProvider/useAuth";
 import Api from "../../contexts/AuthProvider/services/api";
+import PercrusoImg from "../../assets/percursoImg.svg"
 import "./percurso.css";
 
 const Percurso = () => {
@@ -37,8 +38,9 @@ const Percurso = () => {
     ["route", period],
     async () => {
       try {
-        const date = new Date().toISOString().split("T")[0];
-        const response = await Api.post("get-route-student", { date, period });
+        const date = new Date().toISOString();
+        console.log(date);
+        const response = await Api.post("get-route-student", { date, period, userId: user.id });
         if (!response.data?.route) throw new Error("Nenhuma rota encontrada.");
         return response.data;
       } catch (error) {
@@ -48,23 +50,15 @@ const Percurso = () => {
         return null;
       }
     },
+    {
+      enabled: !!user, // A query só será executada quando user estiver definido
+    }
   );
-
+  
   const route = routeData?.route;
 
   // Estados de carregamento unificados
-  if (isUserLoading || isRouteLoading) return <Loading />;
-
-
-  // Usuário não encontrado
-  if (!user) {
-    return (
-      <div className="main-error">
-        <h2>Nenhum usuário encontrado</h2>
-        <p>Por favor, tente novamente mais tarde.</p>
-      </div>
-    );
-  }
+  if (isUserLoading || isRouteLoading || !user) return <Loading />;
 
   // Usuário com CNH (motorista)
   if (user.cnh) {
@@ -78,6 +72,7 @@ const Percurso = () => {
         <HeaderFixo tela="home" img={img} text="Percurso" />
         {error ? (
           <div className="main-error">
+            <img src={PercrusoImg} alt="" />
             <h2>{error}</h2>
             <p>
               Nenhum trajeto foi iniciado até agora. Quando seu motorista iniciar

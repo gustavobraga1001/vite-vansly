@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom"
 import HeaderFixo from "../../../components/HeaderFixo/headerFixo"
-import { useState, useEffect } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import "./styles.css"
 import useAuth from "../../../contexts/AuthProvider/useAuth"
 import { useQuery } from "react-query"
 import Loading from "../../../components/Loading"
 import Api from "../../../contexts/AuthProvider/services/api"
+import { CloudArrowUp, PlusSquare, UploadSimple } from "@phosphor-icons/react"
 
 export function AnuncioEdit() {
   const [formValues, setFormValues] = useState({
@@ -15,6 +16,9 @@ export function AnuncioEdit() {
     valor: "",
     images: "",
   })
+
+  const [photos, setPhotos] = useState([]);
+  
   
   const [announcementId, setAnnouncementId] = useState(null)
   
@@ -34,26 +38,34 @@ export function AnuncioEdit() {
 
   const vehicle = vehicleData?.data?.vehicle
 
-  // Busca o anúncio existente, se houver
-  const { data: announcementData } = useQuery(
-    ["announcement", user?.driver_id],
-    () => user?.driver_id ? Api.get(`get-announcement-driver/${user.driver_id}`) : Promise.resolve(),
-    {
-      enabled: !!user?.driver_id,
-      retry: false, // Não tenta novamente automaticamente
-      onSuccess: (data) => {
-        const announcement = data.data.announcement
-        if (data?.data.announcement) {
-          setFormValues({
-            regiao: announcement.city || "",
-            valor: formatCurrency(String(announcement.monthlyAmount * 100 || "0")),
-            images: announcement.images?.join(", ") || "",
-          })
-          setAnnouncementId(announcement.id)
-        }
-      },
+  const hasFetchedAnnouncement = useRef(false)
+
+useEffect(() => {
+  const fetchAnnouncement = async () => {
+    try {
+      const response = await Api.get(`get-announcement-driver/${user.driver_id}`)
+      const announcement = response.data.announcement
+
+      if (announcement) {
+        setFormValues({
+          regiao: announcement.city || "",
+          valor: formatCurrency(String(announcement.monthlyAmount * 100 || "0")),
+          images: announcement.images.map(image => image.url).join(', ')
+        })
+        setPhotos(announcement.images.map(image => image.url))
+        setAnnouncementId(announcement.id)
+      }
+    } catch (error) {
+      console.error("Erro ao buscar anúncio:", error)
     }
-  )
+  }
+
+  if (user?.driver_id && !hasFetchedAnnouncement.current) {
+    fetchAnnouncement()
+    hasFetchedAnnouncement.current = true
+  }
+}, [user?.driver_id])
+
   
   const formatCurrency = (value) => {
     const valueOnlyDigits = value.replace(/\D/g, "")
@@ -96,7 +108,8 @@ export function AnuncioEdit() {
     try {
       if (announcementId) {
         // Se já existe um anúncio, faz PATCH
-        await Api.patch(`edit-announcement/${announcementId}`, anuncio)
+        console.log(anuncio)
+        await Api.patch(`edit-announcement`, anuncio)
       } else {
         // Se não existe anúncio, faz POST
         await Api.post("announcements", anuncio)
@@ -110,6 +123,45 @@ export function AnuncioEdit() {
   if (isLoading) {
     return <Loading />
   }
+
+  const handleImageChange = async (e) => {
+
+    const ASSETS_CLOUDIFARY = import.meta.env.VITE_ASSETS_CLOUD;
+    console.log('cloud:', ASSETS_CLOUDIFARY);
+    const file = e.target.files[0];
+    const formData = new FormData();
+            formData.append("file", file);
+            formData.append("upload_preset", "unsigned_preset"); // Nome do preset que você criou
+        
+            const response = await fetch(
+              `https://api.cloudinary.com/v1_1/${ASSETS_CLOUDIFARY}/image/upload`,
+              {
+                method: "POST",
+                body: formData,
+              }
+            );
+    const data = await response.json();
+    setPhotos((prev) => [...prev, data.secure_url]);
+  };
+
+  console.log(photos)
+
+  const handleRemovePhoto = async (indexToRemove) => {
+    photos[indexToRemove];
+    
+    try {
+        const updatedPhotos = photos.filter((_, index) => index !== indexToRemove);
+        setPhotos(updatedPhotos);
+  
+        // Atualiza o campo `images` para manter a string com as URLs atualizadas
+        setFormValues((prev) => ({
+          ...prev,
+          images: updatedPhotos.join(", "),
+        }));
+    } catch (error) {
+      console.error("Erro ao excluir imagem do Cloudinary:", error);
+    }
+  };
 
   return (
     <div className="anuncio-edit-container">
@@ -163,6 +215,54 @@ export function AnuncioEdit() {
             onChange={handleValueChange}
             required
           />
+        </div>
+
+        {formValues.images.length === 0 && (
+
+        <div>
+          <label htmlFor="images">Imagens do anúncio</label>
+          <section className="box-upload-first" onClick={() => document.getElementById("imageInput").click()}>
+            <CloudArrowUp size={24} color="rgba(0, 59, 109, 1)"/>
+            <p>Faça o upload das fotos do veículo para o anúncio</p>
+            <PlusSquare size={32} color="rgba(0, 59, 109, 1)" weight="fill"/>
+            <input
+                id="imageInput"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                style={{ display: "none" }} // Esconde o input de arquivo
+            />
+          </section>
+        </div>
+        )}
+
+        
+        <div>
+          <p>Imagens do anúncio</p>
+          <section className="box-array-images">
+            {photos.map((photo, index) => (
+              <span key={index}>
+                <img src={photo} alt={`Foto ${index + 1}`} style={{width: "50px", borderRadius: "8px", height: "50px"}} />
+                <div className="dot-red" onClick={() => handleRemovePhoto(index)}>
+                  <div className="dash"></div>
+                </div>
+              </span>
+            ))}
+          </section>
+          {photos.length > 0 && (
+
+          <section className="button-submit-image" onClick={() => document.getElementById("imageInput").click()}>
+            <p>Enviar Imagem</p>
+            <UploadSimple size={18} color="#ffffff"/>
+            <input
+                id="imageInput"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                style={{ display: "none" }} // Esconde o input de arquivo
+            />
+          </section>
+          )}
         </div>
 
         <div>

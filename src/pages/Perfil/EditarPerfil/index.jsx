@@ -1,73 +1,87 @@
-import { useEffect, useState } from "react";
-import { UploadSimple } from "@phosphor-icons/react";
+import { useState, useEffect } from "react";
 import HeaderFixo from "../../../components/HeaderFixo/headerFixo";
-import useAuth from "../../../hooks/useAuth";
 import "./styles.css";
+import useAuth from "../../../contexts/AuthProvider/useAuth";
+import { useQuery } from "react-query";
+import Loading from "../../../components/Loading";
+import Api from "../../../contexts/AuthProvider/services/api";
+import { useNavigate } from "react-router-dom";
+import { UploadSimple } from "@phosphor-icons/react";
 
 export function EditarPerfil() {
-    const [userData, setUserData] = useState({
-        nome: "",
-        dataNascimento: "",
-        telefone: "",
-        email: "",
-        perfilImage: "", // Campo para armazenar a imagem de perfil
-    });
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [urlPhoto, setUrlPhoto] = useState("");
+    const [photo, setPhoto] = useState("");
 
-    const { user } = useAuth(); // Pega o usuário autenticado
+    const navigate = useNavigate()
 
+    const auth = useAuth();
+    
+    const { data, isLoading } = useQuery(["user"], () => auth.getUser());  
+
+    const user = data?.user;
+
+    // Atualiza os estados quando os dados do usuário estiverem carregados
     useEffect(() => {
-        // Buscar dados do usuário logado no localStorage
-        const users_bd = JSON.parse(localStorage.getItem("users_bd"));
-
-        // Encontra o usuário logado em users_bd
-        const loggedUser = users_bd.find(u => u.id === user.id);
-
-        if (loggedUser) {
-            setUserData({
-                nome: loggedUser.nome,
-                dataNascimento: loggedUser.dataNascimento,
-                telefone: loggedUser.telefone,
-                email: loggedUser.email,
-                perfilImage: loggedUser.perfilImage || "", // Carrega a imagem de perfil se existir
-            });
+        if (user) {
+            setName(user.name || "");
+            setEmail(user.email || "");
+            setUrlPhoto(user.urlPhoto || "");
         }
     }, [user]);
 
-    const handleChange = (e) => {
-        setUserData({
-            ...userData,
-            [e.target.name]: e.target.value,
-        });
-    };
+    if (isLoading) {
+        return <Loading />;
+    }
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setUserData({
-                ...userData,
-                perfilImage: reader.result, // Converte a imagem para base64
-            });
-        };
-        if (file) {
-            reader.readAsDataURL(file);
+        setPhoto(file);
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();       
+
+        const ASSETS_CLOUDIFARY = import.meta.env.VITE_ASSETS_CLOUD;
+
+        if (photo) {
+
+            const formData = new FormData();
+            formData.append("file", photo);
+            formData.append("upload_preset", "unsigned_preset"); // Nome do preset que você criou
+        
+            const response = await fetch(
+              `https://api.cloudinary.com/v1_1/${ASSETS_CLOUDIFARY}/image/upload`,
+              {
+                method: "POST",
+                body: formData,
+              }
+            );
+            const data = await response.json();
+            try {
+                const response = await Api.patch("edit-profile", {name, email, urlPhoto: data.secure_url});
+                console.log(response);
+            
+                // Se deu tudo certo, limpa o erro e navega
+                navigate("/perfil");
+            } catch (error) {
+            // Aqui o error.message terá a mensagem do throw
+            }
+            console.log("Enviando dados atualizados:", { name, email, urlPhoto });
+        } else {
+            try {
+                    const response = await Api.patch("edit-profile", {name, email, urlPhoto});
+                    console.log(response);
+                
+                    // Se deu tudo certo, limpa o erro e navega
+                    navigate("/perfil");
+                } catch (error) {
+                // Aqui o error.message terá a mensagem do throw
+                }
+                console.log("Enviando dados atualizados:", { name, email, urlPhoto });
+            }
         }
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        // Atualiza apenas o usuário logado
-        const users_bd = JSON.parse(localStorage.getItem("users_bd"));
-        const updatedUsers = users_bd.map(u =>
-            u.id === user.id
-                ? { ...u, ...userData } // Atualiza os dados do usuário logado
-                : u
-        );
-
-        localStorage.setItem("users_bd", JSON.stringify(updatedUsers));
-        alert("Perfil atualizado com sucesso!");
-    };
 
     return (
         <div className="container-editar-perfil">
@@ -81,29 +95,8 @@ export function EditarPerfil() {
                         name="nome"
                         id="nome"
                         placeholder="Nome"
-                        value={userData.nome}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="dataNascimento">Defina sua data de Nascimento</label>
-                    <input
-                        type="date"
-                        name="dataNascimento"
-                        id="dataNascimento"
-                        value={userData.dataNascimento}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="telefone">Telefone</label>
-                    <input
-                        type="number"
-                        name="telefone"
-                        id="telefone"
-                        placeholder="(+00) 00 00000-0000"
-                        value={userData.telefone}
-                        onChange={handleChange}
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                     />
                 </div>
                 <div>
@@ -113,27 +106,22 @@ export function EditarPerfil() {
                         name="email"
                         id="email"
                         placeholder="E-mail"
-                        value={userData.email}
-                        onChange={handleChange}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
 
-                <div className="button-foto-perfil">
+                <div className="button-foto-perfil" onClick={() => document.getElementById("imageInput").click()}>
                     <p>Alterar foto de perfil</p>
-                    <button
-                        type="button"
-                        onClick={() => document.getElementById("imageInput").click()}
-                    >
-                        <UploadSimple size={25} />
-                    </button>
-                    <input
-                        id="imageInput"
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        style={{ display: "none" }} // Esconde o input de arquivo
-                    />
-                </div>
+                    <UploadSimple size={25} />
+                        <input
+                            id="imageInput"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            style={{ display: "none" }} // Esconde o input de arquivo
+                        />
+                    </div>
 
                 <input type="submit" value="Salvar Alterações" className="salvar-editar-perfil" />
             </form>

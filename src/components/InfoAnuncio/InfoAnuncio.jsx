@@ -10,7 +10,7 @@ const InfoAnuncio = ({
   stars,
   locals,
   instituicoes,
-  horarios,
+  capacityVehicle,
   motorista,
 }) => {
   // const number = parseFloat(stars.replace(",", "."));
@@ -70,7 +70,7 @@ const InfoAnuncio = ({
           <h5>Horários e vagas disponíveis</h5>
         </div>
 
-        {/* <TabelaHorarios horarios={horarios} /> */}
+        <TabelaHorarios capacityVehicle={capacityVehicle} />
       </div>
     </div>
   );

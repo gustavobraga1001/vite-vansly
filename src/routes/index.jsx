@@ -27,6 +27,7 @@ import { EditarPerfil } from "../pages/Perfil/EditarPerfil";
 import { Estatisticas } from "../pages/Driver/Estatisticas";
 import { jwtDecode } from "jwt-decode";
 import ImgurUploader from "../services/ingur-config";
+import { AcceptContract } from "../pages/Driver/AcceptContract";
 
 
 const RoutesApp = () => {
@@ -88,11 +89,15 @@ const RoutesApp = () => {
             path="/motorista/anuncio-edit"
             element={<AnuncioEdit />}
           />
-        {/* <Route path="/busca" element={<Private Item={Busca} />} />
+          <Route
+            path="/motorista/accept-contract/:contractId"
+            element={<AcceptContract />}
+          />
           <Route
             path="/editar-perfil"
-            element={<Private Item={EditarPerfil} />}
+            element={<EditarPerfil />}
           />
+        {/* <Route path="/busca" element={<Private Item={Busca} />} />
           <Route
             path="/notificacoes"
             element={<Private Item={Notificacoes} />}

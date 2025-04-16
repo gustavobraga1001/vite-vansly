@@ -1,0 +1,64 @@
+.main-accept-contract {
+  padding: 0 15px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.info-student-contract {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+  gap: 30px;
+}
+
+.info-student-contract img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 1px solid blue;
+}
+
+.info-student-contract p {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.input-info-contract {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+
+}
+
+.footer-buttons-accept {
+  position: fixed;
+  bottom: 0;
+  height: 80px;
+  width: 100%;
+  border-top: 1px solid rgba(210, 210, 210, 1);
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.footer-buttons-accept button{
+  height: 60px;
+  width: 150px;
+
+  border: none;
+  border-radius: 8px;
+  color:  white;
+  font-size: 1.2rem;
+  box-shadow: 0px 2px 2px 0px rgba(170, 170, 170, 1);
+
+}
+
+.footer-buttons-accept .button-accept {
+  background: linear-gradient(96.13deg, #003B6D -8.9%, #005297 115.43%);
+}
+.footer-buttons-accept .button-decline {
+  background: linear-gradient(96.13deg, #6D0000 -8.9%, #FF005C 115.43%);
+  }

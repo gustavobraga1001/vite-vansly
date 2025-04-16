@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { FooterDriver } from "../../../components/FooterDriver";
 
 import "./styles.css"
-import { Bell, CaretRight, WarningCircle } from "@phosphor-icons/react";
+import { Bell, CaretRight } from "@phosphor-icons/react";
 import { useQuery } from "react-query";
 import Api from "../../../contexts/AuthProvider/services/api";
 
@@ -41,14 +41,14 @@ export function HomeDriver() {
         <div>
             <header className="header-home-driver">
                 <div className="header-home-mensagem">
-                    <h1>Olá Motrista</h1>
+                    <h1>Olá Motorista</h1>
                     <Bell size={32} weight="fill" />
                 </div>
-                <div className="btn-documento">
+                {/* <div className="btn-documento">
                     <WarningCircle size={32} color="rgba(247, 158, 27, 1)" />
                     <p>Reenvio da CNH pendente | Envio até: 20/09/2024</p>
                     <CaretRight size={20} color="rgba(0, 59, 109, 1)" />
-                </div>
+                </div> */}
             </header>
 
             <main className="main-home-driver">
@@ -64,13 +64,15 @@ export function HomeDriver() {
                             </tr>
                         </thead>
                         <tbody>
-                            {contractsPending.length > 0 ? contractsPending.map((row, index) => (
-                                <tr key={index}>
+                            {contractsPending.length > 0 ? contractsPending.map((row) => (
+                                <tr key={row.id}>
                                     <td>{row.institution}</td>
                                     <td>{new Date(row.created_at).toLocaleDateString('pt-BR')}</td>
                                     <td>{row.period}</td>
                                     <td className="icon-cell">
-                                        <CaretRight size={20} color="rgba(0, 59, 109, 1)" />
+                                        <Link to={`/motorista/accept-contract/${row.id}`}>
+                                            <CaretRight size={20} color="rgba(0, 59, 109, 1)" />
+                                        </Link>
                                     </td>
                                 </tr>
                             )) : (

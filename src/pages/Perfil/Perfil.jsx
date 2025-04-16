@@ -27,7 +27,7 @@ const Perfil = () => {
       <div className="box-perfil">
         <div className="foto-perfil">
           <img
-            src={imgPerfil}
+            src={user.urlPhoto || imgPerfil}
             alt="Imagem de perfil"
           />
         </div>
