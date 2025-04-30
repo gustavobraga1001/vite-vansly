@@ -3,6 +3,7 @@ import HeaderFixo from "../../../components/HeaderFixo/headerFixo";
 import "./styles.css"
 import Api from "../../../contexts/AuthProvider/services/api";
 import { useNavigate, useParams } from "react-router-dom";
+import urlPhotoDefault from "../../../assets/icons/perfilAcionado.svg"
 
 
 export function AcceptContract() {
@@ -25,7 +26,6 @@ export function AcceptContract() {
 
     const contract = contractResponse.data
 
-
     async function handleStatusContract(status) {
         try {
             await Api.patch("contract-stage", {contractId, status})
@@ -41,7 +41,7 @@ export function AcceptContract() {
            <main className="main-accept-contract">
 
            <div className="info-student-contract">
-                <img src="" alt="" />
+                <img src={contract.user.urlPhoto ?? urlPhotoDefault} alt="" />
                 <p>{contract.user.name}</p>
            </div>
            <div className="input-info-contract">

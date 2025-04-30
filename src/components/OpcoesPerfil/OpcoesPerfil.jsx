@@ -60,8 +60,7 @@ const OpcoesPerfil = ({user}) => {
         </Link>
       )}
 
-
-      <Link to={"/contratos"}>
+      <Link to={"/motorista/contratos"}>
         <div className="opcao-perfil">
           <div className="inicio">
             <img src={contratosImg} alt="" />

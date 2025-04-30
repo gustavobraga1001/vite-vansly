@@ -17,6 +17,8 @@
   height: 120px;
   border-radius: 50%;
   border: 1px solid blue;
+  object-fit: contain; /* Garante que a imagem inteira seja exibida no círculo */
+  background-color: #fff; /* Adiciona um fundo branco para preencher espaços vazios */
 }
 
 .info-student-contract p {

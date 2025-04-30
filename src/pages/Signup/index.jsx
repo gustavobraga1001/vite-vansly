@@ -36,7 +36,7 @@ const Signup = () => {
 
   return (
     <div className="container-signup">
-      <Link to={"/signupName"}>
+      <Link to={"/"}>
         <div className="return-sign">
           <img src={voltar} />
         </div>

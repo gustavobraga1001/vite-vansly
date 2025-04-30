@@ -61,6 +61,7 @@
     grid-template-columns: auto 1fr auto auto; /* Define as colunas */
     grid-gap: 10px; /* Espaçamento entre os elementos */
     align-items: center; /* Alinha os itens verticalmente */
+    color: black;
   }
   
   .item-pagamento img {

@@ -28,6 +28,9 @@ import { Estatisticas } from "../pages/Driver/Estatisticas";
 import { jwtDecode } from "jwt-decode";
 import ImgurUploader from "../services/ingur-config";
 import { AcceptContract } from "../pages/Driver/AcceptContract";
+import ContratosDriver from "../pages/Driver/Contracts";
+import Payment from "../pages/Driver/Estatisticas/Payment";
+import NewPayment from "../pages/Driver/Estatisticas/NewPayment";
 
 
 const RoutesApp = () => {
@@ -72,6 +75,18 @@ const RoutesApp = () => {
           <Route
             path="/motorista/veiculo"
             element={<Veiculo />}
+          />
+          <Route
+            path="/motorista/contratos"
+            element={<ContratosDriver />}
+          />
+          <Route
+            path="/estatisticas/payment/:user_id/:mouth"
+            element={<Payment />}
+          />
+          <Route
+            path="/estatisticas/new-payment/:user_id/:mouth"
+            element={<NewPayment />}
           />
           <Route
             path="/motorista/veiculo-infos"

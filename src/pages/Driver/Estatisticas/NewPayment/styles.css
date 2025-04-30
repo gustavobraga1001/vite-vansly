@@ -1,0 +1,59 @@
+.box-timer-payment {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.box-timer-payment h2 {
+  color: rgba(75, 85, 99, 1);
+}
+
+.card-user-payment {
+  padding: 15px;
+  margin: 0 15px;
+  background: rgba(235, 235, 235, 1);
+  display: flex;
+  border-radius: 10px;
+  height: 60px;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.card-payment-infos {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  margin: 0 15px;
+  border-radius: 10px;
+  background: rgba(235, 235, 235, 1);
+  margin-top: 20px;
+  gap: 15px;
+}
+
+.card-payment-infos-line {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-payment {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  height: 60px;
+  border-radius: 10px;
+  color: white;
+  font-size: 1.2rem;
+  box-shadow: 0px 2px 2px 0px rgba(170, 170, 170, 1);
+  border: none;
+}
+
+.button-new-payment {
+  background: linear-gradient(96.13deg, #003B6D -8.9%, #005297 115.43%);
+}
+.button-cancel-payment {
+  background: linear-gradient(96.13deg, #6D0000 -8.9%, #FF005C 115.43%);
+}

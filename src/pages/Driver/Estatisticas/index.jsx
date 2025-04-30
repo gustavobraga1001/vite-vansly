@@ -2,20 +2,24 @@ import { Link } from "react-router-dom";
 import { FooterDriver } from "../../../components/FooterDriver";
 
 import "./styles.css";
-import { CaretDown, CaretRight, MoneyWavy } from "@phosphor-icons/react";
+import { CaretRight, MoneyWavy } from "@phosphor-icons/react";
 import Donut from "../../../components/Pizza";
 import { useQuery } from "react-query";
 import Api from "../../../contexts/AuthProvider/services/api";
 import { useState } from "react";
 
 export function Estatisticas() {
-  const [selectedMonth, setSelectedMonth] = useState("JAN");
-
   // Lista de meses
   const months = [
     "JAN", "FEV", "MAR", "ABR", "MAI", "JUN", 
     "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"
   ];
+
+  // Obtém o mês atual
+  const currentMonth = months[new Date().getMonth()];
+
+  // Define o estado inicial como o mês atual
+  const [selectedMonth, setSelectedMonth] = useState(currentMonth);
 
   // Função para alterar o mês selecionado
   const handleMonthChange = (event) => {
@@ -40,7 +44,7 @@ export function Estatisticas() {
   // Exibe uma mensagem de carregamento enquanto as consultas estão sendo feitas
   if (isLoadingF || isLoadingC || !faturamento || !contratos) {
     return <p>Carregando...</p>;
-  }
+  }``
 
   // Filtra os contratos em pagamentos concluídos e pendentes
   const pagos = contratos.data.filter((c) => c.payment.length > 0);
@@ -79,7 +83,7 @@ export function Estatisticas() {
             </div>
             {pagos.length > 0 ? (
               pagos.map((contract, i) => (
-                <div className="item-pagamento" key={i}>
+                <Link to={`payment/${contract.user_id}/${selectedMonth}`} className="item-pagamento" key={i}>
                   <MoneyWavy size={25} color="#1ff71b" />
                   <p>{contract.name}</p>
                   <p>
@@ -89,7 +93,7 @@ export function Estatisticas() {
                     })}
                   </p>
                   <p>{new Date(contract.payment[0].payment_at).toLocaleDateString('pt-BR')}</p>
-                </div>
+                </Link>
               ))
             ) : (
               <p>sem registros</p>
@@ -103,17 +107,17 @@ export function Estatisticas() {
             </div>
             {pendentes.length > 0 ? (
               pendentes.map((contract, i) => (
-                <div className="item-pagamento" key={i}>
-                  <MoneyWavy size={25} color="#d69507" />
-                  <p>{contract.name}</p>
-                  <p>
-                    R$ {parseFloat(contract.monthlyAmount).toFixed(2).replace('.', ',').toLocaleString('pt-BR', {
-                      style: 'currency',
-                      currency: 'BRL',
-                    })}
-                  </p>
-                  <p>{new Date(contract.venciment).toLocaleDateString('pt-BR')}</p>
-                </div>
+                <Link to={`new-payment/${contract.user_id}/${selectedMonth}`} className="item-pagamento" key={i}>
+                      <MoneyWavy size={25} color="#d69507" />
+                      <p>{contract.name}</p>
+                      <p>
+                        R$ {parseFloat(contract.monthlyAmount).toFixed(2).replace('.', ',').toLocaleString('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        })}
+                      </p>
+                      <p>{new Date(contract.venciment).toLocaleDateString('pt-BR')}</p>
+                  </Link>
               ))              
             ) : (
               <p>sem registros</p>
