@@ -67,12 +67,12 @@ const NewPayment = () => {
               <p>{priceFormatter.format(userContract[0].monthlyAmount)}</p>
             </div>
             <div className="card-payment-infos-line">
-              <p>Data</p>
+              <p>Data Vencimento</p>
               <p>{dateFormatter.format(new Date(userContract[0].created_at))}</p>
             </div>
             <div className="card-payment-infos-line">
-              <p>Data Vencimento</p>
-              <p>{dateFormatter.format(new Date(userContract[0].created_at))}</p>
+              <p>Data do pagamento</p>
+              <p>Ainda não foi pago</p>
             </div>
             <div className="card-payment-infos-line">
               <p>Status</p>

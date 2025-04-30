@@ -2,13 +2,14 @@ import { useQuery } from "react-query";
 import HeaderFixo from "../../../../components/HeaderFixo/headerFixo";
 import Api from "../../../../contexts/AuthProvider/services/api";
 import Loading from "../../../../components/Loading";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { dateFormatter, priceFormatter } from "../../../../utils/formtter";
 import TimerSuccess from '../../../../assets/timer-success.svg';
 
 
 const Payment = () => { 
     const { user_id, mouth } = useParams(); // Obtém o parâmetro "id" da URL
+    const navigate = useNavigate();
   
     // Consulta para obter contratos com base no mês selecionado
     const { data: contratos, isLoading } = useQuery(
@@ -21,6 +22,20 @@ const Payment = () => {
     }
     const contrato = contratos.data.filter((contract) => contract.user_id === user_id);
     const payment = contrato[0].payment[0];
+
+    async function handleCancelPayment() {
+      Api.post("cancel-payment", { paymentId: payment.id })
+        .then((response) => {
+          console.log(response.status);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+
+      navigate("/estatisticas");
+    }
+
+    console.log(contrato);
 
     return (
             <div>
@@ -38,11 +53,11 @@ const Payment = () => {
                   <p>{priceFormatter.format(Number(payment.value))}</p>
                 </div>
                 <div className="card-payment-infos-line">
-                  <p>Data</p>
-                  <p>{dateFormatter.format(new Date(payment.payment_at))}</p>
+                  <p>Data Vencimento</p>
+                  <p>{dateFormatter.format(new Date(contrato[0].venciment))}</p>
                 </div>
                 <div className="card-payment-infos-line">
-                  <p>Data Vencimento</p>
+                  <p>Data do pagamento</p>
                   <p>{dateFormatter.format(new Date(payment.payment_at))}</p>
                 </div>
                 <div className="card-payment-infos-line">
@@ -51,7 +66,7 @@ const Payment = () => {
                 </div>
     
               </div>
-                <button className="button-payment button-cancel-payment">
+                <button className="button-payment button-cancel-payment" onClick={handleCancelPayment}>
                 Cancelar Confirmação de Pagamento
                 </button>
             </div>

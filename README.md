@@ -74,6 +74,8 @@ O projeto estará disponível em:
 http://localhost:3000
 ```
 
+### !!! MVP versão Mobile
+
 ## Funcionalidades do sistema na versão atual V(1.0)
 
 ## RFs (Requisitos funcionais)
@@ -81,7 +83,7 @@ http://localhost:3000
 - [x] Deve ser possível se cadastrar como um passageiro; 
 - [x] Deve ser possível se autenticar;   
 - [x] Deve ser possível um passageiro visualizar ofertas de serviço;   
-- [] Deve ser possível um passageiro filtrar ofertas de serviço;   
+- [ ] Deve ser possível um passageiro filtrar ofertas de serviço;   
 - [x] Deve ser possível um passageiro contratar um serviço;   
 - [x] Deve ser possível um passageiro confirmar falta;   
 - [x] Deve ser possível um passageiro acompanhar um trajeto;   
