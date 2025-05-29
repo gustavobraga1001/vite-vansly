@@ -1,7 +1,10 @@
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_ASSETS_CLOUD;
+
+
 const Api = axios.create({
-  baseURL: 'http://localhost:3333',
+  baseURL: API_URL,
   withCredentials: true, // Envia cookies automaticamente
 });
 
