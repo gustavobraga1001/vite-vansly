@@ -12,7 +12,16 @@ export function getUserLocalStorage() {
 
 export async function LoginRequest(email, password) {
   try {
-    const request = await Api.post("/sessions", { email, password });
+    const request = await Api.post("/sessions", 
+      { email, password }, // Dados enviados no body
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "*/*",
+          "connection": "keep-alive",
+        }
+      }
+    );
     return request.data;
   } catch (error) {
     return null;
