@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_ASSETS_CLOUD;
+const API_URL = import.meta.env.API_URL;
 
 
 const Api = axios.create({
