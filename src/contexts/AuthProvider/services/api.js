@@ -6,6 +6,10 @@ const API_URL = import.meta.env.API_URL;
 const Api = axios.create({
   baseURL: API_URL,
   withCredentials: true, // Envia cookies automaticamente
+  headers:{
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+  }
 });
 
 // Função para obter o token de acesso do localStorage
