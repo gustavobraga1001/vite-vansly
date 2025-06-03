@@ -134,7 +134,7 @@ export function AnuncioEdit() {
             name="city" 
             id="city" 
             value={city}
-            onChange={(e) => setCity(e.targer.value)}
+            onChange={(e) => setCity(e.target.value)}
             required
           />
         </div>
