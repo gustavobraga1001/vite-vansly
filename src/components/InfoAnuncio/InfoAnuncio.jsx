@@ -27,7 +27,7 @@ const InfoAnuncio = ({
       <div className="nota">
         <div className="avaliacao">
           <Stars count={stars} img={star} />
-          <p>{stars}</p>
+          <p>Avaliação: {stars}</p>
         </div>
       </div>
 
