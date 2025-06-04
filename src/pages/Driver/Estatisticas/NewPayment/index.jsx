@@ -11,7 +11,7 @@ const NewPayment = () => {
   const { user_id, mouth } = useParams(); // Obtém o parâmetro "id" da URL
   const navigate = useNavigate();
 
-  async function getContract() {
+      async function getContract() {
       try {
         const response = await Api.get(`/get-contracts-driver/ACEITO`); // Passa o parâmetro diretamente na URL
         return response.data;
@@ -30,7 +30,7 @@ const NewPayment = () => {
 
     console.log(userContract);
     
-    if (isLoading) {
+    if (isLoading && !userContract) {
         return <Loading />;
     }
 
