@@ -6,14 +6,10 @@ const InfoMotorista = ({ nomeMotor }) => {
   return (
     <div>
       <div className="info-moto">
-        <img src={fotoMotorista} />
         <div className="motorista">
           <div className="nome">
             <h5>Motorista: </h5>
             <p>{nomeMotor}</p>
-          </div>
-          <div className="tempo">
-            <p>Motorista há 1 mês</p>
           </div>
         </div>
       </div>
