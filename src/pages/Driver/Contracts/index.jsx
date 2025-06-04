@@ -22,7 +22,7 @@ const ContratosDriver = () => {
 
   const contracts = data?.contracts;
 
-  if (isLoading) {
+  if (isLoading && !contracts) {
     return <Loading />;
   }
 
