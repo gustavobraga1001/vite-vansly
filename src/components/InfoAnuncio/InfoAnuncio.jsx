@@ -29,10 +29,6 @@ const InfoAnuncio = ({
           <Stars count={stars} img={star} />
           <p>{stars}</p>
         </div>
-        <div className="qtdAvaliacao">
-          <p>154</p>
-          <a>Avaliações</a>
-        </div>
       </div>
 
       <InfoMotorista nomeMotor={motorista} />
