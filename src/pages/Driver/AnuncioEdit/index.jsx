@@ -22,7 +22,13 @@ export function AnuncioEdit() {
   const navigate = useNavigate()
   const auth = useAuth()
 
-  const { data, isLoading } = useQuery(["user"], () => auth.getUser())
+const { data, isLoading } = useQuery(
+  ["user"], 
+  () => auth.getUser(),
+  {
+    staleTime: 20000 // 20 segundos (em milissegundos)
+  }
+);
   const user = data?.user || {}
 
   const { loadAnnouncementDriver, announcementDriver } = useContext(AnnouncementContext)
@@ -103,12 +109,21 @@ export function AnuncioEdit() {
   }
 
   const handleImageChange = async (e) => {
-    const file = e.target.files[0];
-    const response = await handleImageCloudifary(file)
-    console.log(response)
+  const file = e.target.files[0];
+  if (!file) return;
+  console.log("Arquivo selecionado:", file);
 
-    setImagesAnnouncement((prev) => [...prev, response.secure_url]);
+  const response = await handleImageCloudifary(file);
+  console.log("Upload response:", response);
+
+  const newImage = {
+    id: String(new Date().getTime()), // Gera um ID simples (pode trocar por uuid se quiser)
+    url: response.secure_url,
   };
+
+  setImagesAnnouncement((prev) => [...prev, newImage]);
+};
+
 
   const handleRemovePhoto = async (imageId) => {
     try {
@@ -116,7 +131,6 @@ export function AnuncioEdit() {
         setImagesAnnouncement(updatedPhotos);
   
         // Atualiza o campo `images` para manter a string com as URLs atualizadas
-        setImagesAnnouncement((updatedPhotos));
     } catch (error) {
       console.error("Erro ao excluir imagem do Cloudinary:", error);
     }
@@ -166,7 +180,7 @@ export function AnuncioEdit() {
 
         <ImagesAnnouncement 
           imagesAnnouncement={imagesAnnouncement} 
-          onChangeImage={handleImageChange}
+          handleImageChange={handleImageChange}
           handleRemovePhoto={handleRemovePhoto}
         />
 

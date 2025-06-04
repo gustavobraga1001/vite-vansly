@@ -2,7 +2,7 @@ import { CloudArrowUp, PlusSquare, UploadSimple } from "@phosphor-icons/react"
 
 // eslint-disable-next-line react/prop-types
 export const ImagesAnnouncement = ({ imagesAnnouncement, handleImageChange, handleRemovePhoto }) => {
-  console.log(imagesAnnouncement)
+  console.log("imagesAnnouncement", imagesAnnouncement);
   return (
     <>
       {imagesAnnouncement.length === 0 && (
