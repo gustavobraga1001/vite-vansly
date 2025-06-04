@@ -103,7 +103,7 @@ export function HomeDriver() {
                                     <tr key={index}>
                                         <td>{row.period}</td>
                                         <td>{row.remainingCapacity}</td>
-                                        <td>{row.occupancyPercentage} %</td>
+                                        <td>{row.occupancyPercentage.toFixed(2)} %</td>
                                     </tr>
                                 ))}
                             </tbody>

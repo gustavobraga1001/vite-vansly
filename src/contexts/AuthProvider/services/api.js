@@ -4,7 +4,7 @@ const API_URL = import.meta.env.API_URL;
 
 
 const Api = axios.create({
-  baseURL: "http://localhost:3333",
+  baseURL: "https://api-vansly.onrender.com",
   withCredentials: true, // Envia cookies automaticamente
 });
 
